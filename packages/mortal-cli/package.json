@@ -1,0 +1,29 @@
+{
+  "name": "mortal-cli",
+  "version": "1.0.1",
+  "private": false,
+  "description": "mortal-cli",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cli",
+    "ora",
+    "mustache",
+    "inquirer",
+    "cop-dir"
+  ],
+  "author": "wyw",
+  "license": "ISC",
+  "bin": {
+    "mortal": "./bin/index.js"
+  },
+  "dependencies": {
+    "copy-dir": "^1.3.0",
+    "inquirer": "8.2.5",
+    "mustache": "^4.2.0",
+    "ora": "5.4.1",
+    "yargs": "^17.7.2"
+  }
+}

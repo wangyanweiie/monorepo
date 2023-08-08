@@ -1,0 +1,19 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "mortal": "mortal"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ant-design-vue": "^4.0.0",
+    "element-plus": "^2.3.9",
+    "mortal-cli": "workspace:*",
+    "react": "^18.2.0",
+    "vue": "^3.3.4"
+  }
+}
