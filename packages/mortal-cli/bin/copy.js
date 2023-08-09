@@ -13,7 +13,7 @@ const Mustache = require("mustache");
 function mkdirGuard(target) {
   try {
     /**
-     * mkdirSync() 创建文件夹目录
+     * mkdirSync(path,options) 创建文件夹目录
      * path：文件夹目录路径；
      * options：recursive 表示是否要创建父目录，true 表示要；
      */

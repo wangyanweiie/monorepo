@@ -10,6 +10,7 @@ const ora = require("ora");
  */
 function inquirerPrompt(argv) {
   const { name } = argv;
+
   return new Promise((resolve, reject) => {
     /**
      * inquirer.prompt() 函数接收一个数组，数组的每一项都是一个询问项，询问项有很多配置参数，下面是常用的配置项
@@ -136,6 +137,7 @@ function install(cmdPath, options) {
     spinner.start(`正在安装依赖，请稍等`);
 
     /**
+     * exec() 函数参数
      * command：命令，比如 pnpm install
      * options：参数
      *   - cwd：设置命令运行环境的路径
@@ -146,16 +148,10 @@ function install(cmdPath, options) {
      */
     exec(
       command,
-
       {
         cwd: path.resolve(cmdPath),
       },
-
       function (error, stdout, stderr) {
-        // console.log("error", error);
-        // console.log("stdout", stdout);
-        // console.log("stderr", stderr);
-
         if (error) {
           spinner.fail(`依赖安装失败`);
           reject();
