@@ -1,10 +1,17 @@
 #!/usr/bin/env node
+// 可以让系统动态的去查找 node 来执行你的脚本文件
+
 // 代码是在 Node.js 环境中运行，Node.js 的模块是遵循 CommonJS 规范的，如果要依赖一个模块，要使用 Node.js 内置 require 系统函数引用模块使用。
+const chalk = require("chalk"); // chalk 可以修改控制台中字符串的样式
+const figlet = require("figlet"); // figlet 可以输出一些特殊的文字，这些文字只包含 ANSI 对应的字符。
 const path = require("path");
 const yargs = require("yargs");
 const { inquirerPrompt, install } = require("./inquirer");
 const { checkMkdirExists, copyDir, copyFile, copyTemplate } = require("./copy");
-console.log("mortal-cli/bin/index.js 执行成功");
+
+console.log(
+  chalk.yellow(figlet.textSync("Mortal CLI", { horizontalLayout: "full" }))
+);
 
 /**
  * 脚手架提供的 mortal 命令后面还可以设置参数，标准的脚手架命令参数需要支持两种格式：
@@ -69,7 +76,7 @@ yargs.command(
          *   - 若 to 以 ./ 开头或者没有符号，则拼接前面路径。
          *
          * __dirname <==> 用来动态获取当前文件模块所属目录的绝对路径。（D:\mortal\packages\mortal-cli\bin）
-         * process.cwd() <==> 当前 Node.js 进程执行时的文件所属目录的绝对路径。（D:\mortal\examples\app）
+         * process.cwd() <==> 当前 Node.js 进程执行时的文件所属目录的绝对路径。（D:\mortal\apps\demo）
          */
 
         // 拷贝目录
