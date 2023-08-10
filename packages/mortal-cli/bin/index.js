@@ -4,8 +4,14 @@ const path = require("path");
 const yargs = require("yargs");
 const { inquirerPrompt, install } = require("./inquirer");
 const { checkMkdirExists, copyDir, copyFile, copyTemplate } = require("./copy");
+console.log("mortal-cli/bin/index.js 执行成功");
 
 /**
+ * 脚手架提供的 mortal 命令后面还可以设置参数，标准的脚手架命令参数需要支持两种格式：
+ *   - mortal --name=orderPage
+ *   - mortal --name orderPage
+ * 如果通过 process.argv 来获取，要额外处理两种不同的命令参数格式，这里推荐 yargs 开源库来解析命令参数
+ *
  * yargs 提供的 command 方法来设置一些子命令，让每个子命令对应各自功能，各司其职：
  * cmd：字符串，子命令名称，也可以传递数组，如 ['create', 'c']，表示子命令叫 create，其别名是 c；
  * desc：字符串，子命令描述信息；
@@ -19,7 +25,6 @@ const { checkMkdirExists, copyDir, copyFile, copyTemplate } = require("./copy");
  */
 yargs.command(
   ["create", "c"],
-
   "新建一个模板",
 
   function (yargs) {
@@ -31,9 +36,11 @@ yargs.command(
     });
   },
 
+  /**
+   * argv 属性是对两个格式的命令参数的处理结果
+   * @param {*} argv
+   */
   function (argv) {
-    console.log("argv", argv);
-
     inquirerPrompt(argv).then((answers) => {
       console.log("answers", answers);
 

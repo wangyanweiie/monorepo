@@ -4,7 +4,10 @@ const { exec } = require("child_process");
 const ora = require("ora");
 
 /**
- * 询问式交互
+ * inquirer 开源库
+ *   - 询问用户问题
+ *   - 获取并解析用户的输入
+ *   - 检测用户的答案是否合法
  * @param {*} argv
  * @returns
  */
@@ -65,46 +68,51 @@ function inquirerPrompt(argv) {
       .then((answers) => {
         const { frame } = answers;
 
-        if (frame === "react") {
-          inquirer
-            .prompt([
-              {
-                type: "list",
-                message: "使用什么UI组件库开发",
-                choices: ["Ant Design Vue"],
-                name: "library",
-              },
-            ])
-            .then((answers1) => {
-              resolve({
-                ...answers,
-                ...answers1,
+        switch (frame) {
+          case "react":
+            inquirer
+              .prompt([
+                {
+                  type: "list",
+                  message: "使用什么UI组件库开发",
+                  choices: ["Ant Design Vue"],
+                  name: "library",
+                },
+              ])
+              .then((answers1) => {
+                resolve({
+                  ...answers,
+                  ...answers1,
+                });
+              })
+              .catch((error) => {
+                reject(error);
               });
-            })
-            .catch((error) => {
-              reject(error);
-            });
-        }
+            break;
 
-        if (frame === "vue") {
-          inquirer
-            .prompt([
-              {
-                type: "list",
-                message: "使用什么UI组件库开发",
-                choices: ["Element Plus"],
-                name: "library",
-              },
-            ])
-            .then((answers2) => {
-              resolve({
-                ...answers,
-                ...answers2,
+          case "vue":
+            inquirer
+              .prompt([
+                {
+                  type: "list",
+                  message: "使用什么UI组件库开发",
+                  choices: ["Element Plus"],
+                  name: "library",
+                },
+              ])
+              .then((answers2) => {
+                resolve({
+                  ...answers,
+                  ...answers2,
+                });
+              })
+              .catch((error) => {
+                reject(error);
               });
-            })
-            .catch((error) => {
-              reject(error);
-            });
+            break;
+
+          default:
+            break;
         }
       })
       .catch((error) => {
@@ -134,7 +142,7 @@ function install(cmdPath, options) {
   return new Promise(function (resolve, reject) {
     // 引入安装动画
     const spinner = ora();
-    spinner.start(`正在安装依赖，请稍等`);
+    spinner.start(`正在安装依赖`);
 
     /**
      * exec() 函数参数
