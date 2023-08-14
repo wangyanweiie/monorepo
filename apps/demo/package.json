@@ -1,19 +1,19 @@
 {
   "name": "demo",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "mortal": "mortal"
+    "mortal": "mortal",
+    "custom": "custom"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "ant-design-vue": "^4.0.0",
-    "element-plus": "^2.3.9",
+    "custom-cli": "workspace:*",
     "mortal-cli": "workspace:*",
-    "react": "^18.2.0",
-    "vue": "^3.3.4"
+    "react": "^18.2.0"
   }
 }
