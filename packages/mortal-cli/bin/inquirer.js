@@ -14,11 +14,11 @@ function inquirerPrompt(argv) {
   return new Promise((resolve, reject) => {
     /**
      * inquirer.prompt() 函数接收一个数组，数组的每一项都是一个询问项，询问项有很多配置参数，下面是常用的配置项
-     * type：提问的类型 => 输入框 input，确认 confirm，单选组：list，多选组：checkbox；
-     * name：存储当前问题答案的变量；
-     * message：问题的描述
+     * type：问题类型 => 输入框 input，确认 confirm，单选组：list，多选组：checkbox；
+     * name：问题名称，用于标识答案对象中对应的属性名；
+     * message：问题描述，将会作为问题提示信息展示给用户
      * default：默认值
-     * choices：列表选项
+     * choices：选项列表，只有当问题类型为 list 时才需要提供
      * validate：对用户的答案进行校验
      * filter：对用户的答案进行处理，返回处理后的值
      */

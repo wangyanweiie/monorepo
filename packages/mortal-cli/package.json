@@ -19,6 +19,9 @@
   "bin": {
     "mortal": "./bin/index.js"
   },
+  "files": [
+    "bin"
+  ],
   "dependencies": {
     "copy-dir": "^1.3.0",
     "inquirer": "8.2.5",

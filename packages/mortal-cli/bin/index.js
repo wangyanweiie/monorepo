@@ -1,7 +1,10 @@
 #!/usr/bin/env node
 // 可以让系统动态的去查找 node 来执行你的脚本文件
 
-// 代码是在 Node.js 环境中运行，Node.js 的模块是遵循 CommonJS 规范的，如果要依赖一个模块，要使用 Node.js 内置 require 系统函数引用模块使用。
+/**
+ * 代码是在 Node.js 环境中运行，Node.js 的模块是遵循 CommonJS 规范的，
+ * 如果要依赖一个模块，要使用 Node.js 内置 require 系统函数引用模块使用；
+ */
 const yargs = require("yargs");
 const path = require("path");
 const chalk = require("chalk"); // chalk 可以修改控制台中字符串的样式
@@ -80,6 +83,9 @@ yargs.command(
          * __dirname <==> 用来动态获取当前文件模块所属目录的绝对路径。（D:\mortal\packages\mortal-cli\bin）
          * process.cwd() <==> 当前 Node.js 进程执行时的文件所属目录的绝对路径。（D:\mortal\apps\demo）
          */
+
+        console.log("__dirname", __dirname);
+        console.log("process.cwd", process.cwd());
 
         // 拷贝目录
         // copyDir(
