@@ -1,0 +1,15 @@
+{
+    "name": "@custom/commitlint-config",
+    "version": "1.0.0",
+    "description": "commitlint scopes",
+    "files": [
+        "index.js"
+    ],
+    "main": "index.js",
+    "keywords": [],
+    "author": "wyw",
+    "license": "ISC",
+    "dependencies": {
+        "yaml": "^2.3.1"
+    }
+}

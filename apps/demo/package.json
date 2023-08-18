@@ -1,19 +1,25 @@
 {
-  "name": "demo",
-  "version": "1.0.1",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "mortal": "mortal",
-    "custom": "custom"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "ant-design-vue": "^4.0.0",
-    "custom-cli": "workspace:*",
-    "mortal-cli": "workspace:*",
-    "react": "^18.2.0"
-  }
+    "name": "demo",
+    "version": "1.0.1",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "mortal": "mortal",
+        "custom": "custom",
+        "eslint": "eslint src --ext .vue,.ts,.js --fix",
+        "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,sass,scss,sty}\""
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "ant-design-vue": "^4.0.0",
+        "@custom/custom-cli": "workspace:*",
+        "@custom/mortal-cli": "workspace:*",
+        "react": "^18.2.0"
+    },
+    "devDependencies": {
+        "@custom/commitlint-config": "workspace:*",
+        "@custom/eslint-config": "workspace:*"
+    }
 }
