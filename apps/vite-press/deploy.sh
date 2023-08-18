@@ -1,10 +1,11 @@
 #!/usr/bin/env sh
+# 在 git bash 终端中运行该脚本 'sh deploy.sh' 自动打包部署
 
 # 确保脚本抛出遇到的错误
 set -e
 
 # 生成静态文件
-pnpm docs:build
+pnpm build
 
 # 进入生成的文件夹
 cd docs/.vitepress/dist

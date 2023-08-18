@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "target": "ESNext",
+        "module": "ESNext",
+        "strict": true,
+        "importHelpers": true,
+        "moduleResolution": "Node",
+        "experimentalDecorators": true,
+        "allowJs": false,
+        "skipLibCheck": true,
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "useDefineForClassFields": true,
+        "sourceMap": true,
+        "declaration": true,
+        "declarationDir": "./dist",
+        "rootDir": ".",
+        "types": [
+            "node"
+        ],
+        "lib": [
+            "ESNext",
+            "DOM"
+        ],
+    },
+    "include": ["src/**/*"],
+    "exclude": [
+        "node_modules", "dist"
+    ]
+}

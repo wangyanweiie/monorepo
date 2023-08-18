@@ -1,0 +1,37 @@
+{
+    "name": "@custom/utils",
+    "version": "1.0.6",
+    "description": "x-mart utils",
+    "main": "./dist/index.esm.js",
+    "module": "./dist/index.esm.js",
+    "types": "./dist/index.d.ts",
+    "type": "module",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "lint": "tsc --noEmit",
+        "build": "rollup -c"
+    },
+    "keywords": [
+        "utils"
+    ],
+    "author": "wyw",
+    "license": "ISC",
+    "devDependencies": {
+        "@rollup/plugin-commonjs": "^25.0.3",
+        "@rollup/plugin-node-resolve": "^15.1.0",
+        "@rollup/plugin-typescript": "^11.1.2",
+        "@types/lodash-es": "^4.17.8",
+        "rollup": "^3.27.0",
+        "rollup-plugin-dts": "^5.3.1",
+        "rollup-plugin-typescript2": "^0.35.0",
+        "tslib": "^2.6.1",
+        "typescript": "^5.1.6"
+    },
+    "dependencies": {
+        "axios": "^1.4.0",
+        "element-plus": "^2.3.9",
+        "lodash-es": "^4.17.21"
+    }
+}

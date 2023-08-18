@@ -1,0 +1,40 @@
+/**
+ * 操作提示
+ */
+export declare enum OPERATION_NOTICE {
+    /** 暂无数据 */
+    NO_DATA = "\u6682\u65E0\u6570\u636E",
+    /** 勾选 */
+    SELECT_NONE = "\u672A\u9009\u4E2D\u6570\u636E",
+    SELECT_A_LEAST_ONE = "\u81F3\u5C11\u52FE\u9009\u4E00\u6761\u6570\u636E\uFF01",
+    SELECT_A_MOST_ONE = "\u8BF7\u52FE\u9009\u4E14\u81F3\u591A\u52FE\u9009\u4E00\u6761\u6570\u636E\uFF01",
+    /** 新增 */
+    CREATE_SUCCESS = "\u65B0\u589E\u6210\u529F",
+    CREATE_ERROR = "\u65B0\u589E\u5931\u8D25",
+    /** 编辑 */
+    EDIT_SUCCESS = "\u7F16\u8F91\u6210\u529F",
+    EDIT_ERROR = "\u7F16\u8F91\u5931\u8D25",
+    /** 导入 */
+    IMPORT_SUCCESS = "\u5BFC\u5165\u6210\u529F",
+    IMPORT_ERROR = "\u5BFC\u5165\u5931\u8D25",
+    /** 导出 */
+    EXPORT_SUCCESS = "\u5BFC\u51FA\u6210\u529F",
+    EXPORT_ERROR = "\u5BFC\u51FA\u5931\u8D25",
+    /** 上传 */
+    UPLOAD_SUCCESS = "\u4E0A\u4F20\u6210\u529F",
+    UPLOAD_ERROR = "\u4E0A\u4F20\u5931\u8D25",
+    /** 下载 */
+    DOWNLOAD_SUCCESS = "\u4E0B\u8F7D\u6210\u529F",
+    DOWNLOAD_ERROR = "\u4E0B\u8F7D\u5931\u8D25",
+    /** 操作 */
+    OPERATE_SUCCESS = "\u64CD\u4F5C\u6210\u529F",
+    OPERATE_ERROR = "\u64CD\u4F5C\u5931\u8D25",
+    /** 删除 */
+    DELETE_CONFIRM = "\u662F\u5426\u786E\u8BA4\u5220\u9664?",
+    DELETE_SUCCESS = "\u5220\u9664\u6210\u529F",
+    DELETE_ERROR = "\u5220\u9664\u5931\u8D25",
+    /** 退出 */
+    LOGOUT_CONFIRM = "\u662F\u5426\u786E\u8BA4\u9000\u51FA\uFF1F",
+    LOGOUT_SUCCESS = "\u9000\u51FA\u6210\u529F",
+    LOGOUT_ERROR = "\u9000\u51FA\u5931\u8D25"
+}
