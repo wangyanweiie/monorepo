@@ -1,1 +1,1 @@
-console.log("mortal-cli/bin/template/dynamicForm/index.js");
+console.log('/template/dynamicForm/index.js');

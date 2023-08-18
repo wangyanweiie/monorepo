@@ -1,7 +1,7 @@
 {
     "name": "@custom/eslint-config",
     "version": "1.0.0",
-    "description": "eslint config",
+    "description": "eslint 配置规则",
     "main": "index.js",
     "keywords": [
         "eslint"

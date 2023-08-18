@@ -1,9 +1,7 @@
 {
     "name": "@custom/mortal-cli",
     "version": "1.0.0",
-    "private": false,
-    "description": "mortal-cli",
-    "main": "index.js",
+    "description": "拷贝文件",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1"
     },

@@ -4,20 +4,21 @@
     "description": "",
     "main": "index.js",
     "scripts": {
-        "mortal": "mortal",
         "eslint": "eslint src --ext .vue,.ts,.js --fix",
-        "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,sass,scss,sty}\""
+        "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,sass,scss,sty}\"",
+        "mortal": "mortal create"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "@custom/mortal-cli": "workspace:*",
         "ant-design-vue": "^4.0.0",
-        "react": "^18.2.0"
+        "element-plus": "^2.3.9",
+        "react": "^18.2.0",
+        "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@custom/commitlint-config": "workspace:*",
+        "@custom/mortal-cli": "workspace:*",
         "@custom/eslint-config": "workspace:*"
     }
 }

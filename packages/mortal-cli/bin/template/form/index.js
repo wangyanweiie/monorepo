@@ -1,1 +1,1 @@
-console.log("mortal-cli/bin/template/form/index.js");
+console.log('/template/form/index.js');

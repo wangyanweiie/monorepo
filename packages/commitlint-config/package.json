@@ -1,7 +1,7 @@
 {
     "name": "@custom/commitlint-config",
     "version": "1.0.0",
-    "description": "commitlint scopes config",
+    "description": "commitlint 配置规则",
     "main": "index.js",
     "keywords": [
         "commitlint"
