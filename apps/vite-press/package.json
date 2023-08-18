@@ -1,0 +1,23 @@
+{
+    "name": "vitepress-starter",
+    "version": "1.0.0",
+    "description": "文档工具",
+    "main": "index.js",
+    "scripts": {
+        "dev": "vitepress dev docs",
+        "build": "vitepress build docs",
+        "serve": "vitepress serve docs",
+        "deploy": "sh deploy.sh"
+    },
+    "directories": {
+        "doc": "docs"
+    },
+    "author": "wyw",
+    "license": "MIT",
+    "dependencies": {
+        "vitepress": "^1.0.0-alpha.20"
+    },
+    "devDependencies": {
+        "@types/node": "^18.11.11"
+    }
+}

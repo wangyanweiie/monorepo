@@ -1,1 +1,8 @@
 node_modules
+pnpm-lock.yaml
+
+*.local
+*.log
+*.idea
+*.vscode
+.turbo

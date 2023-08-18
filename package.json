@@ -1,14 +1,16 @@
 {
-    "name": "mortal",
-    "version": "1.0.1",
-    "description": "",
-    "main": "index.js",
+    "name": "monorepo",
+    "version": "1.0.0",
+    "description": "monorepo template",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install",
-        "clean": "pnpm rm -rf node_modules **/*/node_modules"
+        "clean": "pnpm rm -rf node_modules **/*/node_modules",
+        "template": "template create"
     },
-    "keywords": [],
+    "keywords": [
+        "monorepo"
+    ],
     "author": "wyw",
     "license": "ISC",
     "dependencies": {
@@ -18,6 +20,7 @@
         "@commitlint/cli": "^17.6.7",
         "@commitlint/config-conventional": "^17.6.7",
         "@custom/commitlint-config": "workspace:*",
+        "@custom/app-template": "workspace:*",
         "@types/node": "^20.4.5",
         "@vue/tsconfig": "^0.4.0",
         "husky": "^8.0.3",

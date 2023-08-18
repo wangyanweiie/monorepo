@@ -1,11 +1,10 @@
 {
     "name": "demo",
-    "version": "1.0.1",
+    "version": "1.0.0",
     "description": "",
     "main": "index.js",
     "scripts": {
         "mortal": "mortal",
-        "custom": "custom",
         "eslint": "eslint src --ext .vue,.ts,.js --fix",
         "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,sass,scss,sty}\""
     },
@@ -13,9 +12,8 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "ant-design-vue": "^4.0.0",
-        "@custom/custom-cli": "workspace:*",
         "@custom/mortal-cli": "workspace:*",
+        "ant-design-vue": "^4.0.0",
         "react": "^18.2.0"
     },
     "devDependencies": {
