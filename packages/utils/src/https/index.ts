@@ -3,7 +3,7 @@ import { ElNotification } from 'element-plus';
 import { throttle } from 'lodash-es';
 import type { Options } from './interface';
 import { getStorage } from '../storage/index';
-import { HTTP_ERROR_NOTICE } from '../contant/http-notice';
+import { HTTP_ERROR_NOTICE } from '../contant/index';
 
 /**
  * 拦截器配置函数
