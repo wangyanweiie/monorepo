@@ -1,0 +1,32 @@
+{
+    "extends": "@vue/tsconfig/tsconfig.dom.json",
+    "include": [
+        "src/**/*",
+        "development/**/*",
+        "types/*.d.ts",
+        "vite.config.ts"
+    ],
+    "exclude": [
+        "node_modules",
+            "dist"
+        ],
+    "compilerOptions": {
+        "ignoreDeprecations": "5.0",
+        "baseUrl": "./",
+        "types": [
+            "vite/client",
+            "element-plus/global",
+            "unplugin-icons/types/vue",
+            "node"
+        ],
+        "paths": {
+            "@/*": ["src/*"],
+            "@dev/*": ["development/*"]
+        }
+    },
+    "references": [
+        {
+            "path": "./tsconfig.vite-config.json"
+        }
+    ]
+}
