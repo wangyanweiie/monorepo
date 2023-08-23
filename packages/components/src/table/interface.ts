@@ -28,7 +28,7 @@ export interface Pagination {
     /** 每页数量 */
     pageSize: number;
     /** 当前页 */
-    page: number;
+    currentPage: number;
     /** 总数据量 */
     total: number;
 }
@@ -53,6 +53,8 @@ export interface XTableProp {
     elTableProps?: Partial<TableProps<DataType>>;
     /** el pagination props */
     elPaginationProps?: Partial<PaginationProps> | boolean;
+    /** 是否为分页格式 */
+    dividePage?: boolean;
     /** 是否懒加载 */
     lazy?: boolean;
     /** 序号是否连续 */

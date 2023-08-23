@@ -24,7 +24,7 @@ export default function useIndex(props: XTableV2Prop) {
      */
     const pagination = ref<Pagination>({
         pageSize: 10,
-        page: 1,
+        currentPage: 1,
         total: 0,
     });
 
@@ -51,7 +51,7 @@ export default function useIndex(props: XTableV2Prop) {
             const params = {
                 ...props.apiParams,
                 ...query,
-                [props.apiKeyMap?.queryCurrentPageKey ?? 'page']: pagination.value.page,
+                [props.apiKeyMap?.queryCurrentPageKey ?? 'page']: pagination.value.currentPage,
                 [props.apiKeyMap?.queryPageSizeKey ?? 'limit']: pagination.value.pageSize,
             };
 
@@ -61,9 +61,10 @@ export default function useIndex(props: XTableV2Prop) {
                 return;
             }
 
-            pagination.value.page = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
-            pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
             tableData.value = res.data[props.apiKeyMap?.returnRecordKey ?? 'records'] ?? [];
+            pagination.value.currentPage = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
+            pagination.value.pageSize = res.data[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
+            pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
         } else if (props.api && !props.dividePage) {
             // 2.动态赋值，非分页接口，不渲染分页
             pagination.value.pageSize = -1;
@@ -80,19 +81,15 @@ export default function useIndex(props: XTableV2Prop) {
             }
 
             tableData.value = res.data ?? [];
-        } else if (!props.api && props.dividePage && props.data?.length) {
+        } else if (!props.api && props.dividePage && Array.isArray(props.data)) {
             // 3.静态赋值，假分页
-            pagination.value.page = 1;
+            pagination.value.currentPage = 1;
             pagination.value.total = props.data.length;
             tableData.value = props.data.slice(0, pagination.value.pageSize);
-        } else if (!props.api && !props.dividePage && props.data?.length) {
+        } else if (!props.api && !props.dividePage && Array.isArray(props.data)) {
             // 4.静态赋值，不渲染分页
             pagination.value.pageSize = -1;
             tableData.value = props.data;
-        } else {
-            // 5.置空，不渲染分页
-            pagination.value.pageSize = -1;
-            tableData.value = [];
         }
     }
 
@@ -100,9 +97,9 @@ export default function useIndex(props: XTableV2Prop) {
      * 假分页
      */
     function handleFalsePage() {
-        const skipNum = (pagination.value.page - 1) * pagination.value.pageSize;
+        const skipNum = (pagination.value.currentPage - 1) * pagination.value.pageSize;
         tableData.value =
-            skipNum + pagination.value.page >= props.data!.length
+            skipNum + pagination.value.currentPage >= props.data!.length
                 ? props.data!.slice(skipNum, props.data!.length)
                 : props.data!.slice(skipNum, skipNum + pagination.value.pageSize);
     }

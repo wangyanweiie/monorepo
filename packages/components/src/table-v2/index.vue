@@ -56,7 +56,7 @@
                         <div v-if="tableData.length" class="table__bottom">
                             <div v-if="pagination.pageSize !== -1" class="pagination">
                                 <el-pagination
-                                    v-model:current-page="pagination.page"
+                                    v-model:current-page="pagination.currentPage"
                                     v-model:page-size="pagination.pageSize"
                                     :page-sizes="[10, 20, 50, 100]"
                                     :total="pagination.total"
@@ -81,6 +81,13 @@ import type { Column } from 'element-plus';
 import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
 import type { APIKeyMap, DataType } from './interface';
+
+/**
+ * 定义组件选项
+ */
+defineOptions({
+    name: 'XTable',
+});
 
 /**
  * props
@@ -120,7 +127,7 @@ const props = withDefaults(
         /** 表格列配置 */
         columns: Column<any>[];
         /** 表格数据 */
-        data?: DataType;
+        data?: Record<string, any>[];
         /** 是否为分页格式 */
         dividePage?: boolean;
         /** 分页设置 */

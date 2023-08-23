@@ -28,7 +28,7 @@ export interface Pagination {
     /** 每页数量 */
     pageSize: number;
     /** 当前页 */
-    page: number;
+    currentPage: number;
     /** 总数据量 */
     total: number;
 }

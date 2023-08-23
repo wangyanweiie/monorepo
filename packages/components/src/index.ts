@@ -3,7 +3,9 @@ import XLogo from './layout/x-logo.vue';
 import XUser from './layout/x-user.vue';
 import ParentView from './layout/parent-view.vue';
 import ParentMenuView from './layout/parent-menu-view.vue';
-import XTable from './table/x-table.vue';
+
+import XTable from './table/index.vue';
+import XTableV2 from './table-v2/index.vue';
 import XSearchForm from './form/x-search-form.vue';
 import XDialogForm from './form/x-dialog-form.vue';
 import XForm from './form/x-form.vue';
@@ -20,6 +22,7 @@ export {
     XLogo,
     XUser,
     XTable,
+    XTableV2,
     XSearchForm,
     XDialogForm,
     XForm,
