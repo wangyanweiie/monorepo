@@ -13,7 +13,6 @@ import { generateActiveRoutes, generateCacheList, generateShowMenus } from './ut
 
 export * from './form/interface';
 export * from './table/interface';
-export * from './layout/x-layout';
 
 export {
     XLayout,

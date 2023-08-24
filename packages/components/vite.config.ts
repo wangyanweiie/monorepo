@@ -2,13 +2,14 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import dts from 'vite-plugin-dts';
+import Inspect from 'vite-plugin-inspect';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
-import Inspect from 'vite-plugin-inspect';
 import ElementPlus from 'unplugin-element-plus/vite';
+import DefineOptions from 'unplugin-vue-define-options/vite';
 
 const pathSrc = path.resolve(__dirname, 'src');
 const pathDev = path.resolve(__dirname, 'development');
@@ -74,5 +75,7 @@ export default defineConfig({
         ElementPlus({}),
 
         dts(),
+
+        DefineOptions(),
     ],
 });

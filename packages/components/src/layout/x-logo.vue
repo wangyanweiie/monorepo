@@ -1,26 +1,36 @@
 <template>
     <div class="x-logo">
-        <img width="40" height="40" :src="logo" alt="" />
+        <img width="40" height="40" :src="logo" :alt="alt" />
         <div class="x-logo-title" :class="logoTitleClass">{{ title }}</div>
     </div>
 </template>
 
 <script setup lang="ts">
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
-        title?: string;
+        /** logo url */
         logo?: string;
+        /** logo alt */
         alt?: string;
+        /** 系统名称 */
+        title?: string;
+        /** 是否折叠系统名称 */
         collapsed?: boolean;
     }>(),
     {
-        title: '',
         logo: '',
         alt: '',
+        title: '',
         collapsed: false,
-    }
+    },
 );
 
+/**
+ * 系统名称是否展示
+ */
 const logoTitleClass = computed<string>(() => (props.collapsed ? 'x-logo-title--collapsed' : ''));
 </script>
 

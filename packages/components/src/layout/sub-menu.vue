@@ -1,11 +1,15 @@
 <template>
     <component :is="menuComponent" :index="menu?.path">
         <template #title>
+            <!-- icon -->
             <el-icon v-if="menu?.meta?.icon">
                 <component :is="Icons[menu.meta.icon as IconTypes]"></component>
             </el-icon>
+
+            <!-- menu -->
             <span>{{ menu?.meta?.title }}</span>
 
+            <!-- tag：小铃铛 -->
             <el-tag
                 v-if="showMenuInfo(menu?.meta?.title as string)"
                 class="tag"
@@ -33,31 +37,24 @@ import type { Component } from 'vue';
 import type { RouteRecordRaw } from 'vue-router';
 import type { IconTypes } from '../utils/router-helper';
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
         menu?: RouteRecordRaw;
-        /**
-         * menu info
-         */
+        /** menu info */
         menuInfo?: Map<string, number>;
     }>(),
     {
         menu: undefined,
         menuInfo: undefined,
-    }
+    },
 );
 
 /**
- * 是否展示标题信息
+ * 通过判断有无 children 渲染组件
  */
-function showMenuInfo(title?: string): boolean {
-    if (!title) {
-        return false;
-    }
-
-    return !!props.menuInfo && !!props.menuInfo.get(title);
-}
-
 const menuComponent = computed<Component | undefined>(() => {
     if (!props.menu) {
         return undefined;
@@ -69,6 +66,17 @@ const menuComponent = computed<Component | undefined>(() => {
         return markRaw(ElMenuItem);
     }
 });
+
+/**
+ * 是否展示标题信息
+ */
+function showMenuInfo(title?: string): boolean {
+    if (!title) {
+        return false;
+    }
+
+    return !!props.menuInfo && !!props.menuInfo.get(title);
+}
 </script>
 
 <style lang="scss" scoped>

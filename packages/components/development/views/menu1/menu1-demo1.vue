@@ -15,7 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import XTable from '@/table/x-table.vue';
+import XTable from '@/table/index.vue';
 
 const selectList = ref([
     {

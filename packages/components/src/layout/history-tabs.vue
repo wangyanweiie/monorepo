@@ -1,24 +1,24 @@
 <template>
     <div class="history-tabs">
+        <!-- pre icon -->
         <span class="icon-button" @click="handlePre">
-            <span class="tab-icon">
+            <span>
                 <d-arrow-left></d-arrow-left>
             </span>
         </span>
 
-        <el-scrollbar ref="scrollbarRef" class="tab-scroll">
+        <el-scrollbar ref="scrollbarRef" class="scroll">
             <div ref="tabWrapRef" class="tab-wrap">
                 <div
                     v-for="(tab, index) in tabs"
                     :key="index"
-                    class="tab"
-                    :class="tabClass(index)"
+                    :class="['tab', activeTabClass(index)]"
                     @click="handleTabClick(index, tab)"
                 >
-                    <div class="tab-title">{{ tab.title }}</div>
+                    <div class="tab_title">{{ tab.title }}</div>
 
-                    <span v-if="showClose(index)" class="close" @click.stop="handleTabClose(index)">
-                        <span class="tab-icon--small">
+                    <span v-if="showClose(index)" class="tab_icon-wrap" @click.stop="handleTabClose(index)">
+                        <span class="tab_icon">
                             <close></close>
                         </span>
                     </span>
@@ -26,19 +26,23 @@
             </div>
         </el-scrollbar>
 
+        <!-- after icon -->
         <span class="icon-button" @click="handleAfter">
-            <span class="tab-icon">
+            <span>
                 <d-arrow-right></d-arrow-right>
             </span>
         </span>
 
+        <!-- refresh icon -->
         <span class="icon-button" @click="handleRefresh">
-            <span class="tab-icon">
+            <span>
                 <refresh-right></refresh-right>
             </span>
         </span>
+
+        <!-- setting icon -->
         <span class="icon-button">
-            <span class="tab-icon">
+            <span>
                 <setting></setting>
             </span>
         </span>
@@ -46,9 +50,10 @@
 </template>
 
 <script setup lang="ts">
-import { DArrowLeft, DArrowRight, RefreshRight, Close, Setting } from '@element-plus/icons-vue';
+import { DArrowLeft, Close, DArrowRight, RefreshRight, Setting } from '@element-plus/icons-vue';
 import { useRouter, type RouteRecordName } from 'vue-router';
 import { ElScrollbar } from 'element-plus';
+
 interface Tab {
     path: string;
     name: RouteRecordName;
@@ -56,7 +61,11 @@ interface Tab {
 }
 
 const router = useRouter();
+const proxy = getCurrentInstance()?.proxy;
 
+const tabWrapRef = ref<InstanceType<typeof HTMLElement>>();
+const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
+const currentIndex = ref<number>(0);
 const tabs = ref<Tab[]>([
     {
         path: router.currentRoute.value.path as string,
@@ -65,18 +74,13 @@ const tabs = ref<Tab[]>([
     },
 ]);
 
-const currentIndex = ref<number>(0);
-
-const scrollbarRef = ref<InstanceType<typeof ElScrollbar>>();
-
-const tabWrapRef = ref<InstanceType<typeof HTMLElement>>();
-
 /**
  * 更新滚动条
  */
 async function updateScroll(): Promise<void> {
-    // nextTick: 在history-tab节点生成，且close显示状态切换后，再获取子节点offsetLeft
+    // nextTick: 在 history-tab 节点生成，且 close 显示状态切换后，再获取子节点 offsetLeft
     await nextTick();
+
     const el = tabWrapRef.value?.children[currentIndex.value] as HTMLElement;
 
     if (el) {
@@ -85,20 +89,19 @@ async function updateScroll(): Promise<void> {
 }
 
 /**
- * 路由跳转结束后存储tab
+ * 路由跳转结束后存储 tab
  */
-router.afterEach((to) => {
-    const nextIndex = tabs.value.findIndex((tab) => tab.name === to.name);
+router.afterEach(to => {
+    const nextIndex = tabs.value.findIndex(tab => tab.name === to.name);
 
     // 存在
     if (nextIndex >= 0) {
         currentIndex.value = nextIndex;
         updateScroll();
-
         return true;
     }
 
-    // name 不存在
+    // 若 name 不存在
     if (!to.name) {
         return new Error(`router.name is undefined, ${to.fullPath}`);
     }
@@ -112,7 +115,6 @@ router.afterEach((to) => {
 
     currentIndex.value = tabs.value.length - 1;
     updateScroll();
-
     return true;
 });
 
@@ -121,7 +123,6 @@ router.afterEach((to) => {
  */
 function handleTabClick(index: number, tab: Tab): void {
     currentIndex.value = index;
-
     router.push(tab);
     updateScroll();
 }
@@ -134,6 +135,13 @@ function isActive(index: number): boolean {
 }
 
 /**
+ * 激活 tab class
+ */
+function activeTabClass(index: number): string {
+    return isActive(index) ? 'tab-active' : '';
+}
+
+/**
  * 是否显示关闭按钮
  */
 function showClose(index: number): boolean {
@@ -141,25 +149,17 @@ function showClose(index: number): boolean {
 }
 
 /**
- * 激活 tab class
- */
-function tabClass(index: number): string {
-    return isActive(index) ? 'tab--active' : '';
-}
-
-/**
  * 关闭 tab
  */
 function handleTabClose(index: number) {
     tabs.value.splice(index, 1);
+
     if (index - 1 < 0) {
         handleTabClick(index, tabs.value[index]);
     } else {
         handleTabClick(index - 1, tabs.value[index - 1]);
     }
 }
-
-const proxy = getCurrentInstance()?.proxy;
 
 /**
  * 刷新
@@ -172,12 +172,18 @@ function handleRefresh(): void {
     });
 }
 
+/**
+ * 向前
+ */
 function handlePre() {
     if (currentIndex.value !== 0) {
         handleTabClick(currentIndex.value - 1, tabs.value[currentIndex.value - 1]);
     }
 }
 
+/**
+ * 向后
+ */
 function handleAfter() {
     if (currentIndex.value < tabs.value.length - 1) {
         handleTabClick(currentIndex.value + 1, tabs.value[currentIndex.value + 1]);
@@ -201,21 +207,15 @@ function handleAfter() {
     align-items: center;
     flex-shrink: 0;
     cursor: pointer;
+
+    span {
+        display: block;
+        width: 18px;
+        height: 18px;
+    }
 }
 
-.tab-icon {
-    display: block;
-    width: 18px;
-    height: 18px;
-}
-
-.tab-icon--small {
-    display: block;
-    width: 14px;
-    height: 14px;
-}
-
-.tab-scroll {
+.scroll {
     width: 100%;
 }
 
@@ -238,15 +238,37 @@ function handleAfter() {
     background-color: transparent;
     border: 1px solid var(--el-border-color);
     cursor: default;
+
+    &:hover {
+        color: var(--el-color-primary);
+        background-color: var(--el-color-primary-light-9);
+        border-color: var(--el-color-primary-light-7);
+    }
+
+    &_icon-wrap {
+        margin-left: 4px;
+        display: flex;
+        height: 14px;
+        width: 14px;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--el-color-primary-light-3);
+            background-color: var(--el-color-white);
+        }
+    }
+
+    &_icon {
+        display: block;
+        width: 14px;
+        height: 14px;
+    }
 }
 
-.tab:hover {
-    color: var(--el-color-primary);
-    background-color: var(--el-color-primary-light-9);
-    border-color: var(--el-color-primary-light-7);
-}
-
-.tab--active {
+.tab-active {
     color: var(--el-color-white);
     background-color: var(--el-color-primary);
     border-color: var(--el-color-primary-dark-2);
@@ -254,22 +276,6 @@ function handleAfter() {
     &:hover {
         color: var(--el-color-white);
         background-color: var(--el-color-primary-light-3);
-    }
-}
-
-.close {
-    margin-left: 4px;
-    display: flex;
-    height: 14px;
-    width: 14px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    cursor: pointer;
-
-    &:hover {
-        color: var(--el-color-primary-light-3);
-        background-color: var(--el-color-white);
     }
 }
 </style>

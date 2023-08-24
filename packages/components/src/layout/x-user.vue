@@ -1,12 +1,9 @@
 <template>
     <el-dropdown>
         <div class="user-name">{{ userName }}</div>
+
         <template #dropdown>
-            <el-dropdown-item
-                v-for="(item, index) in dropdownItems"
-                :key="index"
-                @click="item.onClick"
-            >
+            <el-dropdown-item v-for="(item, index) in dropdownItems" :key="index" @click="item.onClick">
                 {{ item.title }}
             </el-dropdown-item>
         </template>
@@ -21,10 +18,9 @@ interface DropdownItem {
 
 withDefaults(
     defineProps<{
+        /** 用户名称 */
         userName?: string;
-        /**
-         * dropdown 配置
-         */
+        /** dropdown 配置 */
         dropdownItems?: DropdownItem[];
     }>(),
     {
@@ -34,7 +30,7 @@ withDefaults(
                 title: '注销',
             },
         ],
-    }
+    },
 );
 </script>
 

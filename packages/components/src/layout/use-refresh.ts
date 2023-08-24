@@ -2,9 +2,7 @@ import { computed, getCurrentInstance, nextTick, ref, watchEffect } from 'vue';
 import { useRoute } from 'vue-router';
 
 interface UseRefreshOption {
-    /**
-     * route matched array index
-     */
+    /** route matched array index */
     matchedIndex: number;
 }
 
@@ -12,23 +10,25 @@ interface UseRefreshOption {
  * refresh
  */
 export function useRefresh(option: UseRefreshOption) {
+    const route = useRoute();
+    const proxy = getCurrentInstance()?.proxy;
+
+    /**
+     * key
+     */
     const componentKey = ref<string>();
 
+    /**
+     * 不包含的列表
+     */
     const excludeSets = ref<Set<string>>(new Set());
-
     const excludeList = computed<string[]>(() => {
         return Array.from<string>(excludeSets.value);
     });
 
-    const route = useRoute();
-
-    watchEffect(() => {
-        componentKey.value = route.matched.at(option.matchedIndex)?.path;
-    });
-
-    const proxy = getCurrentInstance()?.proxy;
-
-    // refresh
+    /**
+     * refresh 事件回调
+     */
     proxy?.$bus.on('refresh', ({ path, name }: { path: string; name: string }) => {
         if (componentKey.value !== path) {
             return;
@@ -41,6 +41,13 @@ export function useRefresh(option: UseRefreshOption) {
             excludeSets.value.delete(name);
             componentKey.value = route.matched.at(option.matchedIndex)?.path;
         });
+    });
+
+    /**
+     * 监听
+     */
+    watchEffect(() => {
+        componentKey.value = route.matched.at(option.matchedIndex)?.path;
     });
 
     return {

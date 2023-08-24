@@ -1,15 +1,11 @@
 <template>
     <div>
-        <el-menu
-            class="x-layout-menu--horizontal"
-            mode="horizontal"
-            router
-            :default-active="activeRoute"
-        >
+        <el-menu mode="horizontal" router :default-active="activeRoute" class="x-layout-menu--horizontal">
             <el-menu-item v-for="(menu, index) in menus" :key="index" :index="menu.path">
                 {{ menu.meta?.title }}
             </el-menu-item>
         </el-menu>
+
         <router-view v-slot="{ Component }">
             <transition name="el-fade-in-linear" mode="out-in">
                 <!-- <keep-alive :exclude="excludeList" :include="cacheList"> -->
@@ -24,20 +20,32 @@
 import { type RouteRecordRaw, useRoute } from 'vue-router';
 import { useRefresh } from './use-refresh';
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
+        /** menu 列表 */
         menus: RouteRecordRaw[];
-        matchedIndex?: number;
+        /** 缓存列表 */
         cacheList?: string[];
+        matchedIndex?: number;
     }>(),
     {
         menus: () => [],
-        matchedIndex: -1,
         cacheList: undefined,
-    }
+        matchedIndex: -1,
+    },
 );
 
 const route = useRoute();
+
+/**
+ * useRefresh
+ */
+const { componentKey, excludeList } = useRefresh({
+    matchedIndex: props.matchedIndex,
+});
 
 /**
  * 当前激活路由
@@ -45,7 +53,7 @@ const route = useRoute();
 const activeRoute = computed<string>(() => {
     let path = route.fullPath;
 
-    // 查找 matched中第一个无子路由的路由
+    // 查找 matched 中第一个无子路由的路由
     for (let i = route.matched.length - 1; i > 0; i -= 1) {
         if (!route.matched[i].children || route.matched[i].children.length === 0) {
             path = route.matched[i].path;
@@ -56,10 +64,6 @@ const activeRoute = computed<string>(() => {
 
     return path;
 });
-
-const { componentKey, excludeList } = useRefresh({
-    matchedIndex: props.matchedIndex,
-});
 </script>
 
 <style lang="scss" scoped>
@@ -67,6 +71,7 @@ const { componentKey, excludeList } = useRefresh({
     margin-bottom: 15px;
 }
 
+/** transition */
 .scale-enter-active,
 .scale-leave-active {
     transition: all 0.5s ease;

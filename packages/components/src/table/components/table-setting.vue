@@ -9,19 +9,22 @@
         </el-tooltip>
 
         <el-tooltip class="box-item" effect="dark" content="列设置" placement="top">
-            <div style="display: inline-block">
+            <div :style="{ display: 'inline-block' }">
                 <el-popover placement="bottom" trigger="click">
                     <template #reference>
                         <el-icon class="icon icon-setting" size="20">
                             <setting />
                         </el-icon>
                     </template>
+
                     <div class="setting__header">
                         <el-checkbox v-model="checkAll" :indeterminate="isIndeterminate" @change="handleCheckAllChange">
                             全选
                         </el-checkbox>
                     </div>
-                    <el-divider style="margin: 5px 0" />
+
+                    <el-divider :style="{ margin: '5px 0' }" />
+
                     <draggable
                         :list="columnList"
                         :group="{ name: 'people', pull: true }"

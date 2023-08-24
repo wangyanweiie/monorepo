@@ -14,10 +14,11 @@
         "ignoreDeprecations": "5.0",
         "baseUrl": "./",
         "types": [
+            "node",
             "vite/client",
             "element-plus/global",
             "unplugin-icons/types/vue",
-            "node"
+            "unplugin-vue-define-options/macros-global"
         ],
         "paths": {
             "@/*": ["src/*"],

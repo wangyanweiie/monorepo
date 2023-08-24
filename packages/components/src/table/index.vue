@@ -156,8 +156,6 @@ const props = withDefaults(
         apiParams?: Record<string, string | number>;
         /** 接口字段映射 */
         apiKeyMap?: APIKeyMap;
-        /** 对查询后的数据进行预处理 */
-        afterQuery?: ((data: any[]) => Promise<any>) | ((data: any[]) => void);
         /** 操作栏 */
         actions?: (row: any, index: number) => ActionButton[];
         /** 导出配置 */

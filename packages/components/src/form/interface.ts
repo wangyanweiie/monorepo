@@ -33,6 +33,7 @@ interface XSelectProp extends ExtractPropTypes<typeof ElSelectV2> {
 type CheckboxType = 'box' | 'button';
 
 type RadioType = 'cycle' | 'button';
+
 /**
  * x form item 基础类型
  */

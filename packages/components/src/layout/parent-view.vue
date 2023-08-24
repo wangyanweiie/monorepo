@@ -13,17 +13,24 @@
 <script setup lang="ts">
 import { useRefresh } from './use-refresh';
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
+        /** 缓存列表 */
         cacheList?: string[];
         matchedIndex?: number;
     }>(),
     {
         cacheList: undefined,
         matchedIndex: -1,
-    }
+    },
 );
 
+/**
+ * useRefresh
+ */
 const { componentKey, excludeList } = useRefresh({
     matchedIndex: props.matchedIndex,
 });
@@ -34,6 +41,7 @@ const { componentKey, excludeList } = useRefresh({
     height: 100%;
 }
 
+/** transition */
 .scale-enter-active,
 .scale-leave-active {
     transition: all 0.5s ease;

@@ -11,7 +11,7 @@ enum MenuType {
 }
 
 /**
- * 处理路由转换为el-menu-item数组
+ * 处理路由转换为 el-menu-item 数组
  * @param { RouteRecordRaw[] } routes 路由数组
  * @param { string[] | undefined } permissions 权限数组
  * @returns 处理后数组
@@ -31,7 +31,7 @@ function routesToMenuItemList(routes: RouteRecordRaw[], permissions?: string[]):
             continue;
         }
 
-        // 区分menu类型
+        // 区分 menu 类型
         if (currentRoute.children && currentRoute.children.length > 0) {
             currentRoute.meta.type = MenuType.submenu;
 

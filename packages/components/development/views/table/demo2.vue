@@ -75,7 +75,7 @@
 
 <script setup lang="ts">
 import type { XTableColumn } from '@/table/interface';
-import xTable from '../../../src/table/x-table.vue';
+import XTable from '../../../src/table/index.vue';
 // 虚拟表格表头
 const columns: XTableColumn[] = [];
 

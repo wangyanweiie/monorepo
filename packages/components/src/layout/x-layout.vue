@@ -1,7 +1,11 @@
 <template>
     <el-container class="x-layout">
+        <!-- 侧边栏容器 -->
         <el-aside width="250px" class="x-aside" :class="collapsedClass">
+            <!-- logo -->
             <slot name="logo" :collapsed="collapsed"> </slot>
+
+            <!-- menu -->
             <div class="x-layout__menu">
                 <el-scrollbar>
                     <el-menu
@@ -12,36 +16,39 @@
                         :collapse="collapsed"
                         v-bind="menuStyle"
                     >
-                        <sub-menu
-                            v-for="menu in routes"
-                            :key="menu.path"
-                            :menu="menu"
-                            :menu-info="menuInfo"
-                        ></sub-menu>
+                        <sub-menu v-for="menu in routes" :key="menu.path" :menu="menu" :menu-info="menuInfo"></sub-menu>
                     </el-menu>
                 </el-scrollbar>
             </div>
         </el-aside>
 
+        <!-- 外层容器 -->
         <el-container>
+            <!-- 顶栏容器 -->
             <el-header class="x-header">
+                <!-- 展开/折叠 -->
                 <div class="x-collapse" @click="toggleMenu">
                     <span class="x-collapse-icon">
                         <expand v-if="collapsed"></expand>
                         <fold v-else></fold>
                     </span>
                 </div>
+
+                <!-- 路由层级面包屑 -->
                 <x-breadcrumb></x-breadcrumb>
+
                 <h3 v-if="isBoxVisible" class="header-center">{{ title }}</h3>
 
-                <div class="right">
+                <div class="header-right">
                     <slot name="header-right"></slot>
                 </div>
             </el-header>
 
+            <!-- 历史页面面包屑 -->
             <history-tabs></history-tabs>
 
             <el-scrollbar>
+                <!-- 主要区域容器 -->
                 <el-main class="x-layout-main">
                     <router-view v-slot="{ Component }">
                         <transition name="fade-slide" mode="out-in">
@@ -72,60 +79,50 @@ interface MenuStyle {
 
 withDefaults(
     defineProps<{
-        /**
-         * 路由数组
-         * @description vue-router routes
-         */
+        /** 路由数组 */
         routes?: RouteRecordRaw[];
-        /**
-         * menu style
-         */
-        menuStyle?: MenuStyle;
-        /**
-         * include
-         */
+        /** include */
         includeList?: string[];
-        /**
-         * 最大缓存数量
-         */
+        /** 最大缓存数量 */
         max?: number;
-
-        /**
-         * 标题
-         */
+        /** 标题 */
         title?: string;
-        /**
-         * menu info
-         */
+        /** menu 样式 */
+        menuStyle?: MenuStyle;
+        /** menu info */
         menuInfo?: Map<string, number>;
     }>(),
     {
         routes: () => [],
+        includeList: undefined,
+        max: undefined,
+        title: '',
         menuStyle: () => ({
             backgroundColor: '#304156',
             textColor: '#b8babf',
             activeTextColor: '#409eff',
         }),
-        includeList: undefined,
-        max: undefined,
-        title: '',
         menuInfo: undefined,
-    }
+    },
 );
 
 const route = useRoute();
 
 /**
- * 当前激活路由
+ * useRefresh
+ */
+const { componentKey, excludeList } = useRefresh({ matchedIndex: 1 });
+
+/**
+ * 当前激活的路由
  */
 const activeRoute = computed<string>(() => {
     let path = route.fullPath;
 
-    // 查找 matched中第一个不隐藏的路由
+    // 查找 matched 中第一个不隐藏的路由
     for (let i = route.matched.length - 1; i > 0; i -= 1) {
         if (!route.matched[i].meta.hidden) {
             path = route.matched[i].path;
-
             break;
         }
     }
@@ -144,29 +141,36 @@ const collapsed = ref<boolean>(false);
 const collapsedClass = computed<string>(() => (collapsed.value ? 'x-aside--collapsed' : ''));
 
 /**
- * 开关菜单
+ * title 是否展示
+ */
+const isBoxVisible = ref<boolean>(true);
+
+/**
+ * 手动开关菜单
  */
 function toggleMenu(): void {
     collapsed.value = !collapsed.value;
 }
 
-const { componentKey, excludeList } = useRefresh({ matchedIndex: 1 });
+/**
+ * 根据窗口宽度自动开关菜单
+ */
+function handleResize() {
+    if (window.innerWidth < 1300) {
+        collapsed.value = true;
+        isBoxVisible.value = false;
+    } else {
+        collapsed.value = false;
+        isBoxVisible.value = true;
+    }
+}
 
-const isBoxVisible = ref<boolean>(true);
-
+/**
+ * 页面渲染
+ */
 onMounted(() => {
     window.addEventListener('resize', handleResize);
 });
-
-function handleResize() {
-    if (window.innerWidth < 1300) {
-        isBoxVisible.value = false;
-        collapsed.value = true;
-    } else {
-        isBoxVisible.value = true;
-        collapsed.value = false;
-    }
-}
 </script>
 
 <style lang="scss">
@@ -235,7 +239,12 @@ body,
     height: 18px;
 }
 
-.right {
+.header-center {
+    flex: 1;
+    text-align: center;
+}
+
+.header-right {
     flex: 1;
     text-align: right;
 }
@@ -260,15 +269,4 @@ body,
     opacity: 0;
     transform: translateX(30px);
 }
-
-.header-center {
-    flex: 1;
-    text-align: center;
-}
-
-// @media (max-width: 300px) {
-//     .header-center {
-//         display: none;
-//     }
-// }
 </style>
