@@ -15,7 +15,7 @@ export default function useIndex(props: XTableProp) {
     /**
      * 操作栏最小宽度
      */
-    const ACTION_COLUMN_MIN_WIDTH = 80;
+    const ACTION_COLUMN_MIN_WIDTH = 150;
 
     /**
      * table ref

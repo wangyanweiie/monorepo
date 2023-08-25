@@ -20,19 +20,9 @@ import type {
 import type { Arrayable } from 'element-plus/es/utils';
 import type { ExtractPropTypes } from 'vue';
 
-interface XSelectMultiProp extends ExtractPropTypes<typeof ElSelect> {
-    // label字段表示
-    labelSchema?: string;
-}
-
-interface XSelectProp extends ExtractPropTypes<typeof ElSelectV2> {
-    // label字段表示
-    labelSchema?: string;
-}
-
 type CheckboxType = 'box' | 'button';
-
 type RadioType = 'cycle' | 'button';
+type RadioValueType = string | number | boolean | undefined;
 
 /**
  * x form item 基础类型
@@ -62,24 +52,44 @@ interface XFormItemInputNumberSchema<T> extends BaseXFormSchema<T> {
 }
 
 /**
- * x form item select
+ * x form item switch
  */
-interface XFormItemSelectSchema<T> extends BaseXFormSchema<T> {
-    components: 'el-select-v2';
-    elProps?: XSelectProp | ((form: any) => XSelectProp);
-    // TODO: 类型推导
-    api?: (data?: any) => Promise<any>;
+interface XFormItemSwitchSchema<T> extends BaseXFormSchema<T> {
+    components: 'el-switch';
+    elProps?: Partial<SwitchProps> | ((form: any) => Partial<SwitchProps>);
+}
+
+/**
+ * x form item checkbox
+ */
+interface XFormItemCheckBoxSchema<T> extends BaseXFormSchema<T> {
+    components: 'el-checkbox';
+    elProps?: Partial<XCheckBoxProps> | ((form: any) => Partial<XCheckBoxProps>);
+}
+
+/**
+ * button
+ */
+interface XFormItemButtonSchema<T> extends BaseXFormSchema<T> {
+    components: 'el-button';
+    elProps?: Partial<ButtonProps> | ((form: any) => Partial<ButtonProps>);
+}
+
+/**
+ * x form item divider
+ */
+interface XFormItemDividerSchema<T> extends BaseXFormSchema<T> {
+    components: 'el-divider';
+    elProps?: Partial<DividerProps> | ((form: any) => Partial<DividerProps>);
 }
 
 /**
  * x form item select
  */
-interface XFormItemSelectMultiSchema<T> extends BaseXFormSchema<T> {
-    components: 'x-select';
-    elProps?: XSelectMultiProp | ((form: any) => XSelectMultiProp);
-    // TODO: 类型推导
+interface XFormItemSelectSchema<T> extends BaseXFormSchema<T> {
+    components: 'el-select-v2';
+    elProps?: XSelectProp | ((form: any) => XSelectProp);
     api?: (data?: any) => Promise<any>;
-    isAllChoose?: boolean;
 }
 
 /**
@@ -88,7 +98,6 @@ interface XFormItemSelectMultiSchema<T> extends BaseXFormSchema<T> {
 interface XFormItemCascaderSchema<T> extends BaseXFormSchema<T> {
     components: 'el-cascader';
     elProps?: any | ((form: any) => any);
-    // TODO: 类型推导
     api?: (data?: any) => Promise<any>;
 }
 
@@ -101,30 +110,6 @@ interface XFormItemDatePickerSchema<T> extends BaseXFormSchema<T> {
 }
 
 /**
- * x form item custom
- */
-interface XFormItemCustomSchema<T> extends BaseXFormSchema<T> {
-    components: 'custom';
-    slotName: string;
-}
-
-/**
- * x form item switch
- */
-interface XFormItemSwitchSchema<T> extends BaseXFormSchema<T> {
-    components: 'el-switch';
-    elProps?: Partial<SwitchProps> | ((form: any) => Partial<SwitchProps>);
-}
-
-/**
- * button
- */
-interface XFormItemButtonSchema<T> extends BaseXFormSchema<T> {
-    components: 'el-button';
-    elProps?: Partial<ButtonProps> | ((form: any) => Partial<ButtonProps>);
-}
-
-/**
  * x form item el-radio
  */
 interface XFormItemRadioSchema<T> extends BaseXFormSchema<T> {
@@ -133,79 +118,37 @@ interface XFormItemRadioSchema<T> extends BaseXFormSchema<T> {
 }
 
 /**
- * x form item divider
+ * x form item select
  */
-interface XFormItemDividerSchema<T> extends BaseXFormSchema<T> {
-    components: 'el-divider';
-    elProps?: Partial<DividerProps> | ((form: any) => Partial<DividerProps>);
+interface XFormItemSelectMultiSchema<T> extends BaseXFormSchema<T> {
+    components: 'x-select';
+    elProps?: XSelectMultiProp | ((form: any) => XSelectMultiProp);
+    api?: (data?: any) => Promise<any>;
+    isAllChoose?: boolean;
 }
 
 /**
- * x form item checkbox
+ * x form item custom
  */
-interface XFormItemCheckBoxSchema<T> extends BaseXFormSchema<T> {
-    components: 'el-checkbox';
-    elProps?: Partial<XCheckBoxProps> | ((form: any) => Partial<XCheckBoxProps>);
+interface XFormItemCustomSchema<T> extends BaseXFormSchema<T> {
+    components: 'custom';
+    slotName: string;
 }
 
 type ComponentTypes =
     | 'el-input'
     | 'el-input-number'
-    | 'el-select-v2'
     | 'el-checkbox'
     | 'el-switch'
+    | 'el-button'
+    | 'el-divider'
+    | 'el-select-v2'
     | 'el-cascader'
     | 'el-date-picker'
     | 'x-radio'
     | 'x-checkbox'
-    | 'custom'
-    | 'el-divider'
-    | 'el-button'
-    | 'x-select';
-
-/**
- * select option
- */
-interface SelectOption {
-    label: string;
-    value: string | number | boolean | undefined;
-}
-
-/**
- * radio option
- */
-interface RadioOption extends Partial<RadioProps> {
-    /**
-     * 显示值
-     */
-    labelName?: string;
-}
-
-/**
- * x radio props
- */
-interface XRadioProps {
-    elProps?: Partial<RadioGroupProps>;
-    options?: RadioOption[];
-}
-
-/**
- * radio option
- */
-interface CheckBoxOption extends Partial<CheckboxProps> {
-    /**
-     * 显示值
-     */
-    labelName?: string;
-}
-
-/**
- * x checkbox props
- */
-interface XCheckBoxProps {
-    elProps?: Partial<CheckboxGroupProps>;
-    options?: CheckBoxOption[];
-}
+    | 'x-select'
+    | 'custom';
 
 /**
  * x form item
@@ -223,15 +166,49 @@ type XFormItemSchema<T = any> =
     | XFormItemCustomSchema<T>
     | XFormItemDividerSchema<T>
     | XFormItemSelectMultiSchema<T>;
+
 /**
  * x form ref
  */
-export interface XFormInstance {
+interface XFormInstance {
     validate: (callback?: FormValidateCallback | undefined) => FormValidationResult;
     resetFields: (props?: Arrayable<FormItemProp> | undefined) => void;
 }
 
-export type ElFormProps = Partial<FormProps>;
+type ElFormProps = Partial<FormProps>;
+
+interface SelectOption {
+    label: string;
+    value: string | number | boolean | undefined;
+}
+
+interface RadioOption extends Partial<RadioProps> {
+    labelName?: string;
+}
+
+interface CheckBoxOption extends Partial<CheckboxProps> {
+    labelName?: string;
+}
+
+interface XRadioProps {
+    elProps?: Partial<RadioGroupProps>;
+    options?: RadioOption[];
+}
+
+interface XCheckBoxProps {
+    elProps?: Partial<CheckboxGroupProps>;
+    options?: CheckBoxOption[];
+}
+
+interface XSelectProp extends ExtractPropTypes<typeof ElSelectV2> {
+    // label字段表示
+    labelSchema?: string;
+}
+
+interface XSelectMultiProp extends ExtractPropTypes<typeof ElSelect> {
+    // label字段表示
+    labelSchema?: string;
+}
 
 export type {
     BaseXFormSchema,
@@ -247,12 +224,15 @@ export type {
     XFormItemCheckBoxSchema,
     XFormItemSwitchSchema,
     XFormItemRadioSchema,
+    XFormItemButtonSchema,
+    XFormItemDividerSchema,
+    XFormInstance,
+    ElFormProps,
+    RadioType,
+    RadioValueType,
+    CheckboxType,
     SelectOption,
     RadioOption,
     CheckBoxOption,
-    CheckboxType,
-    RadioType,
-    XFormItemButtonSchema,
-    XFormItemDividerSchema,
     XSelectMultiProp,
 };

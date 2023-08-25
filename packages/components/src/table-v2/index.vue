@@ -80,7 +80,7 @@
 import type { Column } from 'element-plus';
 import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
-import type { APIKeyMap, DataType } from './interface';
+import type { APIKeyMap } from './interface';
 
 /**
  * 定义组件选项
