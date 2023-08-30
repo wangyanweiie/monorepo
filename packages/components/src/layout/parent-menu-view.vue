@@ -68,7 +68,7 @@ const activeRoute = computed<string>(() => {
 
 <style lang="scss" scoped>
 .x-layout-menu--horizontal {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
 }
 
 /** transition */

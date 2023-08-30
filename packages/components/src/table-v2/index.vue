@@ -1,79 +1,75 @@
 <template>
-    <div class="table" :style="{ height: height, width: width }">
+    <div :style="{ height: height, width: width }">
         <el-auto-resizer>
             <template #default="{ height: autoHeight, width: autoWidth }">
-                <el-card :shadow="shadow" :body-style="bodyStyle">
-                    <div class="table__wrap">
-                        <!-- 顶部区域 -->
-                        <div class="table__header">
-                            <div v-if="title" class="table__header__title">
-                                <slot name="title">
-                                    <span>{{ title }}</span>
-                                </slot>
-                            </div>
+                <el-card :shadow="shadow" :body-style="bodyStyle" class="table">
+                    <!-- 顶部区域 -->
+                    <div class="table__header">
+                        <div v-if="title" class="table__header__title">
+                            <slot name="title">
+                                <span>{{ title }}</span>
+                            </slot>
+                        </div>
 
-                            <el-scrollbar>
-                                <div class="table__header__operation">
-                                    <slot name="operation" :checked-rows="selectedRows"> </slot>
-                                    <!-- <table-setting v-model="tableColumns" @reload="loadData(searchData)" /> -->
+                        <el-scrollbar>
+                            <div class="table__header__operation">
+                                <slot name="operation" :checked-rows="selectedRows"> </slot>
+                                <!-- <table-setting v-model="tableColumns" @reload="loadData(searchData)" /> -->
+                            </div>
+                        </el-scrollbar>
+                    </div>
+
+                    <!-- 表格区域 -->
+                    <div class="table__main">
+                        <el-table-v2
+                            ref="tableRef"
+                            fixed
+                            :row-key="rowKey"
+                            :width="autoWidth"
+                            :height="autoHeight"
+                            :row-height="rowHeight"
+                            :header-height="headerHeight"
+                            :columns="tableColumns"
+                            :data="tableData"
+                            :header-class="typeof headerClass === 'function' && headerClass()"
+                            :row-class="typeof rowClass === 'function' && rowClass()"
+                            :onmouseover="handleMouseOver"
+                            :onmouseleave="handleMouseLeave"
+                        >
+                            <!-- loading -->
+                            <template v-if="loading" #overlay>
+                                <div class="el-loading-mask table__main__loading">
+                                    <el-icon class="is-loading" color="var(--el-color-primary)" :size="26">
+                                        <loading-icon />
+                                    </el-icon>
                                 </div>
-                            </el-scrollbar>
-                        </div>
+                            </template>
 
-                        <!-- 表格区域 -->
-                        <div class="table__main">
-                            <el-table-v2
-                                ref="tableRef"
-                                fixed
-                                :row-key="rowKey"
-                                :width="autoWidth"
-                                :height="autoHeight"
-                                :row-height="rowHeight"
-                                :header-height="headerHeight"
-                                :columns="tableColumns"
-                                :data="tableData"
-                                :header-class="typeof headerClass === 'function' && headerClass()"
-                                :row-class="typeof rowClass === 'function' && rowClass()"
-                                :onmouseover="handleMouseOver"
-                                :onmouseleave="handleMouseLeave"
+                            <!-- empty -->
+                            <template v-if="!tableData.length" #empty>
+                                <el-empty :description="emptyText" />
+                            </template>
+                        </el-table-v2>
+                    </div>
+
+                    <!-- 底部区域 -->
+                    <div v-if="tableData.length" class="table__bottom">
+                        <div v-if="pagination.pageSize !== -1" class="table__bottom__pagination">
+                            <el-pagination
+                                v-model:current-page="pagination.currentPage"
+                                v-model:page-size="pagination.pageSize"
+                                :page-sizes="[10, 20, 50, 100]"
+                                :total="pagination.total"
+                                :background="true"
+                                layout=" ->, slot,total, sizes, prev, pager, next, jumper"
+                                @current-change="handleCurrentChange"
+                                @size-change="handleSizeChange"
                             >
-                                <!-- loading -->
-                                <template v-if="loading" #overlay>
-                                    <div class="el-loading-mask loading">
-                                        <el-icon class="is-loading" color="var(--el-color-primary)" :size="26">
-                                            <loading-icon />
-                                        </el-icon>
-                                    </div>
-                                </template>
-
-                                <!-- empty -->
-                                <template v-if="!tableData.length" #empty>
-                                    <div class="flex items-center justify-center h-100%">
-                                        <el-empty :description="emptyText" />
-                                    </div>
-                                </template>
-                            </el-table-v2>
+                                <template #default> 已选中 {{ selectedCount }} 条数据 </template>
+                            </el-pagination>
                         </div>
 
-                        <!-- 底部区域 -->
-                        <div v-if="tableData.length" class="table__bottom">
-                            <div v-if="pagination.pageSize !== -1" class="pagination">
-                                <el-pagination
-                                    v-model:current-page="pagination.currentPage"
-                                    v-model:page-size="pagination.pageSize"
-                                    :page-sizes="[10, 20, 50, 100]"
-                                    :total="pagination.total"
-                                    :background="true"
-                                    layout=" ->, slot,total, sizes, prev, pager, next, jumper"
-                                    @current-change="handleCurrentChange"
-                                    @size-change="handleSizeChange"
-                                >
-                                    <template #default> 已选中 {{ selectedCount }} 条数据 </template>
-                                </el-pagination>
-                            </div>
-
-                            <div v-else class="total">共 {{ tableData.length }} 条</div>
-                        </div>
+                        <div v-else class="table__bottom__total">共 {{ tableData.length }} 条</div>
                     </div>
                 </el-card>
             </template>
@@ -83,8 +79,8 @@
 
 <script lang="ts" setup>
 import type { Column } from 'element-plus';
-import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import type { APIKeyMap } from './interface';
+import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
 // import TableSetting from './components/table-setting.vue';
 
@@ -213,12 +209,6 @@ defineExpose({
 
 <style lang="scss" scoped>
 .table {
-    width: 100%;
-
-    &__wrap {
-        position: relative;
-    }
-
     &__header {
         display: flex;
         justify-content: space-between;
@@ -241,12 +231,20 @@ defineExpose({
         }
     }
 
+    &__main {
+        &__loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    }
+
     &__bottom {
-        .pagination {
+        &__pagination {
             padding-top: 10px;
         }
 
-        .total {
+        &__total {
             padding-top: 10px;
             display: flex;
             justify-content: flex-end;
@@ -258,11 +256,5 @@ defineExpose({
 
 :deep(.example-showcase) :deep(.el-table-v2__overlay) {
     z-index: 9;
-}
-
-.loading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
 }
 </style>

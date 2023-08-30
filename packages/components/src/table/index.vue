@@ -1,28 +1,30 @@
 <template>
-    <el-card :shadow="shadow" :body-style="bodyStyle">
-        <div class="table">
-            <div class="table__header">
-                <div v-if="title" class="table__header__title">
-                    <slot name="title">
-                        <span>{{ title }}</span>
+    <el-card :shadow="shadow" :body-style="bodyStyle" class="table">
+        <!-- 顶部区域 -->
+        <div class="table__header">
+            <div v-if="title" class="table__header__title">
+                <slot name="title">
+                    <span>{{ title }}</span>
 
-                        <el-tooltip v-if="tooltipContent" :content="tooltipContent" placement="top">
-                            <el-icon class="icon">
-                                <info-filled />
-                            </el-icon>
-                        </el-tooltip>
-                    </slot>
-                </div>
-
-                <el-scrollbar>
-                    <div class="table__header__operation">
-                        <slot name="operation" :checked-rows="selectedRows"></slot>
-
-                        <table-setting v-model="tableColumns" @reload="loadData(searchData)" />
-                    </div>
-                </el-scrollbar>
+                    <el-tooltip v-if="tooltipContent" :content="tooltipContent" placement="top">
+                        <el-icon class="icon">
+                            <info-filled />
+                        </el-icon>
+                    </el-tooltip>
+                </slot>
             </div>
 
+            <el-scrollbar>
+                <div class="table__header__operation">
+                    <slot name="operation" :checked-rows="selectedRows"></slot>
+
+                    <table-setting v-model="tableColumns" @reload="loadData(searchData)" />
+                </div>
+            </el-scrollbar>
+        </div>
+
+        <!-- 表格区域 -->
+        <div class="table__main">
             <el-table
                 ref="tableRef"
                 v-loading="tableLoading"
@@ -88,11 +90,13 @@
                     </template>
                 </el-table-column>
 
-                <slot name="action"></slot>
+                <slot name="table__main__action"></slot>
             </el-table>
+        </div>
 
-            <!-- 分页 -->
-            <div v-if="pagination.pageSize !== -1" class="pagination">
+        <!-- 底部区域 -->
+        <div v-if="tableData.length" class="table__bottom">
+            <div v-if="pagination.pageSize !== -1" class="table__bottom__pagination">
                 <el-pagination
                     v-model:current-page="pagination.currentPage"
                     v-model:page-size="pagination.pageSize"
@@ -107,6 +111,8 @@
                     <template #default> 已选中 {{ selectedCount }} 条数据 </template>
                 </el-pagination>
             </div>
+
+            <div v-else class="table__bottom__total">共 {{ tableData.length }} 条</div>
         </div>
     </el-card>
 </template>
@@ -253,7 +259,7 @@ defineExpose({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .table {
     &__header {
         display: flex;
@@ -269,6 +275,11 @@ defineExpose({
                 font-size: 18px;
                 font-weight: bold;
             }
+
+            .icon {
+                margin-left: 10px;
+                transform: translateY(0.1em);
+            }
         }
 
         &__operation {
@@ -277,19 +288,26 @@ defineExpose({
         }
     }
 
-    .icon {
-        margin-left: 10px;
-        transform: translateY(0.1em);
+    &__main {
+        &__actions {
+            display: flex;
+            justify-content: center;
+            padding: 0 15px;
+        }
     }
 
-    .actions {
-        display: flex;
-        justify-content: center;
-        padding: 0 15px;
-    }
+    &__bottom {
+        &__pagination {
+            padding-top: 10px;
+        }
 
-    .pagination {
-        margin-top: 10px;
+        &__total {
+            padding-top: 10px;
+            display: flex;
+            justify-content: flex-end;
+            text-align: right;
+            font-size: 14px;
+        }
     }
 }
 </style>

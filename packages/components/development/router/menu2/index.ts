@@ -4,7 +4,7 @@ import { ParentView } from '@/index';
 export const menu2Routes: RouteRecordRaw = {
     path: '/menu2',
     name: 'menu2',
-    component: h(ParentView, { matchedIndex: 2 }),
+    component: () => import('@dev/views/menu2/index.vue'),
     redirect: '/menu2/demo1',
     meta: {
         title: 'menu2',

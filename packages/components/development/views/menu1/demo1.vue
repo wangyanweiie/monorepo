@@ -1,7 +1,7 @@
 <template>
     <div>
         <!-- 输入框 -->
-        <el-input v-model="str" placeholder="menu1-demo1"></el-input>
+        <el-input v-model="str" placeholder="menu1-demo1" class="component"></el-input>
 
         <!-- x-table -->
         <x-table
@@ -13,6 +13,7 @@
             :data="data"
             :divide-page="true"
             row-key="id"
+            class="component"
         >
             <template #operation>
                 <el-button type="success">新增</el-button>
@@ -23,12 +24,14 @@
         <!-- x-table-v2 -->
         <x-table-v2
             title="x-table-v2"
+            height="300px"
             show-index
             selectable
             :columns="columnsV2"
             :data="data"
             :divide-page="true"
             row-key="id"
+            class="component"
         >
             <template #operation>
                 <el-button type="success">新增</el-button>
@@ -124,3 +127,8 @@ const data = [
     },
 ];
 </script>
+<style lang="scss" scoped>
+.component {
+    margin-bottom: 10px;
+}
+</style>

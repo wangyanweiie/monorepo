@@ -5,6 +5,8 @@ import { subRoutes } from './sub';
 export const menu1Routes: RouteRecordRaw = {
     path: '/menu1',
     name: 'menu1',
+    // FIXME: 等价写法
+    // component: () => import('@dev/views/menu1/index.vue'),
     component: h(ParentView, { matchedIndex: 2 }),
     redirect: '/menu1/sub',
     meta: {
@@ -16,11 +18,12 @@ export const menu1Routes: RouteRecordRaw = {
             path: '/menu1/sub',
             name: 'menu1-sub',
             redirect: '/menu/sub/sub1',
-            // component: h(ParentMenuView, {
-            //     menus: subRoutes,
-            //     matchIndex: 3,
-            // }),
-            component: () => import('@dev/views/menu1/sub/index.vue'),
+            // FIXME: 等价写法
+            // component: () => import('@dev/views/menu1/sub/index.vue'),
+            component: h(ParentMenuView, {
+                menus: subRoutes,
+                matchIndex: 3,
+            }),
             meta: {
                 title: 'menu1-sub',
                 icon: 'Setting',
