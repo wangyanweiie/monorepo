@@ -8,7 +8,7 @@
 
         <router-view v-slot="{ Component }">
             <transition name="el-fade-in-linear" mode="out-in">
-                <!-- <keep-alive :exclude="excludeList" :include="cacheList"> -->
+                <!-- <keep-alive :include="cacheList" :exclude="excludeList"> -->
                 <component :is="Component" :key="componentKey"></component>
                 <!-- </keep-alive> -->
             </transition>

@@ -1,35 +1,33 @@
 <template>
     <el-card class="x-search-form" :shadow="shadow">
-        <el-form ref="formRef" :model="formData" v-bind="elFormProps">
+        <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
             <el-row>
                 <template v-for="(schema, index) in schemas" :key="index">
                     <el-collapse-transition>
-                        <el-col v-if="isShow ? !formItemShow(index) : true" v-bind="mergeColProps(schema.colProps)">
+                        <el-col v-if="showMore ? !showFormItem(index) : true" v-bind="schemaColProps(schema.colProps)">
                             <x-form-item
-                                :model-value="formData"
+                                :model-value="modelForm"
                                 :schema="schema"
-                                @update:model-value="updateFormData"
+                                @update:model-value="handleUpdate"
                                 @enter="handleEnter"
                             >
                                 <template #[customSlotName(schema)]>
-                                    <slot :name="customSlotName(schema)" :form="formData" :index="0"></slot>
+                                    <slot :name="customSlotName(schema)" :form="modelForm" :index="0"></slot>
                                 </template>
                             </x-form-item>
                         </el-col>
                     </el-collapse-transition>
                 </template>
 
-                <el-col v-bind="colSpan">
+                <el-col v-bind="actionColProps">
                     <div class="x-search-form__actions">
-                        <slot name="action" :form="formData" :form-ref="formRef"></slot>
+                        <slot name="action" :form="modelForm" :form-ref="formRef"></slot>
 
                         <el-button type="primary" :loading="loading" @click="handleSearch">
                             {{ searchBtnText }}
                         </el-button>
-
                         <el-button v-if="showRestButton" @click="handleReset"> 重置 </el-button>
-
-                        <el-button v-if="showCollapse" circle @click="handleChange">
+                        <el-button v-if="showCollapse" circle @click="handleCollapse">
                             <el-icon>
                                 <component :is="collapsed ? ArrowDownBold : ArrowUpBold"></component>
                             </el-icon>
@@ -55,13 +53,16 @@ export interface XFormValue {
 }
 
 /**
- * 扩展HTMLElement
+ * 扩展 HTMLElement
  */
 export interface FormElement extends HTMLElement {
     validate: () => Promise<boolean>;
     resetFields: () => void;
 }
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
         modelValue?: any;
@@ -85,81 +86,79 @@ const props = withDefaults(
     },
 );
 
+/**
+ * emits
+ */
 const emits = defineEmits<{
     (e: 'update:modelValue', value: any): void;
     (e: 'search', value: any): void;
     (e: 'reset', form: any): void;
 }>();
 
-// const formData = ref<Record<string, any>>(props.modelValue);
-const { modelValue: formData } = toRefs(props);
-
-function updateFormData() {
-    emits('update:modelValue', formData.value);
+/**
+ * formItem col props
+ */
+function schemaColProps(colProps?: Partial<ColProps>): Partial<ColProps> {
+    return {
+        xs: 24,
+        sm: colProps ?? 12,
+        md: colProps ?? 8,
+        lg: colProps ?? 6,
+        xl: colProps ?? 6,
+    };
 }
 
 /**
- * slot-name
+ * slot name
  */
 function customSlotName(schema: XFormItemSchema): string {
     return schema.components === 'custom' ? schema.slotName : '';
 }
 
-const formRef = ref<XFormInstance>();
+/**
+ * 渲染 ArrowDownBold 或者 ArrowUpBold
+ */
+const collapsed = ref(true);
 
 /**
  * 计算 form 表单字段数量
  */
-
 const countFormItems = computed(() => {
-    const count = props.schemas.length;
-
+    const count = props.schemas.length && collapsed.value === true ? 7 : props.schemas.length;
     const showMore = count > 7 ? true : false;
+
     return {
-        count: count > 7 && collapsed.value === true ? 7 : count > 7 && collapsed.value === false ? count : count,
+        count,
         showMore,
     };
 });
-/**
- * 查询
- */
-function handleSearch(): void {
-    emits('search', formData.value);
-}
 
 /**
- * 重置
+ * 计算 action 占用的 span
  */
-function handleReset(): void {
-    formData.value = undefined;
-
-    props.schemas.forEach((schema: any) => {
-        if (schema.elProps && schema.elProps.labelSchema) {
-            formData.value[schema.elProps.labelSchema] = undefined;
-        }
-    });
-    formRef.value?.resetFields();
-    emits('reset', formData.value);
-}
-
-/**
- * 是否默认折叠搜索项
- */
-
-const collapsed = ref(true);
+const actionColProps = computed(() => {
+    return {
+        xs: { span: 24 },
+        sm: { span: 24 - ((countFormItems.value.count * 12) % 24) },
+        md: { span: 24 - ((countFormItems.value.count * 8) % 24) },
+        lg: { span: 24 - ((countFormItems.value.count * 6) % 24) },
+        xl: { span: 24 - ((countFormItems.value.count * 6) % 24) },
+    };
+});
 
 /**
  * 是否收缩查询表单
  */
-const isShow = ref(countFormItems.value.showMore);
+const showMore = ref(countFormItems.value.showMore);
+const showCollapse = computed(() => countFormItems.value.showMore);
 
 /**
- * 展开 / 收起
+ * 是否渲染 formItem
  */
-
-function formItemShow(itemIndex: number) {
+function showFormItem(itemIndex: number) {
     // 默认展示两行，7个搜索框
     let count = 0;
+
     // 第 7 个搜索框的位置
     let location = 7;
 
@@ -171,73 +170,100 @@ function formItemShow(itemIndex: number) {
         }
     });
 
-    //超过7的部分
+    // 超过 7 的部分
     if (itemIndex > location) {
         return true;
     }
-    //不超过7的部分
+
+    // 不超过 7 的部分
     return false;
 }
 
 /**
- *  判断是否显示 展开/合并 按钮
+ * 改变展开/收起
  */
-
-const showCollapse = computed(() => {
-    if (!countFormItems.value.showMore) {
-        return false;
-    } else {
-        return true;
-    }
-});
-
-const colSpan = computed(() => {
-    return {
-        xs: { span: 24 },
-        sm: {
-            span: 24 - ((countFormItems.value.count * 12) % 24),
-        },
-        md: {
-            span: 24 - ((countFormItems.value.count * 8) % 24),
-        },
-        lg: { span: 24 - ((countFormItems.value.count * 6) % 24) },
-        xl: { span: 24 - ((countFormItems.value.count * 6) % 24) },
-    };
-});
-
-function handleChange() {
+function handleCollapse() {
     collapsed.value = !collapsed.value;
-    if (collapsed.value) {
-        isShow.value = true;
-    } else {
-        isShow.value = false;
-    }
-}
 
-function mergeColProps(colProps?: Partial<ColProps>): Partial<ColProps> {
-    return {
-        xs: 24,
-        sm: colProps ? colProps : 12,
-        md: colProps ? colProps : 8,
-        lg: colProps ? colProps : 6,
-        xl: colProps ? colProps : 6,
-    };
+    if (collapsed.value) {
+        showMore.value = true;
+    } else {
+        showMore.value = false;
+    }
 }
 
 /**
- * enter事件
+ * form ref
  */
-function handleEnter(): void {
-    emits('search', formData.value);
+const formRef = ref<XFormInstance>();
+
+/**
+ * form 表单
+ */
+const { modelValue: modelForm } = toRefs(props);
+
+/**
+ * 更新数据
+ */
+function handleUpdate() {
+    emits('update:modelValue', modelForm.value);
 }
 
+/**
+ * 表单校验
+ */
+async function validate(): Promise<boolean> {
+    const valid = await formRef.value?.validate();
+
+    if (!valid) {
+        return false;
+    }
+
+    return true;
+}
+
+/**
+ * 重置表单
+ */
+function resetFields() {
+    formRef.value?.resetFields();
+}
+
+/**
+ * 查询
+ */
+function handleSearch(): void {
+    emits('search', modelForm.value);
+}
+
+/**
+ * enter 事件
+ */
+function handleEnter(): void {
+    emits('search', modelForm.value);
+}
+
+/**
+ * 重置
+ */
+function handleReset(): void {
+    modelForm.value = undefined;
+    props.schemas.forEach((schema: any) => {
+        if (schema.elProps && schema.elProps.labelSchema) {
+            modelForm.value[schema.elProps.labelSchema] = undefined;
+        }
+    });
+
+    formRef.value?.resetFields();
+    emits('reset', modelForm.value);
+}
+
+/**
+ * 暴露的属性与方法
+ */
 defineExpose({
-    validate: formRef.value?.validate ?? (() => Promise.resolve(false)),
-    resetFields:
-        formRef.value?.resetFields ??
-        (() => {
-            return;
-        }),
+    validate,
+    resetFields,
 });
 </script>
 
@@ -255,4 +281,3 @@ defineExpose({
     margin-bottom: 18px;
 }
 </style>
-./interface./x-form-item.vue

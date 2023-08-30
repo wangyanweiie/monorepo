@@ -10,8 +10,14 @@
 import { ElRadio, ElRadioButton, type RadioGroupProps } from 'element-plus';
 import type { RadioOption, RadioType } from '../interface';
 
+/**
+ * value type
+ */
 type ValueType = string | number | boolean | undefined;
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
         modelValue?: string | number | boolean;
@@ -27,19 +33,31 @@ const props = withDefaults(
     },
 );
 
+/**
+ * emits
+ */
 const emits = defineEmits<{
     (e: 'update:modelValue', value: ValueType): void;
     (e: 'change', value: ValueType): void;
 }>();
 
+/**
+ * 动态组件
+ */
 const isComponent = computed<Component>(() => {
     return props.type === 'cycle' ? markRaw(ElRadio) : markRaw(ElRadioButton);
 });
 
+/**
+ * 改变选中值
+ */
 function handleChange(value: ValueType): void {
     emits('change', value);
 }
 
+/**
+ * 更新选中的数据
+ */
 function updateData(value: ValueType): void {
     emits('update:modelValue', value);
 }

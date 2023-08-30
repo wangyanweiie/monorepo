@@ -5,7 +5,7 @@
         :width="width"
         append-to-body
         destroy-on-close
-        @opened="handleDialogOpen"
+        @opened="handleOpen"
         @close="handleClose"
     >
         <template #header>
@@ -14,28 +14,19 @@
 
         <!-- <x-form
             ref="formRef"
-            :model-value="formData"
+            :model-value="modelForm"
             :el-form-props="elFormProps"
             :schemas="schemas"
-            @update:model-value="updateData"
+            @update:model-value="handleUpdate"
         >
         </x-form> -->
 
-        <el-form ref="formRef" :model="formData" v-bind="elFormProps">
+        <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
             <el-row>
-                <el-col
-                    v-for="(schema, index) in schemas"
-                    :key="index"
-                    :span="12"
-                    v-bind="schema.colProps"
-                >
-                    <x-form-item
-                        :model-value="formData"
-                        :schema="schema"
-                        @update:model-value="updateData"
-                    >
+                <el-col v-for="(schema, index) in schemas" :key="index" :span="12" v-bind="schema.colProps">
+                    <x-form-item :model-value="modelForm" :schema="schema" @update:model-value="handleUpdate">
                         <template #[customSlotName(schema)]>
-                            <slot :name="customSlotName(schema)" :form="formData"></slot>
+                            <slot :name="customSlotName(schema)" :form="modelForm"></slot>
                         </template>
                     </x-form-item>
                 </el-col>
@@ -43,12 +34,9 @@
         </el-form>
 
         <template #footer>
-            <slot name="action" :form="formData" :form-ref="formRef"></slot>
+            <slot name="action" :form="modelForm" :form-ref="formRef"></slot>
 
-            <el-button v-if="isShowConfirm" type="primary" :loading="loading" @click="handleSubmit">
-                确认
-            </el-button>
-
+            <el-button v-if="isShowConfirm" type="primary" :loading="loading" @click="handleSubmit"> 确认 </el-button>
             <el-button @click="handleCancel"> 取消 </el-button>
         </template>
     </el-dialog>
@@ -60,55 +48,53 @@ import type { XFormInstance, XFormItemSchema } from './interface';
 import type { FormProps } from 'element-plus';
 import XFormItem from './x-form-item.vue';
 
+/**
+ * props
+ */
 const props = withDefaults(
     defineProps<{
+        /** 双向绑定：是否打开弹窗 */
         modelValue: boolean;
-        data?: any;
-        /**
-         * 标题
-         */
+        /** 弹窗标题 */
         title?: string;
+        /** 弹窗宽度 */
         width?: number | string;
-        elFormProps?: Partial<FormProps>;
-        loading?: boolean;
-        /**
-         * form
-         */
+        /** 双向绑定：form 表单 */
+        data?: any;
+        /** 表单配置 */
         schemas?: XFormItemSchema[];
-
+        /** form props */
+        elFormProps?: Partial<FormProps>;
+        /** 是否展示提交按钮 */
         isShowConfirm?: boolean;
+        /** 提交 loading */
+        loading?: boolean;
     }>(),
     {
-        data: () => ({}),
+        modelValue: false,
         title: '新增',
         width: undefined,
-        elFormProps: () => ({ labelWidth: '120px' }),
-        loading: false,
+        data: () => ({}),
         schemas: () => [],
+        elFormProps: () => ({ labelWidth: '120px' }),
         isShowConfirm: true,
-    }
+        loading: false,
+    },
 );
 
+/**
+ * emits
+ */
 const emits = defineEmits<{
-    /**
-     * 双向绑定
-     */
+    /** 双向绑定：弹窗是否打开 */
     (e: 'update:modelValue', value: boolean): void;
-    /**
-     * 双向绑定
-     */
+    /** 双向绑定：form 表单 */
     (e: 'update:data', value: any): void;
-    /**
-     * 对话框打开回调
-     */
+    /** 打开弹窗回调 */
     (e: 'open', form: any): void;
-    /**
-     * 关闭回调
-     */
+    /** 关闭弹窗回调 */
     (e: 'close'): void;
-    /**
-     * 对话框保存回调
-     */
+    /** 提交回调 */
     (e: 'submit', form: any): void;
 }>();
 
@@ -119,56 +105,70 @@ function customSlotName(schema: XFormItemSchema): string {
     return schema.components === 'custom' ? schema.slotName : '';
 }
 
-const formData = computed<any>({
-    get: () => props.data,
-    set: (value) => emits('update:data', value),
-});
-
-function updateData(): void {
-    emits('update:data', formData.value);
-}
-
 /**
- * 处理对话框打开
+ * 是否展示弹窗
  */
-function handleDialogOpen() {
-    emits('open', formData.value);
-}
-
 const visible = computed({
     get: () => props.modelValue,
-    set: (newValue) => {
+    set: newValue => {
         emits('update:modelValue', newValue);
     },
 });
 
 /**
- * 处理对话框关闭
- */
-function handleClose() {
-    formRef.value?.resetFields();
-    formData.value = {};
-    emits('close');
-}
-
-function handleSubmit() {
-    emits('submit', formData.value);
-}
-
-/**
- * 更新数据
+ * form ref
  */
 const formRef = ref<XFormInstance>();
 
 /**
- * 取消弹窗
+ * form
+ */
+const modelForm = computed<any>({
+    get: () => props.data,
+    set: value => emits('update:data', value),
+});
+
+/**
+ * 更新表单数据
+ */
+function handleUpdate(): void {
+    emits('update:data', modelForm.value);
+}
+
+/**
+ * 打开弹窗
+ */
+function handleOpen() {
+    emits('open', modelForm.value);
+}
+
+/**
+ * 关闭弹窗
+ */
+function handleClose() {
+    // 重置表单值
+    formRef.value?.resetFields();
+    modelForm.value = {};
+    emits('close');
+}
+
+/**
+ * 提交
+ */
+function handleSubmit() {
+    emits('submit', modelForm.value);
+}
+
+/**
+ * 取消
  */
 function handleCancel() {
-    formRef.value?.resetFields();
-
     visible.value = false;
 }
 
+/**
+ * 表单校验
+ */
 async function validate(): Promise<boolean> {
     const valid = await formRef.value?.validate();
 
@@ -178,15 +178,19 @@ async function validate(): Promise<boolean> {
 
     return true;
 }
+
+/**
+ * 重置表单
+ */
+function resetFields() {
+    formRef.value?.resetFields();
+}
+
 /**
  * 暴露方法
  */
 defineExpose({
     validate,
-    resetFields:
-        formRef.value?.resetFields ??
-        (() => {
-            return;
-        }),
+    resetFields,
 });
 </script>
