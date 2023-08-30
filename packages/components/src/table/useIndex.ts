@@ -35,7 +35,7 @@ export default function useIndex(props: XTableProp) {
     /**
      * 表格列配置
      */
-    const columnList = ref<XTableColumn[]>();
+    const tableColumns = ref<XTableColumn[]>();
 
     /**
      * 分页设置
@@ -60,18 +60,18 @@ export default function useIndex(props: XTableProp) {
     /**
      * 选中的行数据
      */
-    const selectRows = ref<any[]>([]);
+    const selectedRows = ref<any[]>([]);
 
     /**
      * 选中的行数据数量
      */
-    const selectedCount = computed<number>(() => selectRows.value.length ?? 0);
+    const selectedCount = computed<number>(() => selectedRows.value.length ?? 0);
 
     /**
      * 改变选中状态
      */
     function handleSelectChange(selection: any[]) {
-        selectRows.value = selection;
+        selectedRows.value = selection;
     }
 
     /**
@@ -86,15 +86,11 @@ export default function useIndex(props: XTableProp) {
     }
 
     /**
-     * 是否可以选中当前行数据.如果 type 是,但是个别行数据不可选中,往行数据中加 selected 字段可生效
+     * 是否可以选中当前行数据
      * @param row 行数据
      */
     function handleRowSelect(row: Record<string, any>) {
-        if (row.selected) {
-            return false;
-        }
-
-        return true;
+        return row.selected ?? true;
     }
 
     /**
@@ -132,8 +128,10 @@ export default function useIndex(props: XTableProp) {
             pagination.value.currentPage = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
             pagination.value.pageSize = res.data[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
             pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
-        } else if (props.api && !props.dividePage) {
-            // 2.动态赋值，非分页接口，不渲染分页
+        }
+
+        // 2.动态赋值，非分页接口，不渲染分页
+        if (props.api && !props.dividePage) {
             pagination.value.pageSize = -1;
 
             const params = {
@@ -148,13 +146,17 @@ export default function useIndex(props: XTableProp) {
             }
 
             tableData.value = res.data ?? [];
-        } else if (!props.api && props.dividePage && Array.isArray(props.data)) {
-            // 3.静态赋值，假分页
+        }
+
+        // 3.静态赋值，假分页
+        if (!props.api && props.dividePage && Array.isArray(props.data)) {
             pagination.value.currentPage = 1;
             pagination.value.total = props.data.length;
             tableData.value = props.data.slice(0, pagination.value.pageSize);
-        } else if (!props.api && !props.dividePage && Array.isArray(props.data)) {
-            // 4.静态赋值，不渲染分页
+        }
+
+        // 4.静态赋值，不渲染分页
+        if (!props.api && !props.dividePage && Array.isArray(props.data)) {
             pagination.value.pageSize = -1;
             tableData.value = props.data;
         }
@@ -181,12 +183,10 @@ export default function useIndex(props: XTableProp) {
     async function handleSizeChange() {
         if (props.api) {
             await loadData(searchData.value);
-            selectRows.value = tableRef.value?.getSelectionRows();
+            selectedRows.value = tableRef.value?.getSelectionRows();
         } else {
             handleFalsePage();
         }
-
-        handleSelectedList();
     }
 
     /**
@@ -195,23 +195,22 @@ export default function useIndex(props: XTableProp) {
     async function handleCurrentChange() {
         if (props.api) {
             await loadData(searchData.value);
-            selectRows.value = tableRef.value?.getSelectionRows();
+            selectedRows.value = tableRef.value?.getSelectionRows();
         } else {
             handleFalsePage();
         }
-
-        handleSelectedList();
     }
 
     /**
      * 数据回显勾选
      */
-    function toggleRowSelection(rows: any[]) {
-        if (rows.length) {
-            rows.forEach(row => {
-                tableData.value.find(item => {
-                    if (item[props.rowKey as string] === row[props.rowKey as string]) {
-                        tableRef.value?.toggleRowSelection(item, true);
+    function toggleRowSelection(selectedList: any[]) {
+        if (selectedList.length) {
+            selectedList.forEach(selected => {
+                tableData.value.find(row => {
+                    if (selected[props.rowKey as string] === row[props.rowKey as string]) {
+                        tableRef.value?.toggleRowSelection(row, true);
+                        // selectedRows.value.push(row);
                     }
                 });
             });
@@ -219,16 +218,20 @@ export default function useIndex(props: XTableProp) {
     }
 
     /**
-     * 判断是否有需要回显
+     * 判断是否需要回显
      */
     function handleSelectedList() {
+        if (!props.rowKey && tableData.value[0][props.rowKey as string]) {
+            console.warn(`row-key 未设置会导致回显不生效`);
+            return;
+        }
+
         if (!props.selectedList || props.selectedList.length === 0) {
             return;
         }
 
         nextTick(() => {
             toggleRowSelection(props.selectedList as any[]);
-            selectRows.value = props.selectedList as any[];
         });
     }
 
@@ -265,7 +268,7 @@ export default function useIndex(props: XTableProp) {
      * 获取选中值
      */
     function getSelectedRows(): Record<string, any>[] {
-        return selectRows.value;
+        return selectedRows.value;
     }
 
     /**
@@ -288,7 +291,7 @@ export default function useIndex(props: XTableProp) {
     watch(
         () => props.columns,
         (newValue: XTableColumn[]) => {
-            columnList.value = cloneDeep(newValue) as any;
+            tableColumns.value = cloneDeep(newValue) as any;
         },
     );
 
@@ -299,12 +302,7 @@ export default function useIndex(props: XTableProp) {
         () => props.data,
         newValue => {
             if (Array.isArray(newValue)) {
-                pagination.value.currentPage = 1;
-                pagination.value.pageSize = 10;
-                pagination.value.total = newValue.length;
-                tableData.value = newValue.slice(0, pagination.value.pageSize);
-
-                handleSelectedList();
+                loadData({});
             }
         },
         {
@@ -323,8 +321,7 @@ export default function useIndex(props: XTableProp) {
      * 页面渲染
      */
     onMounted(async () => {
-        columnList.value = cloneDeep<XTableColumn[]>(props.columns);
-        pagination.value.pageSize = props.elPaginationProps === false ? 1000 : 10;
+        tableColumns.value = cloneDeep<XTableColumn[]>(props.columns);
 
         if (!props.lazy) {
             await loadData();
@@ -333,11 +330,11 @@ export default function useIndex(props: XTableProp) {
 
     return {
         tableLoading,
+        tableColumns,
         tableData,
-        columnList,
         pagination,
         treeProps,
-        selectRows,
+        selectedRows,
         selectedCount,
         handleSelectChange,
         handleIndex,

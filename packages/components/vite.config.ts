@@ -10,6 +10,7 @@ import IconsResolver from 'unplugin-icons/resolver';
 import Icons from 'unplugin-icons/vite';
 import ElementPlus from 'unplugin-element-plus/vite';
 import DefineOptions from 'unplugin-vue-define-options/vite';
+import VueDevTools from 'vite-plugin-vue-devtools';
 
 const pathSrc = path.resolve(__dirname, 'src');
 const pathDev = path.resolve(__dirname, 'development');
@@ -41,6 +42,7 @@ export default defineConfig({
         },
     },
     plugins: [
+        VueDevTools(),
         Vue(),
         AutoImport({
             // 自动导入 Vue 相关函数，如：ref, reactive, toRef 等

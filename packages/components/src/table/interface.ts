@@ -52,7 +52,7 @@ export interface XTableProp {
     /** el table props */
     elTableProps?: Partial<TableProps<DataType>>;
     /** el pagination props */
-    elPaginationProps?: Partial<PaginationProps> | boolean;
+    elPaginationProps?: Partial<PaginationProps>;
     /** 是否为分页格式 */
     dividePage?: boolean;
     /** 是否懒加载 */

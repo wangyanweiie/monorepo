@@ -12,9 +12,12 @@
                                 </slot>
                             </div>
 
-                            <div class="table__header__operation">
-                                <slot name="operation" :checked-rows="checkedRows"> </slot>
-                            </div>
+                            <el-scrollbar>
+                                <div class="table__header__operation">
+                                    <slot name="operation" :checked-rows="selectedRows"> </slot>
+                                    <!-- <table-setting v-model="tableColumns" @reload="loadData(searchData)" /> -->
+                                </div>
+                            </el-scrollbar>
                         </div>
 
                         <!-- 表格区域 -->
@@ -61,10 +64,12 @@
                                     :page-sizes="[10, 20, 50, 100]"
                                     :total="pagination.total"
                                     :background="true"
-                                    layout=" ->, total, sizes, prev, pager, next, jumper"
+                                    layout=" ->, slot,total, sizes, prev, pager, next, jumper"
                                     @current-change="handleCurrentChange"
                                     @size-change="handleSizeChange"
-                                ></el-pagination>
+                                >
+                                    <template #default> 已选中 {{ selectedCount }} 条数据 </template>
+                                </el-pagination>
                             </div>
 
                             <div v-else class="total">共 {{ tableData.length }} 条</div>
@@ -79,8 +84,9 @@
 <script lang="ts" setup>
 import type { Column } from 'element-plus';
 import { Loading as LoadingIcon } from '@element-plus/icons-vue';
-import useIndex from './useIndex';
 import type { APIKeyMap } from './interface';
+import useIndex from './useIndex';
+// import TableSetting from './components/table-setting.vue';
 
 /**
  * 定义组件选项
@@ -145,7 +151,7 @@ const props = withDefaults(
         shadow: 'hover',
         bodyStyle: () => {
             return {
-                padding: '0 10px 10px 10px',
+                padding: '15px',
             };
         },
         title: '数据列表',
@@ -183,12 +189,14 @@ const props = withDefaults(
  */
 const {
     tableRef,
-    checkedRows,
+    selectedRows,
+    selectedCount,
     tableColumns,
     tableData,
     pagination,
     handleMouseOver,
     handleMouseLeave,
+    searchData,
     loadData,
     handleCurrentChange,
     handleSizeChange,
@@ -198,7 +206,7 @@ const {
  * 暴露的属性与方法
  */
 defineExpose({
-    checkedRows,
+    selectedRows,
     loadData,
 });
 </script>
@@ -213,12 +221,13 @@ defineExpose({
 
     &__header {
         display: flex;
+        justify-content: space-between;
         align-items: center;
         flex-wrap: wrap;
-        margin-bottom: 10px;
+        padding: 0 10px 10px 10px;
 
         &__title {
-            min-width: 300px;
+            justify-content: left;
 
             span {
                 font-size: 18px;
@@ -227,11 +236,8 @@ defineExpose({
         }
 
         &__operation {
-            flex: 1;
-            min-width: 325px;
             display: flex;
-            justify-content: flex-end;
-            text-align: right;
+            align-items: center;
         }
     }
 

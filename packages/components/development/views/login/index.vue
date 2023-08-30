@@ -1,5 +1,5 @@
 <template>
     <div>
-        <router-view></router-view>
+        <el-card>login</el-card>
     </div>
 </template>

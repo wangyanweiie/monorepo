@@ -1,5 +1,5 @@
 <template>
     <div>
-        <router-view></router-view>
+        <el-card>404</el-card>
     </div>
 </template>

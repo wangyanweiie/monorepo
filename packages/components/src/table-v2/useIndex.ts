@@ -28,11 +28,16 @@ export default function useIndex(props: XTableV2Prop) {
     });
 
     /**
-     * 勾选的行数据
+     * 选中的行数据
      */
-    const checkedRows = computed(() => {
-        return tableData.value?.filter((row: any) => row.checked);
+    const selectedRows = computed(() => {
+        return tableData.value?.filter((row: Record<string, any>) => row.checked);
     });
+
+    /**
+     * 选中的行数据数量
+     */
+    const selectedCount = computed<number>(() => selectedRows.value.length ?? 0);
 
     /**
      * @description 初始化表格数据
@@ -64,8 +69,10 @@ export default function useIndex(props: XTableV2Prop) {
             pagination.value.currentPage = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
             pagination.value.pageSize = res.data[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
             pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
-        } else if (props.api && !props.dividePage) {
-            // 2.动态赋值，非分页接口，不渲染分页
+        }
+
+        // 2.动态赋值，非分页接口，不渲染分页
+        if (props.api && !props.dividePage) {
             pagination.value.pageSize = -1;
 
             const params = {
@@ -80,13 +87,17 @@ export default function useIndex(props: XTableV2Prop) {
             }
 
             tableData.value = res.data ?? [];
-        } else if (!props.api && props.dividePage && Array.isArray(props.data)) {
-            // 3.静态赋值，假分页
+        }
+
+        // 3.静态赋值，假分页
+        if (!props.api && props.dividePage && Array.isArray(props.data)) {
             pagination.value.currentPage = 1;
             pagination.value.total = props.data.length;
             tableData.value = props.data.slice(0, pagination.value.pageSize);
-        } else if (!props.api && !props.dividePage && Array.isArray(props.data)) {
-            // 4.静态赋值，不渲染分页
+        }
+
+        // 4.静态赋值，不渲染分页
+        if (!props.api && !props.dividePage && Array.isArray(props.data)) {
             pagination.value.pageSize = -1;
             tableData.value = props.data;
         }
@@ -199,7 +210,7 @@ export default function useIndex(props: XTableV2Prop) {
         const columns: Column<any>[] = cloneDeep(props.columns).map(item => {
             return {
                 ...item,
-                width: item.width ?? 100,
+                width: item.width ?? 150,
                 align: item.align ?? 'center',
             };
         });
@@ -306,12 +317,14 @@ export default function useIndex(props: XTableV2Prop) {
 
     return {
         tableRef,
-        checkedRows,
+        selectedRows,
+        selectedCount,
         tableColumns,
         tableData,
         pagination,
         handleMouseOver,
         handleMouseLeave,
+        searchData,
         loadData,
         handleSizeChange,
         handleCurrentChange,

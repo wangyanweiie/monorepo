@@ -1,12 +1,11 @@
 import { createApp } from 'vue';
-import App from './App.vue';
 import mitt from 'mitt';
-
-import { initApp } from './init';
+import App from '@dev/App.vue';
+import { handleInit } from '@dev/init';
 
 const app = createApp(App);
 
-initApp(app);
+handleInit(app);
 
 app.config.globalProperties.$bus = mitt();
 

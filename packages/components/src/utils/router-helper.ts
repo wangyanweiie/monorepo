@@ -67,7 +67,6 @@ export function generateActiveRoutes(routes: RouteRecordRaw[], permissions?: str
         if (currentRoute.children && currentRoute.children.length > 0) {
             // 递归 children
             currentRoute.children = generateActiveRoutes(currentRoute.children, permissions);
-            currentRoute.children;
 
             // 修改重定向
             currentRoute.redirect = currentRoute.children.at(0)?.path;
@@ -110,7 +109,6 @@ export function generateShowMenus(routes: RouteRecordRaw[], permissions?: string
         if (currentRoute.children && currentRoute.children.length > 0) {
             // 递归 children
             currentRoute.children = generateShowMenus(currentRoute.children, permissions);
-            currentRoute.children;
 
             // 修改重定向
             currentRoute.redirect = currentRoute.children.at(0)?.path;

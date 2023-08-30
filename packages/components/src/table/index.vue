@@ -1,100 +1,112 @@
 <template>
-    <el-card :shadow="shadow">
-        <div class="table-header">
-            <h1 class="title">
-                {{ title }}
-                <el-tooltip v-if="tooltipContent" :content="tooltipContent" placement="top">
-                    <el-icon class="info-icon">
-                        <info-filled />
-                    </el-icon>
-                </el-tooltip>
-            </h1>
+    <el-card :shadow="shadow" :body-style="bodyStyle">
+        <div class="table">
+            <div class="table__header">
+                <div v-if="title" class="table__header__title">
+                    <slot name="title">
+                        <span>{{ title }}</span>
 
-            <el-scrollbar>
-                <div class="operation">
-                    <slot name="operation" :checked-rows="selectRows"></slot>
-
-                    <table-setting v-model="columnList" @reload="loadData(searchData)" />
-                </div>
-            </el-scrollbar>
-        </div>
-
-        <el-table
-            ref="tableRef"
-            v-loading="tableLoading"
-            border
-            size="small"
-            table-layout="auto"
-            v-bind="elTableProps"
-            :data="tableData"
-            :row-key="rowKey"
-            :tree-props="treeProps"
-            :style="{ width: '100%' }"
-            @selection-change="handleSelectChange"
-        >
-            <!-- 选择列 -->
-            <el-table-column
-                v-if="selectable"
-                type="selection"
-                width="60"
-                align="center"
-                :selectable="handleRowSelect"
-                reserve-selection
-            />
-
-            <!-- 索引列 -->
-            <el-table-column v-if="showIndex" type="index" align="center" label="#" width="50px" :index="handleIndex" />
-
-            <el-table-column
-                v-for="(col, i) in columnList"
-                :key="i"
-                align="center"
-                min-width="150"
-                show-overflow-tooltip
-                v-bind="col"
-            >
-                <template v-if="!col[`formatter`]" #default="scope">
-                    <slot :name="`${col.prop + 'Slot'}`" :scope="scope">
-                        {{ scope.row[`${col.prop}`] }}
+                        <el-tooltip v-if="tooltipContent" :content="tooltipContent" placement="top">
+                            <el-icon class="icon">
+                                <info-filled />
+                            </el-icon>
+                        </el-tooltip>
                     </slot>
-                </template>
-            </el-table-column>
+                </div>
 
-            <!-- 操作栏 -->
-            <el-table-column v-if="hasActionBtn" fixed="right" label="操作" align="center" :width="actionsWidth">
-                <template #default="{ row, $index }">
-                    <div class="actions">
-                        <el-button
-                            v-for="(button, index) in actionButtons(row, $index)"
-                            :key="index"
-                            type="primary"
-                            text
-                            v-bind="button"
-                        >
-                            {{ button.label }}
-                        </el-button>
+                <el-scrollbar>
+                    <div class="table__header__operation">
+                        <slot name="operation" :checked-rows="selectedRows"></slot>
+
+                        <table-setting v-model="tableColumns" @reload="loadData(searchData)" />
                     </div>
-                </template>
-            </el-table-column>
+                </el-scrollbar>
+            </div>
 
-            <slot name="action"></slot>
-        </el-table>
-
-        <!-- 分页 -->
-        <div v-if="elPaginationProps !== false" class="pagination">
-            <el-pagination
-                v-model:current-page="pagination.currentPage"
-                v-model:page-size="pagination.pageSize"
-                :page-sizes="[10, 20, 50, 100]"
-                :total="pagination.total"
-                :background="true"
-                layout=" ->, slot,total, sizes, prev, pager, next, jumper"
-                v-bind="elPaginationProps"
-                @current-change="handleCurrentChange"
-                @size-change="handleSizeChange"
+            <el-table
+                ref="tableRef"
+                v-loading="tableLoading"
+                border
+                size="small"
+                table-layout="auto"
+                :data="tableData"
+                :row-key="rowKey"
+                :tree-props="treeProps"
+                :style="{ width: '100%' }"
+                v-bind="elTableProps"
+                @selection-change="handleSelectChange"
             >
-                <template #default> 已选中{{ selectedCount }}条数据 </template>
-            </el-pagination>
+                <!-- 选择列 -->
+                <el-table-column
+                    v-if="selectable"
+                    type="selection"
+                    align="center"
+                    width="50px"
+                    reserve-selection
+                    :selectable="handleRowSelect"
+                />
+
+                <!-- 索引列 -->
+                <el-table-column
+                    v-if="showIndex"
+                    type="index"
+                    align="center"
+                    width="50px"
+                    label="#"
+                    :index="handleIndex"
+                />
+
+                <el-table-column
+                    v-for="(col, index) in tableColumns"
+                    :key="index"
+                    align="center"
+                    min-width="150"
+                    show-overflow-tooltip
+                    v-bind="col"
+                >
+                    <template v-if="!col[`formatter`]" #default="scope">
+                        <slot :name="`${col.prop + 'Slot'}`" :scope="scope">
+                            {{ scope.row[`${col.prop}`] }}
+                        </slot>
+                    </template>
+                </el-table-column>
+
+                <!-- 操作栏 -->
+                <el-table-column v-if="hasActionBtn" fixed="right" label="操作" align="center" :width="actionsWidth">
+                    <template #default="{ row, $index }">
+                        <div class="actions">
+                            <el-button
+                                v-for="(button, index) in actionButtons(row, $index)"
+                                :key="index"
+                                type="primary"
+                                text
+                                v-bind="button"
+                            >
+                                {{ button.label }}
+                            </el-button>
+                        </div>
+                    </template>
+                </el-table-column>
+
+                <slot name="action"></slot>
+            </el-table>
+
+            <!-- 分页 -->
+            <div v-if="pagination.pageSize !== -1" class="pagination">
+                <el-pagination
+                    v-model:current-page="pagination.currentPage"
+                    v-model:page-size="pagination.pageSize"
+                    :page-sizes="[10, 20, 50, 100]"
+                    :total="pagination.total"
+                    :background="true"
+                    layout=" ->, slot,total, sizes, prev, pager, next, jumper"
+                    v-bind="elPaginationProps"
+                    @current-change="handleCurrentChange"
+                    @size-change="handleSizeChange"
+                >
+                    <template #default> 已选中 {{ selectedCount }} 条数据 </template>
+                </el-pagination>
+            </div>
         </div>
     </el-card>
 </template>
@@ -103,8 +115,8 @@
 import type { PaginationProps, TableProps } from 'element-plus';
 import type { APIKeyMap, XTableColumn, DataType, ActionButton, ExportConfig } from './interface';
 import { InfoFilled } from '@element-plus/icons-vue';
-import tableSetting from './components/table-setting.vue';
 import useIndex from './useIndex';
+import TableSetting from './components/table-setting.vue';
 
 /**
  * 定义组件选项
@@ -124,6 +136,8 @@ const props = withDefaults(
         tooltipContent?: string;
         /** 阴影 */
         shadow?: 'hover' | 'always' | 'never';
+        /** card-body-style */
+        bodyStyle?: Record<string, string>;
         /** loading */
         loading?: boolean;
         /** 是否展示索引 */
@@ -133,7 +147,7 @@ const props = withDefaults(
         /** el table props */
         elTableProps?: Partial<TableProps<DataType>>;
         /** el pagination props */
-        elPaginationProps?: Partial<PaginationProps> | boolean;
+        elPaginationProps?: Partial<PaginationProps>;
         /** 是否为分页格式 */
         dividePage?: boolean;
         /** 是否懒加载 */
@@ -165,6 +179,11 @@ const props = withDefaults(
         title: '数据列表',
         tooltipContent: '',
         shadow: 'hover',
+        bodyStyle: () => {
+            return {
+                padding: '15px',
+            };
+        },
         loading: false,
         showIndex: false,
         selectable: false,
@@ -200,11 +219,11 @@ const props = withDefaults(
  */
 const {
     tableLoading,
+    tableColumns,
     tableData,
-    columnList,
     pagination,
     treeProps,
-    selectRows,
+    selectedRows,
     selectedCount,
     handleSelectChange,
     handleIndex,
@@ -235,45 +254,42 @@ defineExpose({
 </script>
 
 <style lang="scss">
-.table-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    white-space: normal;
-    flex-wrap: wrap;
-}
+.table {
+    &__header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        padding: 0 10px 10px 10px;
 
-.title {
-    padding: 0;
-    margin: 0;
-    align-items: center;
-    justify-content: left;
-}
+        &__title {
+            justify-content: left;
 
-.operation {
-    display: flex;
-    align-items: center;
-    height: 50px;
-}
+            span {
+                font-size: 18px;
+                font-weight: bold;
+            }
+        }
 
-.actions {
-    display: flex;
-    justify-content: center;
-    padding: 0 15px;
-}
+        &__operation {
+            display: flex;
+            align-items: center;
+        }
+    }
 
-.pagination {
-    margin-top: 10px;
-}
+    .icon {
+        margin-left: 10px;
+        transform: translateY(0.1em);
+    }
 
-.title-container {
-    display: flex;
-    align-items: center;
-}
+    .actions {
+        display: flex;
+        justify-content: center;
+        padding: 0 15px;
+    }
 
-.info-icon {
-    margin-left: 10px;
-    transform: translateY(0.1em);
-    // margin-top: 5px;
+    .pagination {
+        margin-top: 10px;
+    }
 }
 </style>
