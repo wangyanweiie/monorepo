@@ -1,13 +1,13 @@
 <template>
-    <el-select v-bind="attrs" :model-value="value" @update:model-value="updateData" @change="handleChange">
+    <el-select :model-value="selectedValue" v-bind="attrs" @change="handleChange" @update:model-value="updateData">
         <el-checkbox
-            v-if="attrs.isAllChoose"
-            v-model="checkAll"
+            v-if="attrs.allChoose"
+            v-model="isAllChoose"
             :indeterminate="isIndeterminate"
             :style="{
                 marginLeft: '20px',
             }"
-            @change="allChoose"
+            @change="handleAllChoose"
         >
             全选
         </el-checkbox>
@@ -21,26 +21,23 @@ import { useAttrs } from 'vue';
 import type { XSelectMultiProp } from '../interface';
 
 /**
- * emits
- */
-const emits = defineEmits<{
-    (e: 'update:modelValue', value: any): void;
-}>();
-
-/**
- * 属性
+ * useAttrs
+ * 可以将父组件中子组件标签身上的属性和属性值传递给子组件内部，且可以获取自定义事件
  */
 const attrs = useAttrs() as XSelectMultiProp;
 
 /**
- * 双向绑定
+ * emits
  */
-const value = ref<any>(attrs.modelValue);
+const emits = defineEmits<{
+    (e: 'update:modelValue', value: any): void;
+    (e: 'change', value: any): void;
+}>();
 
 /**
  * 全选状态
  */
-const checkAll = ref<boolean>(false);
+const isAllChoose = ref<boolean>(false);
 
 /**
  * 半选状态
@@ -50,25 +47,27 @@ const isIndeterminate = ref<boolean>(false);
 /**
  * 选中的数据
  */
-const checkedOptions = ref<any[]>();
+const selectedValue = ref<any>(attrs.modelValue);
+const selectedAll = attrs.options.map((item: any) => item.value);
 
 /**
  * 改变选择
  */
-function handleChange(val: string | any[]) {
-    const checkedCount = val.length;
+function handleChange(val: any) {
+    selectedValue.value = val;
 
-    checkAll.value = checkedCount === attrs.options.length;
-    isIndeterminate.value = checkedCount > 0 && checkedCount < attrs.options.length;
+    isAllChoose.value = val.length === attrs.options.length;
+    isIndeterminate.value = val.length > 0 && val.length < attrs.options.length;
+    emits('change', selectedValue.value);
 }
 
 /**
  * 是否全选
  */
-function allChoose(val: any) {
-    checkedOptions.value = val ? attrs.options.map((item: any) => item.value) : [];
+function handleAllChoose(val: any) {
+    selectedValue.value = val ? selectedAll : [];
     isIndeterminate.value = false;
-    emits('update:modelValue', checkedOptions.value);
+    emits('update:modelValue', selectedValue.value);
 }
 
 /**
@@ -77,4 +76,11 @@ function allChoose(val: any) {
 function updateData(val: any): void {
     emits('update:modelValue', val);
 }
+
+/**
+ * 监听
+ */
+// watchEffect(() => {
+//     selectedValue.value = attrs.modelValue;
+// });
 </script>

@@ -26,7 +26,7 @@ export const menu1Routes: RouteRecordRaw = {
             }),
             meta: {
                 title: 'menu1-sub',
-                icon: 'Setting',
+                icon: '',
                 keepAlive: true,
             },
             children: subRoutes,
@@ -37,7 +37,7 @@ export const menu1Routes: RouteRecordRaw = {
             component: () => import('@dev/views/menu1/demo1.vue'),
             meta: {
                 title: 'menu1-demo1',
-                icon: 'Setting',
+                icon: '',
                 keepAlive: true,
             },
         },
@@ -47,7 +47,7 @@ export const menu1Routes: RouteRecordRaw = {
             component: () => import('@dev/views/menu1/demo2.vue'),
             meta: {
                 title: 'menu1-demo2',
-                icon: 'Setting',
+                icon: '',
                 keepAlive: true,
             },
         },

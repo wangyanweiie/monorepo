@@ -2,7 +2,7 @@
     <div :style="{ height: height, width: width }">
         <el-auto-resizer>
             <template #default="{ height: autoHeight, width: autoWidth }">
-                <el-card :shadow="shadow" :body-style="bodyStyle" class="table">
+                <el-card :header="header" :shadow="shadow" :body-style="bodyStyle" class="table">
                     <!-- 顶部区域 -->
                     <div class="table__header">
                         <div v-if="title" class="table__header__title">
@@ -82,7 +82,6 @@ import type { Column } from 'element-plus';
 import type { APIKeyMap } from './interface';
 import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
-// import TableSetting from './components/table-setting.vue';
 
 /**
  * 定义组件选项
@@ -100,7 +99,9 @@ const props = withDefaults(
         width?: string;
         /** 容器高度 */
         height?: string;
-        /** card-shadow */
+        /** el-card-header */
+        header: string;
+        /** el-card-shadow */
         shadow?: 'always' | 'never' | 'hover';
         /** card-body-style */
         bodyStyle?: Record<string, string>;
@@ -144,6 +145,7 @@ const props = withDefaults(
     {
         width: '100%',
         height: '500px',
+        header: '',
         shadow: 'hover',
         bodyStyle: () => {
             return {

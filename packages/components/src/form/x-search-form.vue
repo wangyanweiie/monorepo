@@ -1,5 +1,5 @@
 <template>
-    <el-card class="x-search-form" :shadow="shadow">
+    <el-card :header="header" :shadow="shadow" class="x-search-form">
         <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
             <el-row>
                 <template v-for="(schema, index) in schemas" :key="index">
@@ -65,24 +65,34 @@ export interface FormElement extends HTMLElement {
  */
 const props = withDefaults(
     defineProps<{
-        modelValue?: any;
-        loading?: boolean;
-        schemas: XFormItemSchema[];
-        elFormProps?: Partial<FormProps>;
+        /** el-card-header */
+        header: string;
+        /** el-card-shadow */
         shadow?: 'hover' | 'never' | 'always';
-        showRestButton?: boolean;
+        /** form 表单 */
+        modelValue?: any;
+        /** 表达配置 */
+        schemas: XFormItemSchema[];
+        /** el-form-props */
+        elFormProps?: Partial<FormProps>;
+        /** 查询 loading */
+        loading?: boolean;
+        /** 查询按钮文字 */
         searchBtnText?: string;
+        /** 是否展示重置按钮 */
+        showRestButton?: boolean;
     }>(),
     {
+        header: '',
+        shadow: 'hover',
         modelValue: undefined,
-        loading: false,
         schemas: () => [],
         elFormProps: () => ({
             labelWidth: '120px',
         }),
-        shadow: 'hover',
-        showRestButton: true,
+        loading: false,
         searchBtnText: '查询',
+        showRestButton: true,
     },
 );
 

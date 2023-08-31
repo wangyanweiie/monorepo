@@ -20,9 +20,9 @@ import type {
 import type { Arrayable } from 'element-plus/es/utils';
 import type { ExtractPropTypes } from 'vue';
 
-type CheckboxType = 'box' | 'button';
 type RadioType = 'cycle' | 'button';
 type RadioValueType = string | number | boolean | undefined;
+type CheckboxType = 'box' | 'button';
 
 /**
  * x form item 基础类型

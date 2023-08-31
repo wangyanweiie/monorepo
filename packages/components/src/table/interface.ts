@@ -37,14 +37,16 @@ export interface Pagination {
  * table props
  */
 export interface XTableProp {
+    /** el-card-header */
+    header: string;
+    /** el-card-shadow */
+    shadow?: 'hover' | 'always' | 'never';
+    /** card-body-style */
+    bodyStyle?: Record<string, string>;
     /** 标题 */
     title?: string;
     /** 感叹号提示内容 */
     tooltipContent?: string;
-    /** 阴影 */
-    shadow?: 'hover' | 'always' | 'never';
-    /** loading */
-    loading?: boolean;
     /** 是否展示索引 */
     showIndex?: boolean;
     /** 是否可选 */
@@ -69,6 +71,8 @@ export interface XTableProp {
     columns: XTableColumn[];
     /** 表格数据 */
     data?: DataType[];
+    /** loading */
+    loading?: boolean;
     /** 请求接口 */
     api?: any;
     /** 请求接口参数 */

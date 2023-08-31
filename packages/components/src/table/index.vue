@@ -1,5 +1,5 @@
 <template>
-    <el-card :shadow="shadow" :body-style="bodyStyle" class="table">
+    <el-card :header="header" :shadow="shadow" :body-style="bodyStyle" class="table">
         <!-- 顶部区域 -->
         <div class="table__header">
             <div v-if="title" class="table__header__title">
@@ -136,16 +136,16 @@ defineOptions({
  */
 const props = withDefaults(
     defineProps<{
+        /** el-card-header */
+        header: string;
+        /** el-card-shadow */
+        shadow?: 'hover' | 'always' | 'never';
+        /** card-body-style */
+        bodyStyle?: Record<string, string>;
         /** 标题 */
         title?: string;
         /** 感叹号提示内容 */
         tooltipContent?: string;
-        /** 阴影 */
-        shadow?: 'hover' | 'always' | 'never';
-        /** card-body-style */
-        bodyStyle?: Record<string, string>;
-        /** loading */
-        loading?: boolean;
         /** 是否展示索引 */
         showIndex?: boolean;
         /** 是否可选 */
@@ -170,6 +170,8 @@ const props = withDefaults(
         columns: XTableColumn[];
         /** 表格数据 */
         data?: DataType[];
+        /** loading */
+        loading?: boolean;
         /** 请求接口 */
         api?: any;
         /** 请求接口参数 */
@@ -182,15 +184,15 @@ const props = withDefaults(
         exportProps?: ExportConfig;
     }>(),
     {
-        title: '数据列表',
-        tooltipContent: '',
+        header: '',
         shadow: 'hover',
         bodyStyle: () => {
             return {
                 padding: '15px',
             };
         },
-        loading: false,
+        title: '数据列表',
+        tooltipContent: '',
         showIndex: false,
         selectable: false,
         elTableProps: () => ({}),
@@ -203,6 +205,7 @@ const props = withDefaults(
         selectedList: () => [],
         columns: () => [],
         data: () => [],
+        loading: false,
         api: undefined,
         apiParams: () => ({}),
         apiKeyMap: () => ({

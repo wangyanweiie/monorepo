@@ -41,7 +41,9 @@ export interface XTableV2Prop {
     width?: string;
     /** 容器高度 */
     height?: string;
-    /** card-shadow */
+    /** el-card-header */
+    header: string;
+    /** el-card-shadow */
     shadow?: 'always' | 'never' | 'hover';
     /** card-body-style */
     bodyStyle?: Record<string, string>;
@@ -75,10 +77,10 @@ export interface XTableV2Prop {
     dividePage?: boolean;
     /** 分页设置 */
     paginationProp?: Record<string, number>;
-    /** 表格行样式 */
-    rowClass?: () => string;
     /** 表头行样式 */
-    headerClass?: () => string;
+    headerClass?: any;
+    /** 表格行样式 */
+    rowClass?: any;
     /** 滚动 */
     scroll?: boolean;
 }

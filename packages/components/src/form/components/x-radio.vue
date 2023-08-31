@@ -1,5 +1,5 @@
 <template>
-    <el-radio-group :model-value="modelValue" v-bind="elProps" @update:model-value="updateData" @change="handleChange">
+    <el-radio-group :model-value="modelValue" v-bind="elProps" @change="handleChange" @update:model-value="updateData">
         <component :is="isComponent" v-for="(option, index) in options" :key="index" v-bind="option">
             {{ option.labelName }}
         </component>
@@ -22,14 +22,14 @@ const props = withDefaults(
     defineProps<{
         modelValue?: string | number | boolean;
         options?: RadioOption[];
-        elProps?: Partial<RadioGroupProps>;
         type?: RadioType;
+        elProps?: Partial<RadioGroupProps>;
     }>(),
     {
         modelValue: undefined,
         options: () => [],
-        elProps: undefined,
         type: 'cycle',
+        elProps: undefined,
     },
 );
 
@@ -45,7 +45,7 @@ const emits = defineEmits<{
  * 动态组件
  */
 const isComponent = computed<Component>(() => {
-    return props.type === 'cycle' ? markRaw(ElRadio) : markRaw(ElRadioButton);
+    return props.type === 'button' ? markRaw(ElRadioButton) : markRaw(ElRadio);
 });
 
 /**

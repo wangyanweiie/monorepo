@@ -17,7 +17,7 @@ export const menu2Routes: RouteRecordRaw = {
             component: () => import('@dev/views/menu2/demo1.vue'),
             meta: {
                 title: 'menu2-demo1',
-                icon: 'Setting',
+                icon: '',
             },
         },
         {
@@ -26,7 +26,7 @@ export const menu2Routes: RouteRecordRaw = {
             component: () => import('@dev/views/menu2/demo2.vue'),
             meta: {
                 title: 'menu2-demo2',
-                icon: 'Setting',
+                icon: '',
             },
         },
     ],

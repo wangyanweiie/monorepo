@@ -147,8 +147,8 @@ function handleOpen() {
  */
 function handleClose() {
     // 重置表单值
-    formRef.value?.resetFields();
-    modelForm.value = {};
+    // formRef.value?.resetFields();
+    // modelForm.value = {};
     emits('close');
 }
 

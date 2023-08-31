@@ -1,11 +1,10 @@
 <template>
     <div>
-        <!-- 输入框 -->
-        <el-input v-model="str" placeholder="menu1-demo1" class="component"></el-input>
-
         <!-- x-table -->
         <x-table
-            title="x-table"
+            ref="tableRef"
+            header="x-table"
+            title="."
             show-index
             selectable
             :selected-list="selectedList"
@@ -23,7 +22,9 @@
 
         <!-- x-table-v2 -->
         <x-table-v2
-            title="x-table-v2"
+            ref="tableV2Ref"
+            header="x-table-v2"
+            title="."
             height="300px"
             show-index
             selectable
@@ -45,8 +46,6 @@
 import XTable from '@/table/index.vue';
 import XTableV2 from '@/table-v2/index.vue';
 
-const str = ref<string>('');
-
 /**
  * 选中列表
  */
@@ -55,6 +54,12 @@ const selectedList = ref([
         id: '11',
     },
 ]);
+
+/**
+ * table ref
+ */
+const tableRef = ref();
+const tableV2Ref = ref();
 
 /**
  * 表格列配置

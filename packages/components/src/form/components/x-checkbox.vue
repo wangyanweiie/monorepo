@@ -1,14 +1,14 @@
 <template>
     <div>
-        <el-checkbox v-model="isAllChoose" :indeterminate="isIndeterminate" @change="handleCheckAllChange">
+        <el-checkbox v-if="allChoose" v-model="isAllChoose" :indeterminate="isIndeterminate" @change="handleAllChoose">
             全选
         </el-checkbox>
 
         <el-checkbox-group
-            :model-value="checkedOptions"
+            :model-value="checkedValue"
             v-bind="elProps"
-            @update:model-value="updateData"
             @change="handleChange"
+            @update:model-value="updateData"
         >
             <component :is="isComponent" v-for="(option, index) in options" :key="index" v-bind="option">
                 {{ option.labelName }}
@@ -35,16 +35,16 @@ const props = withDefaults(
     defineProps<{
         modelValue?: CheckboxGroupValueType;
         options?: CheckBoxOption[];
-        elProps?: Partial<CheckboxGroupProps>;
         type?: CheckboxType;
         allChoose?: boolean;
+        elProps?: Partial<CheckboxGroupProps>;
     }>(),
     {
         modelValue: undefined,
         options: () => [],
-        elProps: undefined,
         type: 'box',
         allChoose: false,
+        elProps: undefined,
     },
 );
 
@@ -60,13 +60,13 @@ const emits = defineEmits<{
  * 动态组件
  */
 const isComponent = computed<Component>(() => {
-    return props.type === 'box' ? markRaw(ElCheckbox) : markRaw(ElCheckboxButton);
+    return props.type === 'button' ? markRaw(ElCheckboxButton) : markRaw(ElCheckbox);
 });
 
 /**
- * 是否全选
+ * 全选状态
  */
-const isAllChoose = ref(props.allChoose ? true : false);
+const isAllChoose = ref();
 
 /**
  * 半选状态
@@ -76,7 +76,7 @@ const isIndeterminate = ref(false);
 /**
  * 选中的值
  */
-const checkedOptions = ref<any>();
+const checkedValue = ref<any>(props.modelValue);
 const checkedAll = props.options.map(item => item.label);
 
 /**
@@ -84,18 +84,20 @@ const checkedAll = props.options.map(item => item.label);
  * @param val 改变选中值
  */
 function handleChange(val: CheckboxValueType[]): void {
-    checkedOptions.value = val;
+    checkedValue.value = val;
+
     isAllChoose.value = val.length === props.options.length;
     isIndeterminate.value = val.length > 0 && val.length < props.options.length;
-    emits('change', checkedOptions.value as CheckboxGroupValueType);
+    emits('change', checkedValue.value as CheckboxGroupValueType);
 }
 
 /**
  * 全选
  */
-function handleCheckAllChange(val: CheckboxValueType): void {
-    checkedOptions.value = val ? checkedAll : [];
+function handleAllChoose(val: CheckboxValueType): void {
+    checkedValue.value = val ? checkedAll : [];
     isIndeterminate.value = false;
+    emits('update:modelValue', checkedValue.value);
 }
 
 /**
@@ -104,4 +106,11 @@ function handleCheckAllChange(val: CheckboxValueType): void {
 function updateData(val: CheckboxGroupValueType): void {
     emits('update:modelValue', val);
 }
+
+/**
+ * 监听
+ */
+watchEffect(() => {
+    checkedValue.value = props.modelValue;
+});
 </script>
