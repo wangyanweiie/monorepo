@@ -4,12 +4,12 @@
             <x-form v-model="form" :el-form-props="elFromProps" :schemas="schemas"> </x-form>
 
             <el-button @click="handleDefault"> DEFAULT </el-button>
-            <el-button @click="handleClear"> EMPTY </el-button>
+            <el-button @click="handleRest"> REST </el-button>
             <el-button type="primary" @click="handleTest"> TEST </el-button>
         </el-card>
 
         <x-search-form
-            v-model="form"
+            v-model="searchForm"
             :schemas="searchSchemas"
             :el-form-props="elFromProps"
             header="x-search-form"
@@ -17,12 +17,6 @@
             @search="handleSearch"
         >
         </x-search-form>
-
-        <!-- <x-table
-            ref="tableRef"
-            :columns="columns"
-            :custom-table-data="tableData"
-        ></x-table> -->
 
         <el-card header="x-dialog-form" shadow="hover" class="component">
             <el-button @click="openDialog">打开弹窗</el-button>
@@ -50,10 +44,17 @@ interface Form {
     text: string;
     number: number;
     switch: boolean;
-    date: string;
-    dateTime: string;
-    daterange: string[];
+    date?: string;
+    dateTime?: string;
+    daterange?: string[];
 }
+
+/**
+ * form props
+ */
+const elFromProps: Partial<FormProps> = {
+    labelWidth: '100px',
+};
 
 /**
  * form 表单
@@ -64,15 +65,7 @@ const form = ref<Form>({
     switch: false,
     date: '',
     dateTime: '',
-    daterange: [],
 });
-
-/**
- * form props
- */
-const elFromProps: Partial<FormProps> = {
-    labelWidth: '100px',
-};
 
 /**
  * 表单配置
@@ -143,7 +136,7 @@ function handleDefault() {
 /**
  * 清空
  */
-function handleClear() {
+function handleRest() {
     form.value = {
         text: '',
         number: NaN,
@@ -160,6 +153,16 @@ function handleClear() {
 function handleTest() {
     console.log('form', form.value);
 }
+
+/**
+ * searchForm 查询表单
+ */
+const searchForm = ref<Form>({
+    text: '',
+    number: NaN,
+    switch: false,
+    daterange: [],
+});
 
 /**
  * 查询表单配置

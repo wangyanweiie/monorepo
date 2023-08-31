@@ -2,7 +2,7 @@
     <el-card :header="header" :shadow="shadow" :body-style="bodyStyle" class="table">
         <!-- 顶部区域 -->
         <div class="table__header">
-            <div v-if="title" class="table__header__title">
+            <div class="table__header__title">
                 <slot name="title">
                     <span>{{ title }}</span>
 
@@ -17,7 +17,6 @@
             <el-scrollbar>
                 <div class="table__header__operation">
                     <slot name="operation" :checked-rows="selectedRows"></slot>
-
                     <table-setting v-model="tableColumns" @reload="loadData(searchData)" />
                 </div>
             </el-scrollbar>
@@ -275,7 +274,7 @@ defineExpose({
             justify-content: left;
 
             span {
-                font-size: 18px;
+                font-size: 17px;
                 font-weight: bold;
             }
 

@@ -14,7 +14,7 @@
 
         <el-card shadow="hover" class="component">
             <el-button @click="handleDefault"> DEFAULT </el-button>
-            <el-button @click="handleClear"> EMPTY </el-button>
+            <el-button @click="handleRest"> REST </el-button>
             <el-button type="primary" @click="handleTest"> TEST </el-button>
         </el-card>
     </div>
@@ -94,7 +94,7 @@ function handleDefault() {
 /**
  * 清空
  */
-function handleClear() {
+function handleRest() {
     radioValue.value = '';
     checkboxValue.value = [];
     selectValue.value = '';

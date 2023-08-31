@@ -1,7 +1,7 @@
 <template>
     <div>
         <el-card header="x-description" shadow="hover" class="component">
-            <x-description :columns="columns" :data="data" size="small"></x-description>
+            <x-description :columns="columns" :data="data"></x-description>
         </el-card>
     </div>
 </template>

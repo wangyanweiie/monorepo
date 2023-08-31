@@ -4,13 +4,11 @@
         <x-table
             ref="tableRef"
             header="x-table"
-            title="."
             show-index
             selectable
             :selected-list="selectedList"
             :columns="columns"
             :data="data"
-            :divide-page="true"
             row-key="id"
             class="component"
         >
@@ -24,13 +22,11 @@
         <x-table-v2
             ref="tableV2Ref"
             header="x-table-v2"
-            title="."
             height="300px"
             show-index
             selectable
             :columns="columnsV2"
             :data="data"
-            :divide-page="true"
             row-key="id"
             class="component"
         >

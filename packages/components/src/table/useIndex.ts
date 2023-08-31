@@ -236,12 +236,12 @@ export default function useIndex(props: XTableProp) {
     }
 
     /**
-     * 是否含有操作栏
+     * 是否存在操作列
      */
     const hasActionBtn = ref<boolean>(true);
 
     /**
-     * 操作栏宽度
+     * 操作列的宽度
      */
     const actionsWidth = ref<number>(0);
 
@@ -249,11 +249,16 @@ export default function useIndex(props: XTableProp) {
      * action buttons
      */
     function actionButtons(row: Record<string, any>, index: number): ActionButton[] {
-        const buttons = props.actions(row, index);
+        let buttons: any[] = [];
 
+        if (typeof props.actions === 'function') {
+            buttons = props.actions(row, index);
+        }
+
+        // 更新是否展示操作列
         hasActionBtn.value = !!buttons.length;
 
-        // 计算操作列宽
+        // 计算操作列的宽度
         const width =
             buttons.reduce((preValue: number, currentValue: ActionButton) => {
                 return preValue + (currentValue.label?.length ?? 0);
