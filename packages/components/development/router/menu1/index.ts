@@ -11,7 +11,7 @@ export const menu1Routes: RouteRecordRaw = {
     redirect: '/menu1/sub',
     meta: {
         title: 'menu1',
-        icon: 'Setting',
+        icon: 'FolderOpened',
     },
     children: [
         {

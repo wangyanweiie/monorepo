@@ -2,6 +2,7 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 import appLayout from '@dev/layout/layout.vue';
 import { menu1Routes } from './menu1';
 import { menu2Routes } from './menu2';
+import { menu3Routes } from './menu3';
 
 /**
  * menu route
@@ -13,11 +14,12 @@ export const menuRoutes: RouteRecordRaw[] = [
         component: () => import('@dev/views/home/index.vue'),
         meta: {
             title: '首页',
-            icon: 'Folder',
+            icon: 'HomeFilled',
         },
     },
     menu1Routes,
     menu2Routes,
+    menu3Routes,
 ];
 
 /**

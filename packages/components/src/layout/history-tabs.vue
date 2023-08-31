@@ -41,11 +41,11 @@
         </span>
 
         <!-- setting icon -->
-        <span class="icon-button">
+        <!-- <span class="icon-button">
             <span>
                 <setting></setting>
             </span>
-        </span>
+        </span> -->
     </div>
 </template>
 

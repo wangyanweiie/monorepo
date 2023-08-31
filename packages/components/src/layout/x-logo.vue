@@ -1,6 +1,6 @@
 <template>
     <div class="x-logo">
-        <img width="40" height="40" :src="logo" :alt="alt" />
+        <img width="30" height="30" :src="logo" :alt="alt" />
         <div class="x-logo-title" :class="logoTitleClass">{{ title }}</div>
     </div>
 </template>

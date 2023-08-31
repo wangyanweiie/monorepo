@@ -8,10 +8,12 @@ import XTableV2 from './table-v2/index.vue';
 import XSearchForm from './form/x-search-form.vue';
 import XDialogForm from './form/x-dialog-form.vue';
 import XForm from './form/x-form.vue';
+import XDescription from './description/index.vue';
 import { generateActiveRoutes, generateCacheList, generateShowMenus } from './utils/router-helper';
 
 export * from './form/interface';
 export * from './table/interface';
+export * from './description/interface';
 
 export {
     XLayout,
@@ -24,6 +26,7 @@ export {
     XSearchForm,
     XDialogForm,
     XForm,
+    XDescription,
     generateActiveRoutes,
     generateCacheList,
     generateShowMenus,

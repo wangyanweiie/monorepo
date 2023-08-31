@@ -88,7 +88,7 @@ export interface XTableV2Prop {
 /**
  * table-v2 表格列配置
  */
-export interface ColumnItem {
+export interface XTableV2Column {
     /** 表头字段名 */
     key: string;
     dateKey: string;
@@ -100,13 +100,4 @@ export interface ColumnItem {
     align?: 'left' | 'center' | 'right';
     /** 渲染函数 */
     cellRenderer?: any;
-
-    [key: string]: any;
-}
-
-/**
- * 表格数据类型
- */
-export interface DataType {
-    [key: string]: number | string | undefined | boolean | null | Array<DataType>;
 }
