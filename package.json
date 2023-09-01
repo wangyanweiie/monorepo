@@ -24,7 +24,7 @@
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
         "@custom/commitlint-config": "workspace:*",
-        "@custom/app-template": "workspace:*",
+        "@custom/generate-template": "workspace:*",
         "@types/node": "^20.5.3",
         "@vue/tsconfig": "^0.4.0",
         "husky": "^8.0.3",
