@@ -16,7 +16,7 @@ const downloadGitRepo = require('download-git-repo');
 const package = require('../package.json');
 const { getGitReposList } = require('./api.js');
 
-console.log(chalk.green(figlet.textSync('APP TEMPLATE', { horizontalLayout: 'full' })));
+console.log(chalk.green(figlet.textSync('TEMPLATE', { horizontalLayout: 'full' })));
 
 /**
  * 以下代码使用了 commander 库来解析命令行参数，并定义了 create 命令；

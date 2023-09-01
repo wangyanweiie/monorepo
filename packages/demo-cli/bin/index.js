@@ -14,12 +14,12 @@ const { inquirerPrompt } = require('./inquirer');
 const { install } = require('./manager');
 const { checkMkdirExists, copyDir, copyFile, copyTemplate } = require('./copy');
 
-console.log(chalk.green(figlet.textSync('COPY CLI', { horizontalLayout: 'full' })));
+console.log(chalk.green(figlet.textSync('DEMO CLI', { horizontalLayout: 'full' })));
 
 /**
- * 脚手架提供的 mortal 命令后面还可以设置参数，标准的脚手架命令参数需要支持两种格式：
- *   - mortal --name=orderPage
- *   - mortal --name orderPage
+ * 脚手架提供的 demo 命令后面还可以设置参数，标准的脚手架命令参数需要支持两种格式：
+ *   - demo --name=orderPage
+ *   - demo --name orderPage
  * 如果通过 process.argv 来获取，要额外处理两种不同的命令参数格式，这里推荐 yargs 开源库来解析命令参数
  *
  * yargs 提供的 command 方法来设置一些子命令，让每个子命令对应各自功能，各司其职：
@@ -78,7 +78,7 @@ yargs.command(
                  *   - 若 to 以 ../ 开头，拼接前面的路径，且不含最后一节路径；
                  *   - 若 to 以 ./ 开头或者没有符号，则拼接前面路径。
                  *
-                 * __dirname <==> 用来动态获取当前文件模块所属目录的绝对路径。（D:\monorepo\packages\mortal-cli\bin）
+                 * __dirname <==> 用来动态获取当前文件模块所属目录的绝对路径。（D:\monorepo\packages\demo-cli\bin）
                  * process.cwd() <==> 当前 Node.js 进程执行时的文件所属目录的绝对路径。（D:\monorepo\apps\demo）
                  */
 

@@ -6,7 +6,7 @@
     "scripts": {
         "eslint": "eslint src --ext .vue,.ts,.js --fix",
         "format": "prettier --write \"./**/*.{html,vue,ts,js,json,md,less,sass,scss,sty}\"",
-        "mortal": "mortal create"
+        "demo": "demo create"
     },
     "keywords": [],
     "author": "",
@@ -18,7 +18,7 @@
         "vue": "^3.3.4"
     },
     "devDependencies": {
-        "@custom/mortal-cli": "workspace:*",
+        "@custom/demo-cli": "workspace:*",
         "@custom/eslint-config": "workspace:*"
     }
 }

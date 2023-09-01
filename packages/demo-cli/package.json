@@ -1,5 +1,5 @@
 {
-    "name": "@custom/mortal-cli",
+    "name": "@custom/demo-cli",
     "version": "1.0.0",
     "description": "拷贝文件",
     "scripts": {
@@ -15,7 +15,7 @@
     "author": "wyw",
     "license": "ISC",
     "bin": {
-        "mortal": "./bin/index.js"
+        "demo": "./bin/index.js"
     },
     "files": [
         "bin"

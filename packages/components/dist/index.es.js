@@ -31481,7 +31481,7 @@ const xse = /* @__PURE__ */ X({
   props: {
     modelValue: { type: Boolean, default: !1 },
     title: { default: "新增" },
-    width: { default: void 0 },
+    width: { default: "40%" },
     data: { default: () => ({}) },
     schemas: { default: () => [] },
     elFormProps: { default: () => ({ labelWidth: "120px" }) },

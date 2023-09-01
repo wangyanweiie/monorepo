@@ -19,7 +19,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     };
     width: {
         type: globalThis.PropType<string | number>;
-        default: undefined;
+        default: string;
     };
     modelValue: {
         type: globalThis.PropType<boolean>;
@@ -64,7 +64,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     };
     width: {
         type: globalThis.PropType<string | number>;
-        default: undefined;
+        default: string;
     };
     modelValue: {
         type: globalThis.PropType<boolean>;

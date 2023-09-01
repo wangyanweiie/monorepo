@@ -3,13 +3,17 @@
     "version": "1.0.0",
     "description": "monorepo template",
     "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1",
         "prepare": "husky install",
+        "preinstall": "npx only-allow pnpm",
         "clean": "pnpm rm -rf node_modules **/*/node_modules",
         "template": "template create"
     },
     "keywords": [
-        "monorepo"
+        "monorepo",
+        "vue3",
+        "typescript",
+        "vite",
+        "element-plus"
     ],
     "author": "wyw",
     "license": "ISC",
@@ -24,6 +28,7 @@
         "@types/node": "^20.5.3",
         "@vue/tsconfig": "^0.4.0",
         "husky": "^8.0.3",
-        "lint-staged": "^14.0.1"
+        "lint-staged": "^14.0.1",
+        "prettier": "^3.0.2"
     }
 }
