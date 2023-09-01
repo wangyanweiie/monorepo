@@ -1,12 +1,22 @@
 <template>
     <div class="form">
-        <h2 class="form__title">登录</h2>
         <el-form ref="formRef" :model="form" :rules="rules">
             <el-form-item prop="account">
                 <el-input v-model="form.account" placeholder="账号"></el-input>
             </el-form-item>
             <el-form-item prop="password">
                 <el-input v-model="form.password" show-password placeholder="密码"></el-input>
+            </el-form-item>
+            <el-form-item prop="companyId">
+                <el-select v-model="form.companyId" placeholder="公司" :style="{ width: '100%' }">
+                    <el-option
+                        v-for="items in companyList"
+                        :key="items.value"
+                        :label="items.label"
+                        :value="items.value"
+                    >
+                    </el-option>
+                </el-select>
             </el-form-item>
         </el-form>
 
@@ -21,10 +31,12 @@ import { to } from '@/utils/await-to';
 import type { FormInstance } from 'element-plus';
 import { useUserStore } from '@/store/user-info';
 import { usePermissionStore } from '@/store/permission';
+import dropdownAPI from '@/api/dropdown';
+import RequestAPI from '@/api/login';
 
 const router = useRouter();
-const permissionStore = usePermissionStore();
-const { handleLogin } = useUserStore();
+const { setPermission, setActiveRouteList } = usePermissionStore();
+const { setToken, setUserInfo } = useUserStore();
 
 /**
  * 登录提交表单
@@ -32,6 +44,7 @@ const { handleLogin } = useUserStore();
 interface Form {
     account: string;
     password: string;
+    companyId: string;
 }
 
 /**
@@ -45,6 +58,7 @@ const formRef = ref<FormInstance>();
 const form = reactive<Form>({
     account: '',
     password: '',
+    companyId: '',
 });
 
 /**
@@ -53,6 +67,7 @@ const form = reactive<Form>({
 const rules = {
     account: [{ required: true, message: '账号不能为空' }],
     password: [{ required: true, message: '密码不能为空' }],
+    companyId: [{ required: true, message: '公司不能为空' }],
 };
 
 /**
@@ -72,16 +87,19 @@ async function login(): Promise<void> {
     }
 
     loading.value = true;
-    const userInfo = await handleLogin(form);
+    const res = await RequestAPI.login(form);
 
-    if (!userInfo) {
+    if (!res) {
         loading.value = false;
         return;
     }
 
     loading.value = false;
-    permissionStore.setPermission(userInfo.pcPerms);
-    permissionStore.setActiveRouteList();
+
+    setToken(res.token);
+    setUserInfo(res);
+    setPermission(res?.pcPerms);
+    setActiveRouteList();
 
     // 重定向
     const redirectPath = router.currentRoute.value.query.redirect;
@@ -91,6 +109,24 @@ async function login(): Promise<void> {
         router.push({ path: '/' });
     }
 }
+
+/**
+ * 公司列表
+ */
+const companyList = ref<any>([]);
+
+/**
+ * 页面渲染
+ */
+onMounted(async () => {
+    const res = await dropdownAPI.getCompanyName();
+
+    if (!res) {
+        return false;
+    }
+
+    companyList.value = res;
+});
 </script>
 
 <style lang="scss" scoped>

@@ -1,33 +1,51 @@
 import type { XFormItemSchema, XFormInstance } from '@custom/components';
 import { OPERATION_NOTICE } from '@custom/utils/src/index';
 import { ElMessage } from 'element-plus';
-import { getUserInfo } from '@/utils/storage';
 import { confirmExitMessage } from '@/utils/confirm-message';
+import { getUserInfo, getUserToken } from '@/utils/storage';
 import { useUserStore } from '@/store/user-info';
+import router from '@/router';
 import RequestAPI from '@/api/login';
 
 export function useConf() {
+    const token = getUserToken();
     const userInfo = getUserInfo();
+    const { clearCache } = useUserStore();
+
+    /**
+     * 下拉列表
+     */
     const dropdownItems = [
         { title: '修改密码', onClick: openDialog },
         { title: '注销', onClick: logout },
     ];
-
-    const { handleLogout } = useUserStore();
 
     /**
      * 退出登录
      */
     async function logout() {
         const confirm = await confirmExitMessage();
-        if (!confirm) return;
-        await handleLogout();
+
+        if (!confirm) {
+            return;
+        }
+
+        if (!token) {
+            return;
+        }
+
+        const res = await RequestAPI.logout();
+
+        if (res) {
+            clearCache();
+            router.push(`/login`);
+        }
     }
 
     /**
      * 表单配置
      */
-    const baseSchemas: XFormItemSchema[] = [
+    const schemas: XFormItemSchema[] = [
         {
             label: '旧密码',
             prop: 'oldPassword',
@@ -51,12 +69,12 @@ export function useConf() {
     /**
      * form ref
      */
-    const passwordFormRef = ref<XFormInstance>();
+    const formRef = ref<XFormInstance>();
 
     /**
      * form
      */
-    const passwordFormData = ref<Record<string, string>>({
+    const form = ref<Record<string, string>>({
         newPassword: '',
         oldPassword: '',
         userId: '',
@@ -65,55 +83,62 @@ export function useConf() {
     /**
      * 弹窗是否展示
      */
-    const passwordVisible = ref<boolean>(false);
+    const visible = ref<boolean>(false);
 
     /**
      * 打开弹窗
      */
     function openDialog() {
-        passwordFormData.value.userId = userInfo.id as string;
-        passwordVisible.value = true;
+        form.value.userId = userInfo.id as string;
+        visible.value = true;
     }
 
     /**
      * loading
      */
-    const passwordLoading = ref<boolean>(false);
+    const loading = ref<boolean>(false);
 
     /**
      * 修改密码
      */
-    async function handleChangePassword(): Promise<void> {
+    async function changePassword(): Promise<void> {
         // 表单校验
-        const valid = await passwordFormRef.value?.validate();
+        const valid = await formRef.value?.validate();
 
         if (!valid) {
             return;
         }
 
-        passwordLoading.value = true;
-        const res = await RequestAPI.updatePassword(passwordFormData.value);
+        loading.value = true;
+        const res = await RequestAPI.updatePassword(form.value);
 
         if (!res) {
-            passwordLoading.value = false;
             ElMessage.error(OPERATION_NOTICE.OPERATE_ERROR);
+            loading.value = false;
             return;
         }
 
         ElMessage.success(OPERATION_NOTICE.OPERATE_SUCCESS);
-        passwordLoading.value = false;
-        passwordVisible.value = false;
-        await handleLogout();
+        loading.value = false;
+        visible.value = false;
+
+        // 退出登录
+        const result = await RequestAPI.logout();
+
+        if (result) {
+            clearCache();
+            router.push(`/login`);
+        }
     }
 
     return {
         userInfo,
         dropdownItems,
-        baseSchemas,
-        passwordVisible,
-        passwordFormRef,
-        passwordLoading,
-        passwordFormData,
-        handleChangePassword,
+        schemas,
+        visible,
+        formRef,
+        loading,
+        form,
+        changePassword,
     };
 }

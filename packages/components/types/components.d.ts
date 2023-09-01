@@ -19,6 +19,7 @@ declare module 'vue' {
     ElCollapseTransition: typeof import('element-plus/es')['ElCollapseTransition']
     ElColumns: typeof import('element-plus/es')['ElColumns']
     ElColumnsItem: typeof import('element-plus/es')['ElColumnsItem']
+    ElConfigProvider: typeof import('element-plus/es')['ElConfigProvider']
     ElContainer: typeof import('element-plus/es')['ElContainer']
     ElDescription: typeof import('element-plus/es')['ElDescription']
     ElDescriptionItem: typeof import('element-plus/es')['ElDescriptionItem']

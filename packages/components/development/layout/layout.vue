@@ -1,18 +1,21 @@
 <template>
-    <x-layout :routes="showMenus">
-        <template #logo="{ collapsed }">
-            <x-logo logo="/logo.jpg" title="数字工厂" :collapsed="collapsed"></x-logo>
-        </template>
+    <el-config-provider :locale="zhCn">
+        <x-layout :routes="showMenus">
+            <template #logo="{ collapsed }">
+                <x-logo logo="/logo.png" title="Development" :collapsed="collapsed"></x-logo>
+            </template>
 
-        <template #header-right>
-            <x-user user-name="admin"></x-user>
-        </template>
-    </x-layout>
+            <template #header-right>
+                <x-user user-name="admin"></x-user>
+            </template>
+        </x-layout>
+    </el-config-provider>
 </template>
 
 <script setup lang="ts">
-import { XLayout, XLogo, XUser } from '../../src/index';
+import zhCn from 'element-plus/es/locale/lang/zh-cn';
 import { usePermissionStore } from '../store/permission';
+import { XLayout, XLogo, XUser } from '../../src/index';
 
 const { showMenus } = usePermissionStore();
 </script>

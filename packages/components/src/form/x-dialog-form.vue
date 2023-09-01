@@ -73,7 +73,7 @@ const props = withDefaults(
     {
         modelValue: false,
         title: '新增',
-        width: undefined,
+        width: '40%',
         data: () => ({}),
         schemas: () => [],
         elFormProps: () => ({ labelWidth: '120px' }),

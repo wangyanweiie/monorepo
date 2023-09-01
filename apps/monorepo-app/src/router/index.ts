@@ -1,14 +1,13 @@
 import { createWebHistory, createRouter, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router';
-import AppLayout from '@/layout/app-layout.vue';
+import appLayout from '@/layout/app-layout.vue';
 import { LOCAL_USER_INFO_KEY } from '@/constant/global';
 import store from 'store2';
-import type { CacheUser } from '@/api';
 
 export const menuRoutes: RouteRecordRaw[] = [
     {
         path: '/home',
         name: 'home',
-        component: () => import('@/views/home/home.vue'),
+        component: () => import('@/views/home/index.vue'),
         meta: {
             title: '首页',
             icon: 'Folder',
@@ -23,7 +22,7 @@ const routes: RouteRecordRaw[] = [
     {
         path: '/',
         name: '/',
-        component: AppLayout,
+        component: appLayout,
         redirect: '/home',
         meta: {
             icon: 'HomeFilled',
@@ -33,7 +32,7 @@ const routes: RouteRecordRaw[] = [
     },
     {
         path: '/login',
-        component: () => import('@/views/login/login.vue'),
+        component: () => import('@/views/login/index.vue'),
         meta: {
             title: '登录',
         },
@@ -64,7 +63,7 @@ interface BeforeEachFunc {
 }
 
 const routerBeforeEachFunc: BeforeEachFunc = (to, from, next) => {
-    const userInfo = store.local.get(LOCAL_USER_INFO_KEY) as CacheUser;
+    const userInfo = store.local.get(LOCAL_USER_INFO_KEY);
     if (to.path !== '/login' && !userInfo) {
         next({ path: '/login', query: { redirect: to.fullPath } });
     } else {

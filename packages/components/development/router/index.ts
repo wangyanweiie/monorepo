@@ -14,7 +14,7 @@ export const menuRoutes: RouteRecordRaw[] = [
         component: () => import('@dev/views/home/index.vue'),
         meta: {
             title: '首页',
-            icon: 'HomeFilled',
+            icon: 'Folder',
         },
     },
     menu1Routes,
