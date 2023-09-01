@@ -1,5 +1,5 @@
 import { createWebHistory, createRouter, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router';
-import appLayout from '@/layout/app-layout.vue';
+import appLayout from '@/layout/index.vue';
 import { LOCAL_USER_INFO_KEY } from '@/constant/global';
 import store from 'store2';
 

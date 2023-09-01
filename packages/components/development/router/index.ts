@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router';
-import appLayout from '@dev/layout/layout.vue';
+import appLayout from '@dev/layout/index.vue';
 import { menu1Routes } from './menu1';
 import { menu2Routes } from './menu2';
 import { menu3Routes } from './menu3';

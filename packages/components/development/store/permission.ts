@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia';
 import type { RouteRecordRaw } from 'vue-router';
 import { generateActiveRoutes, generateCacheList, generateShowMenus } from '@/index';
+import router from '@dev/router/index';
+import appLayout from '@dev/layout/index.vue';
 
 /**
  * 权限缓存状态
@@ -120,6 +122,22 @@ export const usePermissionStore = defineStore('permission', () => {
         return routes;
     }
 
+    /**
+     * 动态加载路由
+     */
+    function setActiveRouteList() {
+        router.addRoute({
+            path: '/',
+            name: '/',
+            component: markRaw(appLayout),
+            redirect: activeRoutes.value[0].path,
+            meta: {
+                title: '/',
+            },
+            children: activeRoutes.value,
+        });
+    }
+
     return {
         usable,
         enablePermission,
@@ -135,5 +153,6 @@ export const usePermissionStore = defineStore('permission', () => {
         cacheList,
         showMenus,
         getPermissionMenus,
+        setActiveRouteList,
     };
 });
