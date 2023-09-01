@@ -8,14 +8,15 @@
     ],
     "exclude": [
         "node_modules",
-            "dist"
-        ],
+        "dist"
+    ],
     "compilerOptions": {
         "ignoreDeprecations": "5.0",
         "baseUrl": "./",
         "types": [
             "node",
             "vite/client",
+            // "element-plus/global",
             "unplugin-icons/types/vue",
             "unplugin-vue-define-options/macros-global"
         ],

@@ -82,7 +82,7 @@ module.exports = {
          */
         'subject-empty': [2, 'never'],
         'subject-min-length': [2, 'always', 2],
-        'subject-max-length': [2, 'always', 20],
+        'subject-max-length': [2, 'always', 50],
         'subject-case': [
             2,
             'always',
