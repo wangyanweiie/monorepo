@@ -1,9 +1,5 @@
 import { type RadioGroupProps } from 'element-plus';
-import type { RadioOption, RadioType } from '../interface';
-/**
- * value type
- */
-type ValueType = string | number | boolean | undefined;
+import type { RadioType, RadioValueType, RadioOption } from '../interface';
 declare const _default: import("vue").DefineComponent<{
     type: {
         type: globalThis.PropType<RadioType>;
@@ -22,8 +18,8 @@ declare const _default: import("vue").DefineComponent<{
         default: undefined;
     };
 }, {}, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {
-    "update:modelValue": (value: ValueType) => void;
-    change: (value: ValueType) => void;
+    "update:modelValue": (value: RadioValueType) => void;
+    change: (value: RadioValueType) => void;
 }, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     type: {
         type: globalThis.PropType<RadioType>;
@@ -42,8 +38,8 @@ declare const _default: import("vue").DefineComponent<{
         default: undefined;
     };
 }>> & {
-    onChange?: ((value: ValueType) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: ValueType) => any) | undefined;
+    onChange?: ((value: RadioValueType) => any) | undefined;
+    "onUpdate:modelValue"?: ((value: RadioValueType) => any) | undefined;
 }, {
     type: RadioType;
     modelValue: string | number | boolean;

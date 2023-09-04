@@ -21,13 +21,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string | number>;
         default: string;
     };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
     modelValue: {
         type: globalThis.PropType<boolean>;
         required: true;
-        default: boolean;
-    };
-    loading: {
-        type: globalThis.PropType<boolean>;
         default: boolean;
     };
     schemas: {
@@ -66,13 +66,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string | number>;
         default: string;
     };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
     modelValue: {
         type: globalThis.PropType<boolean>;
         required: true;
-        default: boolean;
-    };
-    loading: {
-        type: globalThis.PropType<boolean>;
         default: boolean;
     };
     schemas: {
@@ -99,8 +99,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     title: string;
     data: any;
     width: string | number;
-    modelValue: boolean;
     loading: boolean;
+    modelValue: boolean;
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
     isShowConfirm: boolean;

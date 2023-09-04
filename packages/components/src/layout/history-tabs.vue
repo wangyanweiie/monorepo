@@ -50,9 +50,10 @@
 </template>
 
 <script setup lang="ts">
-import { DArrowLeft, Close, DArrowRight, RefreshRight, Setting } from '@element-plus/icons-vue';
+import { getCurrentInstance, nextTick, ref } from 'vue';
 import { useRouter, type RouteRecordName } from 'vue-router';
 import { ElScrollbar } from 'element-plus';
+import { DArrowLeft, Close, DArrowRight, RefreshRight, Setting } from '@element-plus/icons-vue';
 
 interface Tab {
     path: string;

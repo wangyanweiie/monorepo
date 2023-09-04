@@ -1,12 +1,6 @@
 import type { FormProps } from 'element-plus';
 import type { XFormInstance, XFormItemSchema } from '../form/interface';
 /**
- * 表单form值
- */
-export interface XFormValue {
-    [key: string]: any;
-}
-/**
  * 扩展 HTMLElement
  */
 export interface FormElement extends HTMLElement {
@@ -27,13 +21,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    modelValue: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
     loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    modelValue: {
+        type: globalThis.PropType<any>;
+        default: undefined;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -71,13 +65,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    modelValue: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
     loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    modelValue: {
+        type: globalThis.PropType<any>;
+        default: undefined;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -108,8 +102,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     onSearch?: ((value: any) => any) | undefined;
 }, {
     header: string;
-    modelValue: any;
     loading: boolean;
+    modelValue: any;
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
     shadow: "hover" | "never" | "always";
