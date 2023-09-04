@@ -42,15 +42,8 @@
 <script setup lang="ts">
 import type { ColProps, FormProps } from 'element-plus';
 import type { XFormInstance, XFormItemSchema } from '../form/interface';
-import XFormItem from '../form/x-form-item.vue';
 import { ArrowDownBold, ArrowUpBold } from '@element-plus/icons-vue';
-
-/**
- * 表单form值
- */
-export interface XFormValue {
-    [key: string]: any;
-}
+import XFormItem from '../form/x-form-item.vue';
 
 /**
  * 扩展 HTMLElement
@@ -134,12 +127,12 @@ const collapsed = ref(true);
  * 计算 form 表单字段数量
  */
 const countFormItems = computed(() => {
+    const showMore = props.schemas.length > 7 ? true : false;
     const count = props.schemas.length && collapsed.value === true ? 7 : props.schemas.length;
-    const showMore = count > 7 ? true : false;
 
     return {
-        count,
         showMore,
+        count,
     };
 });
 

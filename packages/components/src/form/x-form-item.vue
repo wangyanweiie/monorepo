@@ -14,37 +14,32 @@
 </template>
 
 <script setup lang="ts">
-import type { XFormItemSchema } from './interface';
-import { isNumber, isString, get, set } from 'lodash-es';
+import type { XFormItemSchema, SelectOption } from './interface';
 import { mergeProps, markRaw } from 'vue';
+import { isNumber, isString, get, set } from 'lodash-es';
 import {
-    ElCheckbox,
+    ElDivider,
     ElSwitch,
-    ElCascader,
-    ElDatePicker,
+    ElButton,
+    ElRadio,
+    ElCheckbox,
     ElInput,
     ElInputNumber,
     ElSelectV2,
-    ElButton,
-    ElRadio,
-    ElDivider,
+    ElDatePicker,
+    ElCascader,
 } from 'element-plus';
 import XRadio from './components/x-radio.vue';
 import XSelect from './components/x-select.vue';
-
-interface Options {
-    label: string;
-    value: string | number;
-}
 
 /**
  * props
  */
 const props = withDefaults(
     defineProps<{
-        // 表单配置子项
+        /** 表单配置子项 */
         schema: XFormItemSchema;
-        // form 表单
+        /** form 表单 */
         modelValue: any;
     }>(),
     {
@@ -139,6 +134,7 @@ function handleEnter(): void {
 function handleUpdate(value: string | number | null | undefined): void {
     let selectedValue = value;
 
+    // 文本字符串/数字
     if (isString(currentValue.value)) {
         selectedValue = selectedValue ?? '';
     } else if (isNumber(currentValue.value)) {
@@ -147,6 +143,7 @@ function handleUpdate(value: string | number | null | undefined): void {
         }
     }
 
+    // 下拉
     if (props.schema.components === 'el-select-v2' || props.schema.components === 'x-select') {
         if (componentProps.value.labelSchema) {
             getSelectedLabel(selectedValue);
@@ -250,11 +247,12 @@ function getSelectedLabel(value: any | any[]) {
     if (componentProps.value.multiple) {
         const selectedLabels =
             value
-                .map((id: any) => componentProps.value.options.find((item: Options) => item.value === id))
-                .map((item: Options) => item.label) ?? '';
+                .map((id: any) => componentProps.value.options.find((item: SelectOption) => item.value === id))
+                .map((item: SelectOption) => item.label) ?? '';
         emits('update:modelValue', set(modelForm.value, componentProps.value.labelSchema, selectedLabels.toString()));
     } else {
-        const selectedLabel = componentProps.value.options.find((item: Options) => item.value === value)?.label ?? '';
+        const selectedLabel =
+            componentProps.value.options.find((item: SelectOption) => item.value === value)?.label ?? '';
         emits('update:modelValue', set(modelForm.value, componentProps.value.labelSchema, selectedLabel));
     }
 }

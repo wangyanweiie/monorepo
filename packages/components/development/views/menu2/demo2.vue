@@ -1,13 +1,6 @@
 <template>
     <div>
-        <el-card header="x-form" shadow="hover" class="component">
-            <x-form v-model="form" :el-form-props="elFromProps" :schemas="schemas"> </x-form>
-
-            <el-button @click="handleDefault"> DEFAULT </el-button>
-            <el-button @click="handleRest"> REST </el-button>
-            <el-button type="primary" @click="handleTest"> TEST </el-button>
-        </el-card>
-
+        <!-- search-form -->
         <x-search-form
             v-model="searchForm"
             :schemas="searchSchemas"
@@ -18,6 +11,16 @@
         >
         </x-search-form>
 
+        <!-- form -->
+        <el-card header="x-form" shadow="hover" class="component">
+            <x-form v-model="form" :el-form-props="elFromProps" :schemas="schemas"> </x-form>
+
+            <el-button @click="handleDefault"> DEFAULT </el-button>
+            <el-button @click="handleRest"> REST </el-button>
+            <el-button type="primary" @click="handleTest"> TEST </el-button>
+        </el-card>
+
+        <!-- dialog-form -->
         <el-card header="x-dialog-form" shadow="hover" class="component">
             <el-button @click="openDialog">打开弹窗</el-button>
 
@@ -40,127 +43,23 @@ import XForm from '@/form/x-form.vue';
 import XSearchForm from '@/form/x-search-form.vue';
 import XDialogForm from '@/form/x-dialog-form.vue';
 
-interface Form {
+/**
+ ***************** search from *****************
+ */
+interface SearchForm {
     text: string;
     number: number;
-    switch: boolean;
-    date?: string;
-    dateTime?: string;
-    daterange?: string[];
-}
-
-/**
- * form props
- */
-const elFromProps: Partial<FormProps> = {
-    labelWidth: '100px',
-};
-
-/**
- * form 表单
- */
-const form = ref<Form>({
-    text: '',
-    number: NaN,
-    switch: false,
-    date: '',
-    dateTime: '',
-});
-
-/**
- * 表单配置
- */
-const colProps: Partial<ColProps> = {
-    span: 12,
-};
-const schemas: XFormItemSchema[] = [
-    {
-        label: '文本',
-        prop: 'text',
-        components: 'el-input',
-        colProps,
-    },
-    {
-        label: '数字',
-        prop: 'number',
-        components: 'el-input-number',
-        colProps,
-        elProps: {
-            controlsPosition: 'right',
-        },
-    },
-    {
-        label: '日期',
-        prop: 'date',
-        components: 'el-date-picker',
-        colProps,
-        elProps: {
-            type: 'date',
-            format: 'YYYY-MM-DD',
-            valueFormat: 'YYYY-MM-DD',
-        },
-    },
-    {
-        label: '日期时间',
-        prop: 'dateTime',
-        components: 'el-date-picker',
-        colProps,
-        elProps: {
-            type: 'datetime',
-            format: 'YYYY-MM-DD HH:mm:ss',
-            valueFormat: 'YYYY-MM-DD HH:mm:ss',
-        },
-    },
-    {
-        label: '开关',
-        prop: 'switch',
-        components: 'el-switch',
-        colProps,
-    },
-];
-
-/**
- * 默认值
- */
-function handleDefault() {
-    form.value = {
-        text: '哈哈',
-        number: 18,
-        switch: true,
-        date: '2023-08-31',
-        dateTime: '2023-08-31 12:00:00',
-        daterange: ['2023-08-31', '2024-02-28'],
-    };
-}
-
-/**
- * 清空
- */
-function handleRest() {
-    form.value = {
-        text: '',
-        number: NaN,
-        switch: false,
-        date: '',
-        dateTime: '',
-        daterange: [],
-    };
-}
-
-/**
- * 测试
- */
-function handleTest() {
-    console.log('form', form.value);
+    select: string | number;
+    daterange: string[];
 }
 
 /**
  * searchForm 查询表单
  */
-const searchForm = ref<Form>({
+const searchForm = ref<SearchForm>({
     text: '',
     number: NaN,
-    switch: false,
+    select: '',
     daterange: [],
 });
 
@@ -200,10 +99,16 @@ const searchSchemas: XFormItemSchema[] = [
         },
     },
     {
-        label: '开关',
-        prop: 'switch',
-        components: 'el-switch',
+        label: '下拉',
+        prop: 'select',
+        components: 'el-select-v2',
         colProps: searchProps,
+        elProps: {
+            options: [
+                { label: 'label1', value: 'value1' },
+                { label: 'label2', value: 'value2' },
+            ],
+        },
     },
 ];
 
@@ -215,9 +120,168 @@ function handleSearch(form: any) {
 }
 
 /**
+ ***************** from *****************
+ */
+interface Form {
+    text: string;
+    number: number;
+    radio: string | number;
+    select: string | number;
+    selectLabel: string;
+    switch: boolean;
+    date: string;
+    dateTime: string;
+}
+
+/**
+ * form 表单
+ */
+const form = ref<Form>({
+    text: '',
+    number: NaN,
+    radio: NaN,
+    select: '',
+    selectLabel: '',
+    switch: false,
+    date: '',
+    dateTime: '',
+});
+
+/**
+ * form props
+ */
+const elFromProps: Partial<FormProps> = {
+    labelWidth: '100px',
+};
+
+/**
+ * 表单配置
+ */
+const colProps: Partial<ColProps> = {
+    span: 12,
+};
+const schemas: XFormItemSchema[] = [
+    {
+        label: '文本',
+        prop: 'text',
+        components: 'el-input',
+        colProps,
+    },
+    {
+        label: '数字',
+        prop: 'number',
+        components: 'el-input-number',
+        colProps,
+        elProps: {
+            controlsPosition: 'right',
+        },
+    },
+    {
+        label: '单选',
+        prop: 'radio',
+        components: 'x-radio',
+        colProps,
+        elProps: {
+            options: [
+                { labelName: '是', label: 1 },
+                { labelName: '否', label: 2 },
+            ],
+        },
+    },
+    {
+        label: '下拉',
+        prop: 'select',
+        components: 'el-select-v2',
+        colProps,
+        elProps: {
+            labelSchema: 'selectLabel',
+            options: [
+                { label: 'label1', value: 'value1' },
+                { label: 'label2', value: 'value2' },
+            ],
+        },
+    },
+    {
+        label: '日期',
+        prop: 'date',
+        components: 'el-date-picker',
+        colProps,
+        elProps: {
+            type: 'date',
+            format: 'YYYY-MM-DD',
+            valueFormat: 'YYYY-MM-DD',
+        },
+    },
+    {
+        label: '日期时间',
+        prop: 'dateTime',
+        components: 'el-date-picker',
+        colProps,
+        elProps: {
+            type: 'datetime',
+            format: 'YYYY-MM-DD HH:mm:ss',
+            valueFormat: 'YYYY-MM-DD HH:mm:ss',
+        },
+    },
+    {
+        label: '开关',
+        prop: 'switch',
+        components: 'el-switch',
+        colProps,
+    },
+];
+
+/**
+ * 默认值
+ */
+function handleDefault() {
+    form.value = {
+        text: '哈哈',
+        number: 18,
+        radio: 1,
+        select: 'value1',
+        selectLabel: 'label1',
+        switch: true,
+        date: '2023-08-31',
+        dateTime: '2023-08-31 12:00:00',
+    };
+}
+
+/**
+ * 清空
+ */
+function handleRest() {
+    form.value = {
+        text: '',
+        number: NaN,
+        radio: NaN,
+        select: '',
+        selectLabel: '',
+        switch: false,
+        date: '',
+        dateTime: '',
+    };
+}
+
+/**
+ * 测试
+ */
+function handleTest() {
+    console.log('form', form.value);
+}
+
+/**
+ ***************** dialog from *****************
+ */
+/**
  * 弹窗是否展示
  */
 const dialogVisible = ref<boolean>(false);
+
+/**
+ * loading
+ */
+const loading = ref<boolean>(false);
 
 /**
  * 打开弹窗
@@ -225,11 +289,6 @@ const dialogVisible = ref<boolean>(false);
 function openDialog() {
     dialogVisible.value = true;
 }
-
-/**
- * loading
- */
-const loading = ref<boolean>(false);
 
 /**
  * 提交
