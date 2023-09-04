@@ -12,11 +12,11 @@ const inquirer = require('inquirer');
 const path = require('path');
 const ora = require('ora');
 const fs = require('fs-extra');
-const downloadGitRepo = require('download-git-repo');
 const package = require('../package.json');
-const { getGitReposList } = require('./api.js');
+const downloadGitRepo = require('download-git-repo');
+const { getGitRepoList } = require('./api.js');
 
-console.log(chalk.green(figlet.textSync('TEMPLATE', { horizontalLayout: 'full' })));
+console.log(chalk.green(figlet.textSync('GENERATE TEMPLATE', { horizontalLayout: 'full' })));
 
 /**
  * 以下代码使用了 commander 库来解析命令行参数，并定义了 create 命令；
@@ -32,7 +32,7 @@ program
         spinner.start(`正在获取模版列表`);
 
         // 2.获取模版列表
-        const templates = await getGitReposList('wangyanweiie');
+        const templates = await getGitRepoList('wangyanweiie');
 
         if (!templates.length) {
             spinner.fail(`获取模版失败`);

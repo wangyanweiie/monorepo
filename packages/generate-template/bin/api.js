@@ -5,7 +5,7 @@ const https = require('https');
  * @param {*} username 用户名
  * @returns
  */
-function getGitReposList(username) {
+function getGitRepoList(username) {
     return new Promise((resolve, reject) => {
         https
             .request(
@@ -25,11 +25,13 @@ function getGitReposList(username) {
                     res.on('end', () => {
                         const list = JSON.parse(data);
                         resolve(
-                            list.map(item => ({
-                                // 组合成模版所需要的 name，value 结构
-                                name: item.name,
-                                value: `https://github.com:${username}/${item.name}`,
-                            })),
+                            list
+                                .filter(item => item.name === 'monorepo-app')
+                                .map(item => ({
+                                    // 先过滤出 monorepo 模版，再组合成模版所需要的 name，value 结构
+                                    name: item.name,
+                                    value: `https://github.com:${username}/${item.name}`,
+                                })),
                         );
                     });
 
@@ -43,5 +45,5 @@ function getGitReposList(username) {
 }
 
 module.exports = {
-    getGitReposList,
+    getGitRepoList,
 };
