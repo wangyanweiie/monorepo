@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { defineConfig } = require('eslint-define-config');
 
 module.exports = defineConfig({

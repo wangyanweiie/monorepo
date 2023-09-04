@@ -6,6 +6,7 @@
         "prepare": "husky install",
         "preinstall": "npx only-allow pnpm",
         "clean": "pnpm rm -rf node_modules **/*/node_modules",
+        "commit": "git add . && git cz",
         "template": "template create"
     },
     "config": {
@@ -20,8 +21,9 @@
         "monorepo",
         "vue3",
         "typescript",
+        "element-plus",
         "vite",
-        "element-plus"
+        "rollup"
     ],
     "author": "wyw",
     "license": "ISC",

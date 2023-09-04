@@ -1,3 +1,4 @@
+// https://github.com/leoforfree/cz-customizable
 const config = require('@custom/cz-config');
 
 module.exports = {

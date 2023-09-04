@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const { getScopes } = require('./get-scopes');
 const scopes = getScopes();
 
