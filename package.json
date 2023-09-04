@@ -8,6 +8,14 @@
         "clean": "pnpm rm -rf node_modules **/*/node_modules",
         "template": "template create"
     },
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-customizable"
+        },
+        "cz-customizable": {
+            "config": "./.cz-config.cjs"
+        }
+    },
     "keywords": [
         "monorepo",
         "vue3",
@@ -24,11 +32,13 @@
         "@commitlint/cli": "^17.7.1",
         "@commitlint/config-conventional": "^17.7.0",
         "@custom/commitlint-config": "workspace:*",
+        "@custom/cz-config": "workspace:*",
         "@custom/generate-template": "workspace:*",
         "@types/node": "^20.5.3",
         "@vue/tsconfig": "^0.4.0",
         "husky": "^8.0.3",
         "lint-staged": "^14.0.1",
-        "prettier": "^3.0.2"
+        "prettier": "^3.0.2",
+        "cz-customizable": "^7.0.0"
     }
 }

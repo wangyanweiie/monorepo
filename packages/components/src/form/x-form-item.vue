@@ -66,16 +66,16 @@ const emits = defineEmits<{
  * 它们可能出于各种各样的原因被使用：有些值不应该是响应式的，例如复杂的第三方类实例或 Vue 组件对象；
  */
 const maps = {
+    'el-divider': markRaw(ElDivider),
+    'el-button': markRaw(ElButton),
+    'el-switch': markRaw(ElSwitch),
+    'el-radio': markRaw(ElRadio),
+    'el-checkbox': markRaw(ElCheckbox),
     'el-input': markRaw(ElInput),
     'el-input-number': markRaw(ElInputNumber),
     'el-select-v2': markRaw(ElSelectV2),
-    'el-checkbox': markRaw(ElCheckbox),
-    'el-radio': markRaw(ElRadio),
-    'el-switch': markRaw(ElSwitch),
-    'el-cascader': markRaw(ElCascader),
     'el-date-picker': markRaw(ElDatePicker),
-    'el-button': markRaw(ElButton),
-    'el-divider': markRaw(ElDivider),
+    'el-cascader': markRaw(ElCascader),
     'x-radio': markRaw(XRadio),
     'x-select': markRaw(XSelect),
 };
