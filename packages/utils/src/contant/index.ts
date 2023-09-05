@@ -42,6 +42,7 @@ enum OPERATION_NOTICE {
     EDIT_ERROR = '编辑失败',
 
     /** 导入 */
+    IMPORT_FILE_TYPE_ERROR = '导入文件类型错误',
     IMPORT_SUCCESS = '导入成功',
     IMPORT_ERROR = '导入失败',
 
