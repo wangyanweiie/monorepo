@@ -62,9 +62,14 @@ enum OPERATION_NOTICE {
     OPERATE_ERROR = '操作失败',
 
     /** 删除 */
-    DELETE_CONFIRM = '是否确认删除?',
+    DELETE_CONFIRM = '是否确认删除？',
     DELETE_SUCCESS = '删除成功',
     DELETE_ERROR = '删除失败',
+
+    /** 重置 */
+    RESET_CONFIRM = '是否确认重置？',
+    RESET_SUCCESS = '重置成功',
+    RESET_ERROR = '重置失败',
 
     /** 退出 */
     LOGOUT_CONFIRM = '是否确认退出？',
