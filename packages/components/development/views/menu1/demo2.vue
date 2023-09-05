@@ -6,9 +6,9 @@
             header="x-table"
             show-index
             selectable
-            :selected-list="selectedList"
             :columns="columns"
             :data="data"
+            :selected-list="selectedList"
             row-key="id"
             class="component"
         >

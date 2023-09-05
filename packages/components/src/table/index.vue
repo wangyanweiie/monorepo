@@ -44,7 +44,7 @@
                     align="center"
                     width="50px"
                     reserve-selection
-                    :selectable="handleRowSelect"
+                    :selectable="selectableValue"
                 />
 
                 <!-- 索引列 -->
@@ -79,8 +79,8 @@
                             <el-button
                                 v-for="(button, index) in actionButtons(row, $index)"
                                 :key="index"
-                                type="primary"
                                 text
+                                type="primary"
                                 v-bind="button"
                             >
                                 {{ button.label }}
@@ -232,6 +232,7 @@ const props = withDefaults(
  * useIndex
  */
 const {
+    tableRef,
     tableLoading,
     tableColumns,
     tableData,
@@ -241,12 +242,12 @@ const {
     selectedCount,
     handleSelectChange,
     handleIndex,
-    handleRowSelect,
+    selectableValue,
     searchData,
     loadData,
     handleSizeChange,
     handleCurrentChange,
-    toggleRowSelection,
+    handleToggleRowSelection,
     hasActionBtn,
     actionsWidth,
     actionButtons,
@@ -256,14 +257,14 @@ const {
 } = useIndex(props);
 
 /**
- * 对外暴露属性/方法
+ * 暴露的属性/方法
  */
 defineExpose({
     loadData,
-    toggleRowSelection,
     getSelectedRows,
     clearSelection,
     getTableData,
+    handleToggleRowSelection,
 });
 </script>
 

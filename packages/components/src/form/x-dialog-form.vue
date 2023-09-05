@@ -12,16 +12,16 @@
             <slot name="title"></slot>
         </template>
 
-        <!-- <x-form
+        <x-form
             ref="formRef"
             :model-value="modelForm"
             :el-form-props="elFormProps"
             :schemas="schemas"
             @update:model-value="handleUpdate"
         >
-        </x-form> -->
+        </x-form>
 
-        <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
+        <!-- <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
             <el-row>
                 <el-col v-for="(schema, index) in schemas" :key="index" :span="12" v-bind="schema.colProps">
                     <x-form-item :model-value="modelForm" :schema="schema" @update:model-value="handleUpdate">
@@ -31,7 +31,7 @@
                     </x-form-item>
                 </el-col>
             </el-row>
-        </el-form>
+        </el-form> -->
 
         <template #footer>
             <slot name="action" :form="modelForm" :form-ref="formRef"></slot>
@@ -46,6 +46,7 @@
 import { computed, ref } from 'vue';
 import type { XFormInstance, XFormItemSchema } from './interface';
 import type { FormProps } from 'element-plus';
+import XForm from './x-form.vue';
 import XFormItem from './x-form-item.vue';
 
 /**

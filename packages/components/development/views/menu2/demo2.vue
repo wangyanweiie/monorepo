@@ -13,7 +13,7 @@
 
         <!-- form -->
         <el-card header="x-form" shadow="hover" class="component">
-            <x-form v-model="form" :el-form-props="elFromProps" :schemas="schemas"> </x-form>
+            <x-form ref="formRef" v-model="form" :el-form-props="elFromProps" :schemas="schemas"> </x-form>
 
             <el-button @click="handleDefault"> DEFAULT </el-button>
             <el-button @click="handleRest"> REST </el-button>
@@ -25,6 +25,7 @@
             <el-button @click="openDialog">打开弹窗</el-button>
 
             <x-dialog-form
+                ref="dialogFormRef"
                 v-model="dialogVisible"
                 v-model:data="form"
                 title="新增"
@@ -124,8 +125,8 @@ function handleSearch(form: any) {
  */
 interface Form {
     text: string;
-    number: number;
-    radio: string | number;
+    number: number | undefined;
+    radio: string | number | undefined;
     select: string | number;
     selectLabel: string;
     switch: boolean;
@@ -134,12 +135,17 @@ interface Form {
 }
 
 /**
+ * form ref
+ */
+const formRef = ref();
+
+/**
  * form 表单
  */
 const form = ref<Form>({
     text: '',
-    number: NaN,
-    radio: NaN,
+    number: undefined,
+    radio: undefined,
     select: '',
     selectLabel: '',
     switch: false,
@@ -166,6 +172,14 @@ const schemas: XFormItemSchema[] = [
         prop: 'text',
         components: 'el-input',
         colProps,
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '文本不能为空',
+                },
+            ],
+        },
     },
     {
         label: '数字',
@@ -174,6 +188,14 @@ const schemas: XFormItemSchema[] = [
         colProps,
         elProps: {
             controlsPosition: 'right',
+        },
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '数字不能为空',
+                },
+            ],
         },
     },
     {
@@ -185,6 +207,14 @@ const schemas: XFormItemSchema[] = [
             options: [
                 { labelName: '是', label: 1 },
                 { labelName: '否', label: 2 },
+            ],
+        },
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '单选不能为空',
+                },
             ],
         },
     },
@@ -200,6 +230,14 @@ const schemas: XFormItemSchema[] = [
                 { label: 'label2', value: 'value2' },
             ],
         },
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '下拉不能为空',
+                },
+            ],
+        },
     },
     {
         label: '日期',
@@ -211,6 +249,14 @@ const schemas: XFormItemSchema[] = [
             format: 'YYYY-MM-DD',
             valueFormat: 'YYYY-MM-DD',
         },
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '日期不能为空',
+                },
+            ],
+        },
     },
     {
         label: '日期时间',
@@ -221,6 +267,14 @@ const schemas: XFormItemSchema[] = [
             type: 'datetime',
             format: 'YYYY-MM-DD HH:mm:ss',
             valueFormat: 'YYYY-MM-DD HH:mm:ss',
+        },
+        elFormItemProps: {
+            rules: [
+                {
+                    required: true,
+                    message: '日期时间不能为空',
+                },
+            ],
         },
     },
     {
@@ -253,8 +307,8 @@ function handleDefault() {
 function handleRest() {
     form.value = {
         text: '',
-        number: NaN,
-        radio: NaN,
+        number: undefined,
+        radio: undefined,
         select: '',
         selectLabel: '',
         switch: false,
@@ -266,13 +320,25 @@ function handleRest() {
 /**
  * 测试
  */
-function handleTest() {
+async function handleTest() {
+    // 表单校验
+    const valid = await formRef.value.validate();
+
+    if (!valid) {
+        return;
+    }
+
     console.log('form', form.value);
 }
 
 /**
  ***************** dialog from *****************
  */
+/**
+ * form ref
+ */
+const dialogFormRef = ref();
+
 /**
  * 弹窗是否展示
  */
@@ -293,7 +359,14 @@ function openDialog() {
 /**
  * 提交
  */
-function handleSubmit(form: any) {
+async function handleSubmit(form: any) {
+    // 表单校验
+    const valid = await dialogFormRef.value.validate();
+
+    if (!valid) {
+        return;
+    }
+
     console.log('dialogForm', form);
 }
 </script>

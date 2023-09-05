@@ -89,7 +89,7 @@ export default function useIndex(props: XTableProp) {
      * 是否可以选中当前行数据
      * @param row 行数据
      */
-    function handleRowSelect(row: Record<string, any>) {
+    function selectableValue(row: Record<string, any>) {
         return row.selected ?? true;
     }
 
@@ -204,13 +204,15 @@ export default function useIndex(props: XTableProp) {
     /**
      * 数据回显勾选
      */
-    function toggleRowSelection(selectedList: any[]) {
+    function handleToggleRowSelection(selectedList: any[]) {
         if (selectedList.length) {
             selectedList.forEach(selected => {
-                tableData.value.find(row => {
+                tableData.value.forEach(row => {
                     if (selected[props.rowKey as string] === row[props.rowKey as string]) {
-                        tableRef.value?.toggleRowSelection(row, true);
-                        // selectedRows.value.push(row);
+                        nextTick(() => {
+                            tableRef.value?.toggleRowSelection(row, true);
+                            selectedRows.value.push(row);
+                        });
                     }
                 });
             });
@@ -230,9 +232,7 @@ export default function useIndex(props: XTableProp) {
             return;
         }
 
-        nextTick(() => {
-            toggleRowSelection(props.selectedList as any[]);
-        });
+        handleToggleRowSelection(props.selectedList as any[]);
     }
 
     /**
@@ -334,6 +334,7 @@ export default function useIndex(props: XTableProp) {
     });
 
     return {
+        tableRef,
         tableLoading,
         tableColumns,
         tableData,
@@ -343,12 +344,12 @@ export default function useIndex(props: XTableProp) {
         selectedCount,
         handleSelectChange,
         handleIndex,
-        handleRowSelect,
+        selectableValue,
         searchData,
         loadData,
         handleSizeChange,
         handleCurrentChange,
-        toggleRowSelection,
+        handleToggleRowSelection,
         hasActionBtn,
         actionsWidth,
         actionButtons,
