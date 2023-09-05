@@ -48,6 +48,9 @@ export function useRefresh(option: UseRefreshOption) {
      */
     watchEffect(() => {
         componentKey.value = route.matched.at(option.matchedIndex)?.path;
+
+        console.log('matchedIndex', option.matchedIndex);
+        console.log('componentKey', componentKey.value);
     });
 
     return {

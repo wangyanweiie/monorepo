@@ -22,7 +22,7 @@ export const menu1Routes: RouteRecordRaw = {
             // component: () => import('@dev/views/menu1/sub/index.vue'),
             component: h(ParentMenuView, {
                 menus: subRoutes,
-                matchIndex: 3,
+                // matchedIndex: 3,
             }),
             meta: {
                 title: 'menu1-sub',

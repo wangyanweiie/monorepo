@@ -1,5 +1,5 @@
 <template>
     <div>
-        <el-card>home</el-card>
+        <el-card shadow="hover">home</el-card>
     </div>
 </template>
