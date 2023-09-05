@@ -1,5 +1,5 @@
 import { ElCheckbox, type CheckboxValueType, type Column, type TableV2Instance } from 'element-plus';
-import type { Pagination, XTableV2Prop } from './interface';
+import type { XTableV2Pagination, XTableV2Prop } from './interface';
 import { ref, unref, computed, onMounted, onUnmounted, h } from 'vue';
 import { cloneDeep } from 'lodash-es';
 
@@ -21,7 +21,7 @@ export default function useIndex(props: XTableV2Prop) {
     /**
      * 分页设置
      */
-    const pagination = ref<Pagination>({
+    const pagination = ref<XTableV2Pagination>({
         pageSize: 10,
         currentPage: 1,
         total: 0,

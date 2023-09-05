@@ -21,7 +21,7 @@ import XFormItem from './x-form-item.vue';
 /**
  * props
  */
-const props = withDefaults(
+withDefaults(
     defineProps<{
         /** form 表单 */
         modelValue: any;

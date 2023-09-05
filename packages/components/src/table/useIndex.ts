@@ -1,5 +1,5 @@
 import type { TableInstance } from 'element-plus';
-import type { Pagination, XTableColumn, ActionButton, XTableProp } from './interface';
+import type { XTablePagination, XTableColumn, XTableActionButton, XTableProp } from './interface';
 import { cloneDeep } from 'lodash-es';
 
 /**
@@ -40,7 +40,7 @@ export default function useIndex(props: XTableProp) {
     /**
      * 分页设置
      */
-    const pagination = ref<Pagination>({
+    const pagination = ref<XTablePagination>({
         pageSize: 10,
         currentPage: 1,
         total: 0,
@@ -248,7 +248,7 @@ export default function useIndex(props: XTableProp) {
     /**
      * action buttons
      */
-    function actionButtons(row: Record<string, any>, index: number): ActionButton[] {
+    function actionButtons(row: Record<string, any>, index: number): XTableActionButton[] {
         let buttons: any[] = [];
 
         if (typeof props.actions === 'function') {
@@ -260,7 +260,7 @@ export default function useIndex(props: XTableProp) {
 
         // 计算操作列的宽度
         const width =
-            buttons.reduce((preValue: number, currentValue: ActionButton) => {
+            buttons.reduce((preValue: number, currentValue: XTableActionButton) => {
                 return preValue + (currentValue.label?.length ?? 0);
             }, 0) * WIDTH_PER_CHAR;
 

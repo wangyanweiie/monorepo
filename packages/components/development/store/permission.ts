@@ -1,7 +1,8 @@
 import { defineStore } from 'pinia';
 import type { RouteRecordRaw } from 'vue-router';
 import { generateActiveRoutes, generateCacheList, generateShowMenus } from '@/index';
-import router from '@dev/router/index';
+import store from 'store2';
+import router, { menuRoutes } from '@dev/router/index';
 import appLayout from '@dev/layout/index.vue';
 
 /**
@@ -123,7 +124,7 @@ export const usePermissionStore = defineStore('permission', () => {
     }
 
     /**
-     * 动态加载路由
+     * FIXME: 动态加载路由？
      */
     function setActiveRouteList() {
         router.addRoute({
@@ -156,3 +157,15 @@ export const usePermissionStore = defineStore('permission', () => {
         setActiveRouteList,
     };
 });
+
+/**
+ * 设置路由与权限
+ */
+export function usePermission() {
+    const permissionStore = usePermissionStore();
+    const permissions = store.local.get('permissions');
+
+    permissionStore.setPermission(permissions);
+    permissionStore.setRoutes(menuRoutes);
+    permissionStore.setActiveRouteList();
+}

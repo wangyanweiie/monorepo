@@ -118,7 +118,13 @@
 
 <script lang="ts" setup>
 import type { PaginationProps, TableProps } from 'element-plus';
-import type { APIKeyMap, XTableColumn, DataType, ActionButton, ExportConfig } from './interface';
+import type {
+    XTableAPIKeyMap,
+    XTableColumn,
+    XTableDataType,
+    XTableActionButton,
+    XTableExportConfig,
+} from './interface';
 import { InfoFilled } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
 import TableSetting from './components/table-setting.vue';
@@ -150,7 +156,7 @@ const props = withDefaults(
         /** 是否可选 */
         selectable?: boolean;
         /** el table props */
-        elTableProps?: Partial<TableProps<DataType>>;
+        elTableProps?: Partial<TableProps<XTableDataType>>;
         /** el pagination props */
         elPaginationProps?: Partial<PaginationProps>;
         /** 是否为分页格式 */
@@ -168,7 +174,7 @@ const props = withDefaults(
         /** 表格列配置 */
         columns: XTableColumn[];
         /** 表格数据 */
-        data?: DataType[];
+        data?: XTableDataType[];
         /** loading */
         loading?: boolean;
         /** 请求接口 */
@@ -176,11 +182,11 @@ const props = withDefaults(
         /** 请求接口参数 */
         apiParams?: Record<string, string | number>;
         /** 接口字段映射 */
-        apiKeyMap?: APIKeyMap;
+        apiKeyMap?: XTableAPIKeyMap;
         /** 操作栏 */
-        actions?: (row: any, index: number) => ActionButton[];
+        actions?: (row: any, index: number) => XTableActionButton[];
         /** 导出配置 */
-        exportProps?: ExportConfig;
+        exportProps?: XTableExportConfig;
     }>(),
     {
         header: '',

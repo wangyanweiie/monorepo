@@ -77,6 +77,9 @@ interface MenuStyle {
     activeTextColor: string;
 }
 
+/**
+ * props
+ */
 withDefaults(
     defineProps<{
         /** 路由数组 */
@@ -106,6 +109,9 @@ withDefaults(
     },
 );
 
+/**
+ * route
+ */
 const route = useRoute();
 
 /**

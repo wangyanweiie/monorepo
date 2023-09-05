@@ -24,7 +24,7 @@ import type { XDescriptionColumn } from './interface';
 /**
  * props
  */
-const props = withDefaults(
+withDefaults(
     defineProps<{
         /** 标题 */
         title: string;

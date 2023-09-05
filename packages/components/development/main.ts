@@ -1,12 +1,29 @@
 import { createApp } from 'vue';
 import mitt from 'mitt';
+import { createPinia } from 'pinia';
 import App from '@dev/App.vue';
-import { handleInit } from '@dev/init';
+import router from '@dev/router/index';
+import permission from '@dev/directive/permission';
+import { usePermission } from '@dev/store/permission';
 
-const app = createApp(App);
+(() => {
+    const app = createApp(App);
 
-handleInit(app);
+    // 注册状态管理器
+    app.use(createPinia());
 
-app.config.globalProperties.$bus = mitt();
+    // 注册路由
+    app.use(router);
 
-app.mount('#app');
+    // 注册权限指令
+    app.use(permission);
+
+    // 设置路由权限
+    usePermission();
+
+    // 事件通讯
+    app.config.globalProperties.$bus = mitt();
+
+    // 挂载
+    app.mount('#app');
+})();

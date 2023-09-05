@@ -79,7 +79,7 @@
 
 <script lang="ts" setup>
 import type { Column } from 'element-plus';
-import type { APIKeyMap } from './interface';
+import type { XTableV2APIKeyMap } from './interface';
 import { Loading as LoadingIcon } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
 
@@ -126,7 +126,7 @@ const props = withDefaults(
         /** 请求接口参数 */
         apiParams?: Record<string, string | number>;
         /** 接口字段映射 */
-        apiKeyMap?: APIKeyMap;
+        apiKeyMap?: XTableV2APIKeyMap;
         /** 表格列配置 */
         columns: Column<any>[];
         /** 表格数据 */
