@@ -1,3 +1,24 @@
-packages: 
-  - 'packages/*' 
+packages:
+  - 'packages/*'
   - 'apps/*'
+
+# 假设 workspace 中有 foo、 bar、 qar、 zoo 并且版本都是 1.5.0
+# 发布前引用方式
+# {
+#     "dependencies": {
+#         "foo": "workspace:*",
+#         "bar": "workspace:~",
+#         "qar": "workspace:^",
+#         "zoo": "workspace:^1.5.0"
+#     }
+# }
+
+# 发布后自动转化
+# {
+#     "dependencies": {
+#         "foo": "1.5.0",
+#         "bar": "~1.5.0",
+#         "qar": "^1.5.0",
+#         "zoo": "^1.5.0"
+#     }
+# }
