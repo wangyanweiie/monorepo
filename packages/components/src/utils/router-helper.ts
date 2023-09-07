@@ -8,24 +8,25 @@ export type IconTypes = keyof typeof IconNameMap;
  * 生成缓存数组
  * @param { RouteRecordRaw[] } routes 路由数组
  * @param { string[] | undefined } permissions 权限数组
- * @returns 处理后数组
+ * @returns { string[] } 缓存数组
  */
 export function generateCacheList(routes: RouteRecordRaw[], permissions?: string[]): string[] {
+    const cloneRoutes = cloneDeep(routes);
     const cacheList: string[] = [];
 
-    for (let i = 0; i < routes.length; i += 1) {
-        const currentRoute = routes[i];
+    for (let i = 0; i < cloneRoutes.length; i += 1) {
+        const currentRoute = cloneRoutes[i];
 
         if (!currentRoute.meta) {
             continue;
         }
 
-        // 无权限
+        // 过滤掉无权限的路由
         if (permissions && !permissions.includes(currentRoute.meta?.title as string)) {
             continue;
         }
 
-        // 缓存
+        // 更新缓存路由数组
         if (currentRoute.meta.keepAlive) {
             cacheList.push(currentRoute.name as string);
         }
@@ -34,6 +35,8 @@ export function generateCacheList(routes: RouteRecordRaw[], permissions?: string
         if (currentRoute.children && currentRoute.children.length > 0) {
             // 递归 children
             const childCacheList = generateCacheList(currentRoute.children, permissions);
+
+            // 更新缓存路由数组
             cacheList.push(...childCacheList);
         }
     }
@@ -42,10 +45,10 @@ export function generateCacheList(routes: RouteRecordRaw[], permissions?: string
 }
 
 /**
- * 生成可用路由数组
+ * 生成可用路由
  * @param { RouteRecordRaw[] } routes 路由数组
  * @param { string[] | undefined } permissions 权限数组
- * @returns 处理后数组
+ * @returns { RouteRecordRaw[] } 可用路由
  */
 export function generateActiveRoutes(routes: RouteRecordRaw[], permissions?: string[]): RouteRecordRaw[] {
     const cloneRoutes = cloneDeep(routes);
@@ -58,7 +61,7 @@ export function generateActiveRoutes(routes: RouteRecordRaw[], permissions?: str
             continue;
         }
 
-        // 无权限
+        // 过滤掉无权限的路由
         if (permissions && !permissions.includes(currentRoute.meta?.title as string)) {
             continue;
         }
@@ -79,10 +82,10 @@ export function generateActiveRoutes(routes: RouteRecordRaw[], permissions?: str
 }
 
 /**
- * 生成菜单
+ * 生成菜单路由
  * @param { RouteRecordRaw[] } routes 路由数组
  * @param { string[] | undefined } permissions 权限数组
- * @returns 处理后数组
+ * @returns  { RouteRecordRaw[] } 菜单路由
  */
 export function generateShowMenus(routes: RouteRecordRaw[], permissions?: string[]): RouteRecordRaw[] {
     const cloneRoutes = cloneDeep(routes);
@@ -95,12 +98,12 @@ export function generateShowMenus(routes: RouteRecordRaw[], permissions?: string
             continue;
         }
 
-        // 无权限
+        // 过滤掉无权限的路由
         if (permissions && !permissions.includes(currentRoute.meta?.title as string)) {
             continue;
         }
 
-        // 隐藏
+        // 过滤掉隐藏的路由
         if (currentRoute.meta.hidden) {
             continue;
         }

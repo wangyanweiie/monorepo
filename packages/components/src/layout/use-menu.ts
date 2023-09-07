@@ -47,4 +47,4 @@ function routesToMenuItemList(routes: RouteRecordRaw[], permissions?: string[]):
     return menuRoutes;
 }
 
-export { routesToMenuItemList, MenuType };
+export { MenuType, routesToMenuItemList };

@@ -5,9 +5,9 @@ import { menu2Routes } from './menu2';
 import { menu3Routes } from './menu3';
 
 /**
- * menu route
+ * menu-routes
  */
-export const menuRoutes: RouteRecordRaw[] = [
+const menuRoutes: RouteRecordRaw[] = [
     {
         path: '/home',
         name: 'home',
@@ -23,7 +23,7 @@ export const menuRoutes: RouteRecordRaw[] = [
 ];
 
 /**
- * router
+ * routers
  */
 const routes: RouteRecordRaw[] = [
     {
@@ -53,7 +53,14 @@ const routes: RouteRecordRaw[] = [
     },
 ];
 
-export default createRouter({
+/**
+ * router
+ */
+const router = createRouter({
+    // 历史模式
     history: createWebHistory(),
     routes,
 });
+
+export default router;
+export { menuRoutes, routes };
