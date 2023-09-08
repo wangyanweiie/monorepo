@@ -1,5 +1,5 @@
 {
-    "name": "vitepress-starter",
+    "name": "@custom/vitepress",
     "version": "1.0.0",
     "description": "文档工具",
     "main": "index.js",
