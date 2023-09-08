@@ -5,10 +5,11 @@
     "private": true,
     "scripts": {
         "dev": "vite --host",
-        "lint": "vue-tsc --noEmit",
         "build": "vue-tsc --noEmit && vite build",
         "build:test": "vue-tsc --noEmit && vite build --mode test",
         "serve": "vite preview",
+        "type-check": "vue-tsc --noEmit",
+        "format": "prettier --write src/",
         "write-api": "tsc ./script/generate-api/get-api-docs.ts --skipLibCheck && node ./script/generate-api/get-api-docs.js && npx prettier -w ./src/json/api.json",
         "prettier-api": "npx prettier -w ./src/api",
         "generate-api": "cd ./script/generate-api && npx openapi-generator-cli generate -c ./openapitools.json --generator-key v2.0",

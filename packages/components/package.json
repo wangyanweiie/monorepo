@@ -18,9 +18,10 @@
     "module": "./src/index.ts",
     "scripts": {
         "dev": "vite --host",
-        "lint": "vue-tsc --noEmit",
         "build": "vue-tsc --noEmit && vite build",
-        "serve": "vite preview"
+        "serve": "vite preview",
+        "type-check": "vue-tsc --noEmit",
+        "format": "prettier --write src/"
     },
     "types": "./dist/src/index.d.ts",
     "author": "wyw",
