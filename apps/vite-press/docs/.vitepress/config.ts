@@ -1,11 +1,11 @@
-import { getNavBar } from './nav'
-import { 
+import { getNavBar } from './nav';
+import {
     getSideBarGuide, // 指南
     getSideBarNoteEditor, // 笔记 - 编辑器/IDE
     getSideBarNoteFrame, // 笔记 - 前端技术栈
     getSideBarNoteDeploy, // 笔记 - 配置部署
     getSideBarNoteShare, // 笔记 - 交流分享
-} from './sidebar'
+} from './sidebar';
 
 /**
  ******************** 配置信息 ********************
@@ -18,7 +18,7 @@ module.exports = {
     base: '/vitePress/',
     head: [
         // 添加图标
-        ['link', { rel: 'icon', href: '/favicon.png' }]
+        ['link', { rel: 'icon', href: '/favicon.png' }],
     ],
     themeConfig: {
         // 网站 logo
@@ -28,15 +28,11 @@ module.exports = {
         // 启动页面丝滑滚动
         smoothScroll: true,
         // 社交账户链接
-        socialLinks: [
-            { icon: 'github', link: 'https://github.com/wangyanweiie/vitePress' },
-        ],
-        // 站内搜索 - 需要配置 algolia
-        // algolia: {
-        //     appId: '8J64VVRP8K',
-        //     apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
-        //     indexName: 'vitepress'
-        // },
+        socialLinks: [{ icon: 'github', link: 'https://github.com/wangyanweiie/vitePress' }],
+        // 内置的站内搜索
+        search: {
+            provider: 'local',
+        },
         // 导航栏配置
         nav: getNavBar(),
         // 左侧边栏配置
@@ -50,21 +46,21 @@ module.exports = {
         // 右侧边栏标题
         outlineTitle: 'Title',
         // 上下篇文本提示文字
-        docFooter: { 
+        docFooter: {
             prev: '上一篇',
-            next: '下一篇'
+            next: '下一篇',
         },
         // 上次更新时间提示文字
         lastUpdatedText: 'Updated Date',
         // 编辑链接
         editLink: {
             text: 'Edit this page on GitHub',
-            pattern: 'https://github.com/wangyanweiie/vitePress'
+            pattern: 'https://github.com/wangyanweiie/vitePress',
         },
         // 页面底部
         footer: {
             message: '',
-            copyright: 'Copyright © 2022 wangyanwei'
+            copyright: 'Copyright © 2022 wangyanwei',
         },
-    }
-}
+    },
+};
