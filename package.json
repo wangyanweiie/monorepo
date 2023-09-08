@@ -28,7 +28,7 @@
     "author": "wyw",
     "license": "ISC",
     "dependencies": {
-        "typescript": "^5.1.6"
+        "typescript": "^5.2.2"
     },
     "devDependencies": {
         "@commitlint/cli": "^17.7.1",
@@ -36,11 +36,11 @@
         "@custom/commitlint-config": "workspace:*",
         "@custom/cz-config": "workspace:*",
         "@custom/generate-template": "workspace:*",
-        "@types/node": "^20.5.3",
+        "@types/node": "^20.5.9",
         "@vue/tsconfig": "^0.4.0",
         "husky": "^8.0.3",
         "lint-staged": "^14.0.1",
-        "prettier": "^3.0.2",
+        "prettier": "^3.0.3",
         "cz-customizable": "^7.0.0"
     }
 }

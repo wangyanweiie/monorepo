@@ -1,5 +1,5 @@
 import type { PaginationProps, TableProps } from 'element-plus';
-import type { APIKeyMap, XTableColumn, DataType, ActionButton, ExportConfig } from './interface';
+import type { XTableAPIKeyMap, XTableColumn, XTableDataType, XTableActionButton, XTableExportConfig } from './interface';
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     title: {
         type: globalThis.PropType<string>;
@@ -11,7 +11,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => never[];
     };
     data: {
-        type: globalThis.PropType<DataType[]>;
+        type: globalThis.PropType<XTableDataType[]>;
         default: () => never[];
     };
     header: {
@@ -58,7 +58,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: boolean;
     };
     elTableProps: {
-        type: globalThis.PropType<Partial<TableProps<DataType>>>;
+        type: globalThis.PropType<Partial<TableProps<XTableDataType>>>;
         default: () => {};
     };
     elPaginationProps: {
@@ -86,7 +86,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {};
     };
     apiKeyMap: {
-        type: globalThis.PropType<APIKeyMap>;
+        type: globalThis.PropType<XTableAPIKeyMap>;
         default: () => {
             queryCurrentPageKey: string;
             queryPageSizeKey: string;
@@ -98,19 +98,19 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         };
     };
     actions: {
-        type: globalThis.PropType<(row: any, index: number) => ActionButton[]>;
+        type: globalThis.PropType<(row: any, index: number) => XTableActionButton[]>;
         default: () => never[];
     };
     exportProps: {
-        type: globalThis.PropType<ExportConfig>;
+        type: globalThis.PropType<XTableExportConfig>;
         default: () => {};
     };
 }, {
     loadData: (query?: Record<string, any> | undefined) => Promise<void>;
-    toggleRowSelection: (selectedList: any[]) => void;
     getSelectedRows: () => Record<string, any>[];
     clearSelection: () => void;
     getTableData: () => Record<string, any>[];
+    handleToggleRowSelection: (selectedList: any[]) => void;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     title: {
         type: globalThis.PropType<string>;
@@ -122,7 +122,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => never[];
     };
     data: {
-        type: globalThis.PropType<DataType[]>;
+        type: globalThis.PropType<XTableDataType[]>;
         default: () => never[];
     };
     header: {
@@ -169,7 +169,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: boolean;
     };
     elTableProps: {
-        type: globalThis.PropType<Partial<TableProps<DataType>>>;
+        type: globalThis.PropType<Partial<TableProps<XTableDataType>>>;
         default: () => {};
     };
     elPaginationProps: {
@@ -197,7 +197,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {};
     };
     apiKeyMap: {
-        type: globalThis.PropType<APIKeyMap>;
+        type: globalThis.PropType<XTableAPIKeyMap>;
         default: () => {
             queryCurrentPageKey: string;
             queryPageSizeKey: string;
@@ -209,17 +209,17 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         };
     };
     actions: {
-        type: globalThis.PropType<(row: any, index: number) => ActionButton[]>;
+        type: globalThis.PropType<(row: any, index: number) => XTableActionButton[]>;
         default: () => never[];
     };
     exportProps: {
-        type: globalThis.PropType<ExportConfig>;
+        type: globalThis.PropType<XTableExportConfig>;
         default: () => {};
     };
 }>>, {
     title: string;
     columns: XTableColumn[];
-    data: DataType[];
+    data: XTableDataType[];
     header: string;
     loading: boolean;
     api: any;
@@ -230,16 +230,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     selectable: boolean;
     tooltipContent: string;
     showIndex: boolean;
-    elTableProps: Partial<TableProps<DataType>>;
+    elTableProps: Partial<TableProps<XTableDataType>>;
     elPaginationProps: Partial<PaginationProps>;
     dividePage: boolean;
     continuous: boolean;
     isTree: boolean;
     selectedList: any[];
     apiParams: Record<string, string | number>;
-    apiKeyMap: APIKeyMap;
-    actions: (row: any, index: number) => ActionButton[];
-    exportProps: ExportConfig;
+    apiKeyMap: XTableAPIKeyMap;
+    actions: (row: any, index: number) => XTableActionButton[];
+    exportProps: XTableExportConfig;
 }, {}>, Partial<Record<string, (_: {
     scope: any;
 }) => any>> & {

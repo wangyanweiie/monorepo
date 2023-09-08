@@ -15,4 +15,4 @@ declare enum MenuType {
  * @returns 处理后数组
  */
 declare function routesToMenuItemList(routes: RouteRecordRaw[], permissions?: string[]): RouteRecordRaw[];
-export { routesToMenuItemList, MenuType };
+export { MenuType, routesToMenuItemList };

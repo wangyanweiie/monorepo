@@ -1,5 +1,5 @@
 import type { Column } from 'element-plus';
-import type { APIKeyMap } from './interface';
+import type { XTableV2APIKeyMap } from './interface';
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     title: {
         type: globalThis.PropType<string>;
@@ -74,7 +74,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {};
     };
     apiKeyMap: {
-        type: globalThis.PropType<APIKeyMap>;
+        type: globalThis.PropType<XTableV2APIKeyMap>;
         default: () => {
             queryCurrentPageKey: string;
             queryPageSizeKey: string;
@@ -183,7 +183,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {};
     };
     apiKeyMap: {
-        type: globalThis.PropType<APIKeyMap>;
+        type: globalThis.PropType<XTableV2APIKeyMap>;
         default: () => {
             queryCurrentPageKey: string;
             queryPageSizeKey: string;
@@ -233,7 +233,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     showIndex: boolean;
     dividePage: boolean;
     apiParams: Record<string, string | number>;
-    apiKeyMap: APIKeyMap;
+    apiKeyMap: XTableV2APIKeyMap;
     headerClass: any;
     headerHeight: number;
     rowClass: any;

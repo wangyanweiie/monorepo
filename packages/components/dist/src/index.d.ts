@@ -12,5 +12,6 @@ import XDescription from './description/index.vue';
 import { generateActiveRoutes, generateCacheList, generateShowMenus } from './utils/router-helper';
 export * from './form/interface';
 export * from './table/interface';
+export * from './table-v2/interface';
 export * from './description/interface';
 export { XLayout, ParentView, ParentMenuView, XLogo, XUser, XTable, XTableV2, XSearchForm, XDialogForm, XForm, XDescription, generateActiveRoutes, generateCacheList, generateShowMenus, };

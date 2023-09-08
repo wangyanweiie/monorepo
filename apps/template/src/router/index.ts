@@ -1,7 +1,7 @@
 import { createWebHistory, createRouter, type RouteRecordRaw, type RouteLocationNormalized } from 'vue-router';
+import store from 'store2';
 import appLayout from '@/layout/index.vue';
 import { LOCAL_USER_INFO_KEY } from '@/constant/global';
-import store from 'store2';
 
 /**
  * men-routes

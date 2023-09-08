@@ -3,7 +3,7 @@ import type { PaginationProps, TableProps, ButtonProps, TableColumnCtx } from 'e
  * 请求接口出参入参字段
  * Partial<APIKeyMap>
  */
-export interface APIKeyMap {
+export interface XTableAPIKeyMap {
     /** 查询时的当前页 key 值 */
     queryCurrentPageKey: string;
     /** 查询时的每页数量 key 值 */
@@ -22,7 +22,7 @@ export interface APIKeyMap {
 /**
  * 分页参数
  */
-export interface Pagination {
+export interface XTablePagination {
     /** 每页数量 */
     pageSize: number;
     /** 当前页 */
@@ -49,7 +49,7 @@ export interface XTableProp {
     /** 是否可选 */
     selectable?: boolean;
     /** el table props */
-    elTableProps?: Partial<TableProps<DataType>>;
+    elTableProps?: Partial<TableProps<XTableDataType>>;
     /** el pagination props */
     elPaginationProps?: Partial<PaginationProps>;
     /** 是否为分页格式 */
@@ -67,7 +67,7 @@ export interface XTableProp {
     /** 表格列配置 */
     columns: XTableColumn[];
     /** 表格数据 */
-    data?: DataType[];
+    data?: XTableDataType[];
     /** loading */
     loading?: boolean;
     /** 请求接口 */
@@ -75,11 +75,11 @@ export interface XTableProp {
     /** 请求接口参数 */
     apiParams?: Record<string, string | number>;
     /** 接口字段映射 */
-    apiKeyMap?: APIKeyMap;
+    apiKeyMap?: XTableAPIKeyMap;
     /** 操作栏 */
-    actions?: (row: any, index: number) => ActionButton[];
+    actions?: (row: any, index: number) => XTableActionButton[];
     /** 导出配置 */
-    exportProps?: ExportConfig;
+    exportProps?: XTableExportConfig;
 }
 /**
  * 表格列配置
@@ -92,13 +92,13 @@ export type XTableColumn<T = any> = Partial<TableColumnCtx<T>> & {
 /**
  * 表格数据类型
  */
-export interface DataType {
-    [key: string]: number | string | undefined | boolean | null | Array<DataType>;
+export interface XTableDataType {
+    [key: string]: number | string | undefined | boolean | null | Array<XTableDataType>;
 }
 /**
  * 操作按钮
  */
-export interface ActionButton extends Partial<ButtonProps> {
+export interface XTableActionButton extends Partial<ButtonProps> {
     label: string;
     permission?: string;
     onClick: () => void;
@@ -106,7 +106,7 @@ export interface ActionButton extends Partial<ButtonProps> {
 /**
  * 导出配置
  */
-export interface ExportConfig {
+export interface XTableExportConfig {
     exportApi?: (patams?: any) => Promise<void>;
     extraParams?: any[];
 }

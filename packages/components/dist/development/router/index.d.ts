@@ -1,7 +1,15 @@
 import { type RouteRecordRaw } from 'vue-router';
 /**
- * menu route
+ * menu-routes
  */
-export declare const menuRoutes: RouteRecordRaw[];
-declare const _default: import("vue-router").Router;
-export default _default;
+declare const menuRoutes: RouteRecordRaw[];
+/**
+ * routers
+ */
+declare const routes: RouteRecordRaw[];
+/**
+ * router
+ */
+declare const router: import("vue-router").Router;
+export default router;
+export { menuRoutes, routes };

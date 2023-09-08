@@ -3,7 +3,7 @@ import type { Column } from 'element-plus';
  * table-v2 请求接口出参入参字段
  * Partial<APIKeyMap>
  */
-export interface APIKeyMap {
+export interface XTableV2APIKeyMap {
     /** 查询时的当前页 key 值 */
     queryCurrentPageKey: string;
     /** 查询时的每页数量 key 值 */
@@ -22,7 +22,7 @@ export interface APIKeyMap {
 /**
  * table-v2 分页参数
  */
-export interface Pagination {
+export interface XTableV2Pagination {
     /** 每页数量 */
     pageSize: number;
     /** 当前页 */
@@ -65,7 +65,7 @@ export interface XTableV2Prop {
     /** 请求接口参数 */
     apiParams?: Record<string, string | number>;
     /** 接口字段映射 */
-    apiKeyMap?: APIKeyMap;
+    apiKeyMap?: XTableV2APIKeyMap;
     /** 表格列配置 */
     columns: Column<any>[];
     /** 表格数据 */

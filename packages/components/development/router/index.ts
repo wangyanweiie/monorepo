@@ -38,13 +38,6 @@ const routes: RouteRecordRaw[] = [
         children: menuRoutes,
     },
     {
-        path: '/login',
-        component: () => import('@dev/views/login/index.vue'),
-        meta: {
-            title: '登录',
-        },
-    },
-    {
         path: '/:pathMatch(.*)*',
         component: () => import('@dev/views/not-found/404.vue'),
         meta: {

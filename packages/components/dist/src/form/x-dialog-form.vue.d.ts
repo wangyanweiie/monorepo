@@ -104,9 +104,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
     isShowConfirm: boolean;
-}, {}>, Partial<Record<string, (_: {
-    form: any;
-}) => any>> & {
+}, {}>, {
     title?(_: {}): any;
     action?(_: {
         form: any;

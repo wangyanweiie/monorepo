@@ -87,48 +87,6 @@ var HTTP_ERROR_NOTICE;
     HTTP_ERROR_NOTICE["EXPIRE"] = "\u767B\u5F55\u8FC7\u671F\uFF0C\u5373\u5C06\u8DF3\u8F6C\u81F3\u767B\u5F55\u9875";
 })(HTTP_ERROR_NOTICE || (HTTP_ERROR_NOTICE = {}));
 /**
- * 操作提示
- */
-var OPERATION_NOTICE;
-(function (OPERATION_NOTICE) {
-    /** 暂无数据 */
-    OPERATION_NOTICE["NO_DATA"] = "\u6682\u65E0\u6570\u636E";
-    /** 勾选 */
-    OPERATION_NOTICE["SELECT_NONE"] = "\u672A\u9009\u4E2D\u6570\u636E";
-    OPERATION_NOTICE["SELECT_A_LEAST_ONE"] = "\u81F3\u5C11\u52FE\u9009\u4E00\u6761\u6570\u636E\uFF01";
-    OPERATION_NOTICE["SELECT_A_MOST_ONE"] = "\u8BF7\u52FE\u9009\u4E14\u81F3\u591A\u52FE\u9009\u4E00\u6761\u6570\u636E\uFF01";
-    /** 新增 */
-    OPERATION_NOTICE["CREATE_SUCCESS"] = "\u65B0\u589E\u6210\u529F";
-    OPERATION_NOTICE["CREATE_ERROR"] = "\u65B0\u589E\u5931\u8D25";
-    /** 编辑 */
-    OPERATION_NOTICE["EDIT_SUCCESS"] = "\u7F16\u8F91\u6210\u529F";
-    OPERATION_NOTICE["EDIT_ERROR"] = "\u7F16\u8F91\u5931\u8D25";
-    /** 导入 */
-    OPERATION_NOTICE["IMPORT_SUCCESS"] = "\u5BFC\u5165\u6210\u529F";
-    OPERATION_NOTICE["IMPORT_ERROR"] = "\u5BFC\u5165\u5931\u8D25";
-    /** 导出 */
-    OPERATION_NOTICE["EXPORT_SUCCESS"] = "\u5BFC\u51FA\u6210\u529F";
-    OPERATION_NOTICE["EXPORT_ERROR"] = "\u5BFC\u51FA\u5931\u8D25";
-    /** 上传 */
-    OPERATION_NOTICE["UPLOAD_SUCCESS"] = "\u4E0A\u4F20\u6210\u529F";
-    OPERATION_NOTICE["UPLOAD_ERROR"] = "\u4E0A\u4F20\u5931\u8D25";
-    /** 下载 */
-    OPERATION_NOTICE["DOWNLOAD_SUCCESS"] = "\u4E0B\u8F7D\u6210\u529F";
-    OPERATION_NOTICE["DOWNLOAD_ERROR"] = "\u4E0B\u8F7D\u5931\u8D25";
-    /** 操作 */
-    OPERATION_NOTICE["OPERATE_SUCCESS"] = "\u64CD\u4F5C\u6210\u529F";
-    OPERATION_NOTICE["OPERATE_ERROR"] = "\u64CD\u4F5C\u5931\u8D25";
-    /** 删除 */
-    OPERATION_NOTICE["DELETE_CONFIRM"] = "\u662F\u5426\u786E\u8BA4\u5220\u9664?";
-    OPERATION_NOTICE["DELETE_SUCCESS"] = "\u5220\u9664\u6210\u529F";
-    OPERATION_NOTICE["DELETE_ERROR"] = "\u5220\u9664\u5931\u8D25";
-    /** 退出 */
-    OPERATION_NOTICE["LOGOUT_CONFIRM"] = "\u662F\u5426\u786E\u8BA4\u9000\u51FA\uFF1F";
-    OPERATION_NOTICE["LOGOUT_SUCCESS"] = "\u9000\u51FA\u6210\u529F";
-    OPERATION_NOTICE["LOGOUT_ERROR"] = "\u9000\u51FA\u5931\u8D25";
-})(OPERATION_NOTICE || (OPERATION_NOTICE = {}));
-
-/**
  * 拦截器配置函数
  * @param {Options} options 配置项
  * @returns 接口函数
@@ -300,7 +258,7 @@ function to(promise) {
 }
 
 /**
- * 1.校验是否为数字类型（正数/负数/整数/小数）
+ * 校验是否为数字类型（正数/负数/整数/小数）
  * @param value 字符串
  */
 function checkNumberFormat(value) {
@@ -318,7 +276,7 @@ function checkNumberFormat(value) {
     }
 }
 /**
- * 2.强制保留小数位方法
+ * 强制保留小数位方法
  * @param value 要处理的数据
  * @param precision 小数位数
  */
@@ -342,7 +300,7 @@ function keepDecimalPrecision(value, precision) {
     return res;
 }
 /**
- * 3.将枚举转换为 options
+ * 将枚举转换为 options
  * @param enumeration 枚举
  */
 function transformEnumToOptions(enumeration) {
@@ -359,19 +317,35 @@ function transformEnumToOptions(enumeration) {
     return transList;
 }
 /**
- * 4.将 '-' 拼接字符串改为驼峰格式
+ * 将 '-' 拼接字符串改为驼峰格式
  * @param str 要转换的字符串
+ * @param type 要转换的驼峰格式
  */
-function handleToHumpFormat(str) {
-    // 小驼峰格式：x-table ==> xTable
-    // const reg = /[-_](\w)/g;
-    // return str.replace(reg, (initial, item) => {
-    //     return item.toUpperCase();
-    // });
-    // 大驼峰格式：x-table ==> XTable
-    const arr = str.split('-');
-    const res = arr.map(item => `${item[0].toUpperCase()}${item.slice(1, item.length)}`).join('');
-    return res;
+function handleToHumpFormat(str, type) {
+    switch (type) {
+        // 小驼峰格式：x-table ==> xTable
+        case 'min': {
+            const reg = /[-_](\w)/g;
+            return str.replace(reg, (initial, item) => {
+                return item.toUpperCase();
+            });
+        }
+        // 大驼峰格式：x-table ==> XTable
+        case 'max': {
+            const arr = str.split('-');
+            const res = arr.map(item => `${item[0].toUpperCase()}${item.slice(1, item.length)}`).join('');
+            return res;
+        }
+    }
+}
+/**
+ * 生成 uuid
+ */
+function guid() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        const r = (Math.random() * 16) | 0, v = c == 'x' ? r : (r & 0x3) | 0x8;
+        return v.toString(16);
+    });
 }
 
-export { HTTP_ERROR_NOTICE, OPERATION_NOTICE, checkNumberFormat, clearStorage, getStorage, handleToHumpFormat, keepDecimalPrecision, removeStorage, saveStorage, setupAxiosInterceptors, to, transformEnumToOptions };
+export { checkNumberFormat, clearStorage, getStorage, guid, handleToHumpFormat, keepDecimalPrecision, removeStorage, saveStorage, setupAxiosInterceptors, to, transformEnumToOptions };

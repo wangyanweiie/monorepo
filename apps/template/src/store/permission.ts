@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router';
 import { defineStore } from 'pinia';
-import { generateActiveRoutes, generateCacheList, generateShowMenus } from '@custom/components';
 import store from 'store2';
+import { generateActiveRoutes, generateCacheList, generateShowMenus } from '@custom/components';
 import router, { menuRoutes } from '@/router/index';
 import appLayout from '@/layout/index.vue';
 import { LOCAL_USER_INFO_KEY } from '@/constant/global';
