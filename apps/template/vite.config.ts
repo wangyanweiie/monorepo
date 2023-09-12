@@ -26,10 +26,9 @@ export default defineConfig({
         AutoImport({
             imports: ['vue', 'vue-router'],
             resolvers: [ElementPlusResolver()],
-            dts: path.resolve(pathSrc, 'types/auto-imports.d.ts'),
+            dts: path.resolve(pathSrc, 'src/types/auto-imports.d.ts'),
         }),
         Components({
-            // 组件解析器
             resolvers: [
                 ElementPlusResolver(),
                 IconsResolver({
@@ -37,8 +36,7 @@ export default defineConfig({
                 }),
             ],
 
-            // 配置文件生成位置
-            dts: path.resolve(pathSrc, 'types/components.d.ts'),
+            dts: path.resolve(pathSrc, 'src/types/components.d.ts'),
         }),
 
         Inspect(),
