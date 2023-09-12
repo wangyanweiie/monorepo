@@ -1,6 +1,10 @@
 {
+    // extends 属性可以从另一个配置文件里继承配置
     "extends": "@vue/tsconfig/tsconfig.dom.json",
+
+    // 编译选项
     "compilerOptions": {
+        // 跳过库文件检查
         "skipLibCheck": true
     }
 }
