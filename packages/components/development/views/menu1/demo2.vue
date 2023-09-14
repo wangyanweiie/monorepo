@@ -1,5 +1,41 @@
 <template>
     <div>
+        <!-- x-edit-table -->
+        <x-edit-table
+            ref="editTableRef"
+            header="x-edit-table"
+            show-index
+            selectable
+            :columns="editColumns"
+            :data-source="data"
+            row-key="id"
+            class="component"
+        >
+            <template #operation>
+                <el-button type="success" @click="editTableRef?.editActions.addRow()">新增</el-button>
+                <el-button @click="editTableSubmit">提交</el-button>
+            </template>
+
+            <template #default>
+                <x-edit-table-item v-for="(item, index) in editColumns" :key="index" v-bind="item">
+                    <template #edit="{ row }">
+                        <el-input v-model="row[item.prop]" placeholder="请输入"></el-input>
+                    </template>
+                </x-edit-table-item>
+                <x-edit-table-item label="操作" :required="false" fixed="right">
+                    <template #default="{ actions, index }">
+                        <el-button text type="primary" @click="actions.startEdit(index)">操作</el-button>
+                        <el-button text type="primary" @click="actions.deleteRow(index)">删除</el-button>
+                    </template>
+                    <template #edit="{ actions, index }">
+                        <el-button text type="primary" @click="actions.saveEdit(index)">保存</el-button>
+                        <el-button text type="primary" @click="actions.cancelEdit(index)">取消</el-button>
+                        <el-button text type="primary" @click="actions.deleteRow(index)">删除</el-button>
+                    </template>
+                </x-edit-table-item>
+            </template>
+        </x-edit-table>
+
         <!-- x-table -->
         <x-table
             ref="tableRef"
@@ -39,8 +75,8 @@
 </template>
 
 <script setup lang="ts">
-import XTable from '@/table/index.vue';
-import XTableV2 from '@/table-v2/index.vue';
+import { XTable, XTableV2, XEditTable, XEditTableItem, type XTableColumn, type XEditTableColumn } from '@/index';
+import type { Column } from 'element-plus';
 
 /**
  * 选中列表
@@ -56,11 +92,12 @@ const selectedList = ref([
  */
 const tableRef = ref();
 const tableV2Ref = ref();
+const editTableRef = ref();
 
 /**
  * 表格列配置
  */
-const columns: any[] = [
+const columns: XTableColumn[] = [
     {
         label: '姓名',
         prop: 'name',
@@ -78,7 +115,7 @@ const columns: any[] = [
         prop: 'hobby',
     },
 ];
-const columnsV2: any[] = [
+const columnsV2: Column[] = [
     {
         title: '姓名',
         key: 'name',
@@ -98,6 +135,27 @@ const columnsV2: any[] = [
         title: '爱好',
         key: 'hobby',
         dataKey: 'hobby',
+    },
+];
+const editColumns: XEditTableColumn[] = [
+    {
+        label: '姓名',
+        prop: 'name',
+        edit: false,
+    },
+    {
+        label: '年龄',
+        prop: 'age',
+        required: true,
+    },
+    {
+        label: '性别',
+        prop: 'sex',
+        required: true,
+    },
+    {
+        label: '爱好',
+        prop: 'hobby',
     },
 ];
 
@@ -127,6 +185,13 @@ const data = [
         hobby: '跳舞',
     },
 ];
+
+/**
+ * 编辑表格提交
+ */
+function editTableSubmit() {
+    console.log('result', editTableRef.value?.resultData);
+}
 </script>
 <style lang="scss" scoped>
 .component {

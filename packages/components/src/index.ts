@@ -5,6 +5,8 @@ import ParentView from './layout/parent-view.vue';
 import ParentMenuView from './layout/parent-menu-view.vue';
 import XTable from './table/index.vue';
 import XTableV2 from './table-v2/index.vue';
+import XEditTable from './edit-table/x-edit-table.vue';
+import XEditTableItem from './edit-table/x-edit-table-item.vue';
 import XSearchForm from './form/x-search-form.vue';
 import XDialogForm from './form/x-dialog-form.vue';
 import XForm from './form/x-form.vue';
@@ -14,6 +16,7 @@ import { generateActiveRoutes, generateCacheList, generateShowMenus } from './ut
 export * from './form/interface';
 export * from './table/interface';
 export * from './table-v2/interface';
+export * from './edit-table/interface';
 export * from './description/interface';
 
 export {
@@ -24,6 +27,8 @@ export {
     XUser,
     XTable,
     XTableV2,
+    XEditTable,
+    XEditTableItem,
     XSearchForm,
     XDialogForm,
     XForm,
