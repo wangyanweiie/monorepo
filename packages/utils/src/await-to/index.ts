@@ -11,5 +11,3 @@ export function to<T, U = Error>(promise: Promise<T>): Promise<[U, undefined] | 
             return [err, undefined];
         });
 }
-
-export default to;

@@ -28,7 +28,7 @@ export default function useIndex(props: XTableProp): {
             selectOnIndeterminate?: boolean | undefined;
             indent?: number | undefined;
             flexible?: boolean | undefined;
-            readonly size?: import("element-plus/es/utils/index.js").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never> | undefined;
+            readonly size?: import("element-plus/es/utils/index.mjs").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never> | undefined;
             key?: string | number | symbol | undefined;
             ref?: import("vue").VNodeRef | undefined;
             ref_for?: boolean | undefined;
@@ -74,36 +74,36 @@ export default function useIndex(props: XTableProp): {
             class?: unknown;
             readonly width?: string | number | undefined;
             onSelect?: ((...args: any[]) => any) | undefined;
-            readonly height?: string | number | undefined;
-            readonly emptyText?: string | undefined;
-            readonly cellClassName?: import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined;
-            readonly maxHeight?: string | number | undefined;
-            readonly load?: ((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.js").TreeNode, resolve: (data: any[]) => void) => void) | undefined;
+            readonly showOverflowTooltip?: boolean | Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined;
             readonly rowKey?: string | ((row: any) => string) | undefined;
+            readonly height?: string | number | undefined;
+            readonly maxHeight?: string | number | undefined;
             readonly sumText?: string | undefined;
-            readonly summaryMethod?: import("element-plus/es/components/table/src/table/defaults.js").SummaryMethod<any> | undefined;
-            readonly rowClassName?: import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined;
-            readonly rowStyle?: import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined;
-            readonly cellStyle?: import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined;
-            readonly headerRowClassName?: import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined;
-            readonly headerRowStyle?: import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined;
-            readonly headerCellClassName?: import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined;
-            readonly headerCellStyle?: import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined;
+            readonly summaryMethod?: import("element-plus/es/components/table/src/table/defaults.mjs").SummaryMethod<any> | undefined;
+            readonly rowClassName?: import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined;
+            readonly rowStyle?: import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined;
+            readonly cellClassName?: import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined;
+            readonly cellStyle?: import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined;
+            readonly headerRowClassName?: import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined;
+            readonly headerRowStyle?: import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined;
+            readonly headerCellClassName?: import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined;
+            readonly headerCellStyle?: import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined;
             readonly currentRowKey?: string | number | undefined;
+            readonly emptyText?: string | undefined;
             readonly expandRowKeys?: any[] | undefined;
-            readonly defaultSort?: import("element-plus/es/components/table/src/table/defaults.js").Sort | undefined;
+            readonly defaultSort?: import("element-plus/es/components/table/src/table/defaults.mjs").Sort | undefined;
             readonly tooltipEffect?: string | undefined;
-            readonly tooltipOptions?: Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined;
+            readonly tooltipOptions?: Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined;
             readonly spanMethod?: ((data: {
                 row: any;
                 rowIndex: number;
-                column: import("element-plus/es/components/table/src/table-column/defaults.js").TableColumnCtx<any>;
+                column: import("element-plus/es/components/table/src/table-column/defaults.mjs").TableColumnCtx<any>;
                 columnIndex: number;
             }) => number[] | {
                 rowspan: number;
                 colspan: number;
             } | undefined) | undefined;
-            readonly showOverflowTooltip?: boolean | Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined;
+            readonly load?: ((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.mjs").TreeNode, resolve: (data: any[]) => void) => void) | undefined;
             "onExpand-change"?: ((...args: any[]) => any) | undefined;
             "onCurrent-change"?: ((...args: any[]) => any) | undefined;
             "onSelect-all"?: ((...args: any[]) => any) | undefined;
@@ -141,7 +141,7 @@ export default function useIndex(props: XTableProp): {
                 default: () => never[];
             };
             size: {
-                readonly type: globalThis.PropType<import("element-plus/es/utils/index.js").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
+                readonly type: globalThis.PropType<import("element-plus/es/utils/index.mjs").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
                 readonly required: false;
                 readonly validator: ((val: unknown) => boolean) | undefined;
                 __epPropKey: true;
@@ -162,27 +162,27 @@ export default function useIndex(props: XTableProp): {
             };
             showSummary: BooleanConstructor;
             sumText: StringConstructor;
-            summaryMethod: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").SummaryMethod<any> | undefined>;
-            rowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined>;
-            rowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined>;
-            cellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined>;
-            cellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined>;
-            headerRowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined>;
-            headerRowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined>;
-            headerCellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined>;
-            headerCellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined>;
+            summaryMethod: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").SummaryMethod<any> | undefined>;
+            rowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined>;
+            rowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined>;
+            cellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined>;
+            cellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined>;
+            headerRowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined>;
+            headerRowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined>;
+            headerCellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined>;
+            headerCellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined>;
             highlightCurrentRow: BooleanConstructor;
             currentRowKey: (StringConstructor | NumberConstructor)[];
             emptyText: StringConstructor;
             expandRowKeys: globalThis.PropType<any[] | undefined>;
             defaultExpandAll: BooleanConstructor;
-            defaultSort: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").Sort | undefined>;
+            defaultSort: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").Sort | undefined>;
             tooltipEffect: StringConstructor;
-            tooltipOptions: globalThis.PropType<Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined>;
+            tooltipOptions: globalThis.PropType<Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined>;
             spanMethod: globalThis.PropType<((data: {
                 row: any;
                 rowIndex: number;
-                column: import("element-plus/es/components/table/src/table-column/defaults.js").TableColumnCtx<any>;
+                column: import("element-plus/es/components/table/src/table-column/defaults.mjs").TableColumnCtx<any>;
                 columnIndex: number;
             }) => number[] | {
                 rowspan: number;
@@ -207,7 +207,7 @@ export default function useIndex(props: XTableProp): {
                 };
             };
             lazy: BooleanConstructor;
-            load: globalThis.PropType<((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.js").TreeNode, resolve: (data: any[]) => void) => void) | undefined>;
+            load: globalThis.PropType<((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.mjs").TreeNode, resolve: (data: any[]) => void) => void) | undefined>;
             style: {
                 type: globalThis.PropType<import("vue").CSSProperties>;
                 default: () => {};
@@ -225,7 +225,7 @@ export default function useIndex(props: XTableProp): {
                 default: boolean;
             };
             flexible: BooleanConstructor;
-            showOverflowTooltip: globalThis.PropType<boolean | Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined>;
+            showOverflowTooltip: globalThis.PropType<boolean | Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined>;
         }>> & {
             onSelect?: ((...args: any[]) => any) | undefined;
             "onExpand-change"?: ((...args: any[]) => any) | undefined;
@@ -267,7 +267,7 @@ export default function useIndex(props: XTableProp): {
                 cssVarBlock: (object: Record<string, string>) => Record<string, string>;
                 cssVarBlockName: (name: string) => string;
             };
-            layout: import("element-plus/es/components/table/src/table-layout.js").default<any>;
+            layout: import("element-plus/es/components/table/src/table-layout.mjs").default<any>;
             store: any;
             handleHeaderFooterMousewheel: (event: any, data: any) => void;
             handleMouseLeave: () => void;
@@ -305,7 +305,7 @@ export default function useIndex(props: XTableProp): {
             sort: (prop: string, order: string) => void;
             t: import("element-plus").Translator;
             setDragVisible: (visible: boolean) => void;
-            context: import("element-plus/es/components/table/src/table/defaults.js").Table<any>;
+            context: import("element-plus/es/components/table/src/table/defaults.mjs").Table<any>;
             computedSumText: globalThis.ComputedRef<string>;
             computedEmptyText: globalThis.ComputedRef<string>;
             tableLayout: globalThis.ComputedRef<"fixed" | "auto" | undefined>;
@@ -389,7 +389,7 @@ export default function useIndex(props: XTableProp): {
             default: () => never[];
         };
         size: {
-            readonly type: globalThis.PropType<import("element-plus/es/utils/index.js").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
+            readonly type: globalThis.PropType<import("element-plus/es/utils/index.mjs").EpPropMergeType<StringConstructor, "" | "default" | "small" | "large", never>>;
             readonly required: false;
             readonly validator: ((val: unknown) => boolean) | undefined;
             __epPropKey: true;
@@ -410,27 +410,27 @@ export default function useIndex(props: XTableProp): {
         };
         showSummary: BooleanConstructor;
         sumText: StringConstructor;
-        summaryMethod: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").SummaryMethod<any> | undefined>;
-        rowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined>;
-        rowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined>;
-        cellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined>;
-        cellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined>;
-        headerRowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnCls<any> | undefined>;
-        headerRowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").ColumnStyle<any> | undefined>;
-        headerCellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellCls<any> | undefined>;
-        headerCellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").CellStyle<any> | undefined>;
+        summaryMethod: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").SummaryMethod<any> | undefined>;
+        rowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined>;
+        rowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined>;
+        cellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined>;
+        cellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined>;
+        headerRowClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnCls<any> | undefined>;
+        headerRowStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").ColumnStyle<any> | undefined>;
+        headerCellClassName: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellCls<any> | undefined>;
+        headerCellStyle: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").CellStyle<any> | undefined>;
         highlightCurrentRow: BooleanConstructor;
         currentRowKey: (StringConstructor | NumberConstructor)[];
         emptyText: StringConstructor;
         expandRowKeys: globalThis.PropType<any[] | undefined>;
         defaultExpandAll: BooleanConstructor;
-        defaultSort: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.js").Sort | undefined>;
+        defaultSort: globalThis.PropType<import("element-plus/es/components/table/src/table/defaults.mjs").Sort | undefined>;
         tooltipEffect: StringConstructor;
-        tooltipOptions: globalThis.PropType<Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined>;
+        tooltipOptions: globalThis.PropType<Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined>;
         spanMethod: globalThis.PropType<((data: {
             row: any;
             rowIndex: number;
-            column: import("element-plus/es/components/table/src/table-column/defaults.js").TableColumnCtx<any>;
+            column: import("element-plus/es/components/table/src/table-column/defaults.mjs").TableColumnCtx<any>;
             columnIndex: number;
         }) => number[] | {
             rowspan: number;
@@ -455,7 +455,7 @@ export default function useIndex(props: XTableProp): {
             };
         };
         lazy: BooleanConstructor;
-        load: globalThis.PropType<((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.js").TreeNode, resolve: (data: any[]) => void) => void) | undefined>;
+        load: globalThis.PropType<((row: any, treeNode: import("element-plus/es/components/table/src/table/defaults.mjs").TreeNode, resolve: (data: any[]) => void) => void) | undefined>;
         style: {
             type: globalThis.PropType<import("vue").CSSProperties>;
             default: () => {};
@@ -473,7 +473,7 @@ export default function useIndex(props: XTableProp): {
             default: boolean;
         };
         flexible: BooleanConstructor;
-        showOverflowTooltip: globalThis.PropType<boolean | Partial<Pick<import("element-plus").ElTooltipProps, "offset" | "effect" | "popperClass" | "popperOptions" | "placement" | "showArrow" | "enterable" | "showAfter" | "hideAfter">> | undefined>;
+        showOverflowTooltip: globalThis.PropType<boolean | Partial<Pick<import("element-plus").ElTooltipProps, "showArrow" | "effect" | "enterable" | "popperClass" | "offset" | "placement" | "popperOptions" | "showAfter" | "hideAfter">> | undefined>;
     }>> & {
         onSelect?: ((...args: any[]) => any) | undefined;
         "onExpand-change"?: ((...args: any[]) => any) | undefined;
@@ -515,7 +515,7 @@ export default function useIndex(props: XTableProp): {
             cssVarBlock: (object: Record<string, string>) => Record<string, string>;
             cssVarBlockName: (name: string) => string;
         };
-        layout: import("element-plus/es/components/table/src/table-layout.js").default<any>;
+        layout: import("element-plus/es/components/table/src/table-layout.mjs").default<any>;
         store: any;
         handleHeaderFooterMousewheel: (event: any, data: any) => void;
         handleMouseLeave: () => void;
@@ -553,7 +553,7 @@ export default function useIndex(props: XTableProp): {
         sort: (prop: string, order: string) => void;
         t: import("element-plus").Translator;
         setDragVisible: (visible: boolean) => void;
-        context: import("element-plus/es/components/table/src/table/defaults.js").Table<any>;
+        context: import("element-plus/es/components/table/src/table/defaults.mjs").Table<any>;
         computedSumText: globalThis.ComputedRef<string>;
         computedEmptyText: globalThis.ComputedRef<string>;
         tableLayout: globalThis.ComputedRef<"fixed" | "auto" | undefined>;

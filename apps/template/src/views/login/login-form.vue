@@ -27,8 +27,8 @@
 <script setup lang="ts">
 import { reactive, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { to } from '@/utils/await-to';
 import type { FormInstance } from 'element-plus';
+import { to } from '@custom/utils';
 import { useUserStore } from '@/store/user-info';
 import { usePermissionStore } from '@/store/permission';
 import dropdownAPI from '@/api/dropdown';

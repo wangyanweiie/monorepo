@@ -19,16 +19,12 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    loading: {
+    selectable: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
-    api: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
     shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
+        type: globalThis.PropType<"hover" | "always" | "never">;
         default: string;
     };
     bodyStyle: {
@@ -37,23 +33,31 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
             padding: string;
         };
     };
-    rowKey: {
-        type: globalThis.PropType<string>;
-        default: string;
-    };
-    lazy: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    selectable: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     tooltipContent: {
         type: globalThis.PropType<string>;
         default: string;
     };
     showIndex: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    rowKey: {
+        type: globalThis.PropType<string>;
+        default: string;
+    };
+    api: {
+        type: globalThis.PropType<any>;
+        default: undefined;
+    };
+    apiParams: {
+        type: globalThis.PropType<Record<string, string | number>>;
+        default: () => {};
+    };
+    lazy: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
@@ -80,10 +84,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     selectedList: {
         type: globalThis.PropType<any[]>;
         default: () => never[];
-    };
-    apiParams: {
-        type: globalThis.PropType<Record<string, string | number>>;
-        default: () => {};
     };
     apiKeyMap: {
         type: globalThis.PropType<XTableAPIKeyMap>;
@@ -130,16 +130,12 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    loading: {
+    selectable: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
-    api: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
     shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
+        type: globalThis.PropType<"hover" | "always" | "never">;
         default: string;
     };
     bodyStyle: {
@@ -148,23 +144,31 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
             padding: string;
         };
     };
-    rowKey: {
-        type: globalThis.PropType<string>;
-        default: string;
-    };
-    lazy: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    selectable: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     tooltipContent: {
         type: globalThis.PropType<string>;
         default: string;
     };
     showIndex: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    rowKey: {
+        type: globalThis.PropType<string>;
+        default: string;
+    };
+    api: {
+        type: globalThis.PropType<any>;
+        default: undefined;
+    };
+    apiParams: {
+        type: globalThis.PropType<Record<string, string | number>>;
+        default: () => {};
+    };
+    lazy: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
@@ -192,10 +196,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<any[]>;
         default: () => never[];
     };
-    apiParams: {
-        type: globalThis.PropType<Record<string, string | number>>;
-        default: () => {};
-    };
     apiKeyMap: {
         type: globalThis.PropType<XTableAPIKeyMap>;
         default: () => {
@@ -221,22 +221,22 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     columns: XTableColumn[];
     data: XTableDataType[];
     header: string;
-    loading: boolean;
-    api: any;
-    shadow: "hover" | "never" | "always";
-    bodyStyle: Record<string, string>;
-    rowKey: string;
-    lazy: boolean;
     selectable: boolean;
+    shadow: "hover" | "always" | "never";
+    bodyStyle: Record<string, string>;
     tooltipContent: string;
     showIndex: boolean;
+    rowKey: string;
+    api: any;
+    apiParams: Record<string, string | number>;
+    lazy: boolean;
+    loading: boolean;
     elTableProps: Partial<TableProps<XTableDataType>>;
     elPaginationProps: Partial<PaginationProps>;
     dividePage: boolean;
     continuous: boolean;
     isTree: boolean;
     selectedList: any[];
-    apiParams: Record<string, string | number>;
     apiKeyMap: XTableAPIKeyMap;
     actions: (row: any, index: number) => XTableActionButton[];
     exportProps: XTableExportConfig;

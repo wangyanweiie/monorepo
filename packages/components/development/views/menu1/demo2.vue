@@ -76,7 +76,6 @@
 
 <script setup lang="ts">
 import { XTable, XTableV2, XEditTable, XEditTableItem, type XTableColumn, type XEditTableColumn } from '@/index';
-import type { Column } from 'element-plus';
 
 /**
  * 选中列表
@@ -115,7 +114,7 @@ const columns: XTableColumn[] = [
         prop: 'hobby',
     },
 ];
-const columnsV2: Column[] = [
+const columnsV2: any[] = [
     {
         title: '姓名',
         key: 'name',

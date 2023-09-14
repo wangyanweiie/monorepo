@@ -1,6 +1,6 @@
 import { ElMessageBox } from 'element-plus';
 import { OPERATION_NOTICE } from '@/constant/base';
-import { to } from '@/utils/await-to';
+import { to } from '@custom/utils';
 
 /**
  * 确认删除弹出提示

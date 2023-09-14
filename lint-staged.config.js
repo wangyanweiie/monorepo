@@ -1,3 +1,4 @@
 module.exports = {
-    '*.{vue,ts,json}': ['prettier --write'],
+    // '*.{vue,ts,json}': ['pnpm lint'],
+    '*.{vue,ts,json}': ['pnpm format'],
 };

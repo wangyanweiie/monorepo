@@ -23,9 +23,35 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    loading: {
+    selectable: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    shadow: {
+        type: globalThis.PropType<"hover" | "always" | "never">;
+        default: string;
+    };
+    bodyStyle: {
+        type: globalThis.PropType<Record<string, string>>;
+        default: () => {
+            padding: string;
+        };
+    };
+    showIndex: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    rowKey: {
+        type: globalThis.PropType<string>;
+        default: string;
+    };
+    api: {
+        type: globalThis.PropType<any>;
+        default: undefined;
+    };
+    apiParams: {
+        type: globalThis.PropType<Record<string, string | number>>;
+        default: () => {};
     };
     height: {
         type: globalThis.PropType<string>;
@@ -35,43 +61,17 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    api: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
-    shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
-        default: string;
-    };
-    bodyStyle: {
-        type: globalThis.PropType<Record<string, string>>;
-        default: () => {
-            padding: string;
-        };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
     };
     scroll: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    rowKey: {
-        type: globalThis.PropType<string>;
-        default: string;
-    };
-    selectable: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    showIndex: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
     dividePage: {
         type: globalThis.PropType<boolean>;
         default: boolean;
-    };
-    apiParams: {
-        type: globalThis.PropType<Record<string, string | number>>;
-        default: () => {};
     };
     apiKeyMap: {
         type: globalThis.PropType<XTableV2APIKeyMap>;
@@ -132,9 +132,35 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    loading: {
+    selectable: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    shadow: {
+        type: globalThis.PropType<"hover" | "always" | "never">;
+        default: string;
+    };
+    bodyStyle: {
+        type: globalThis.PropType<Record<string, string>>;
+        default: () => {
+            padding: string;
+        };
+    };
+    showIndex: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
+    };
+    rowKey: {
+        type: globalThis.PropType<string>;
+        default: string;
+    };
+    api: {
+        type: globalThis.PropType<any>;
+        default: undefined;
+    };
+    apiParams: {
+        type: globalThis.PropType<Record<string, string | number>>;
+        default: () => {};
     };
     height: {
         type: globalThis.PropType<string>;
@@ -144,43 +170,17 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    api: {
-        type: globalThis.PropType<any>;
-        default: undefined;
-    };
-    shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
-        default: string;
-    };
-    bodyStyle: {
-        type: globalThis.PropType<Record<string, string>>;
-        default: () => {
-            padding: string;
-        };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
     };
     scroll: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    rowKey: {
-        type: globalThis.PropType<string>;
-        default: string;
-    };
-    selectable: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
-    showIndex: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
     dividePage: {
         type: globalThis.PropType<boolean>;
         default: boolean;
-    };
-    apiParams: {
-        type: globalThis.PropType<Record<string, string | number>>;
-        default: () => {};
     };
     apiKeyMap: {
         type: globalThis.PropType<XTableV2APIKeyMap>;
@@ -221,18 +221,18 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     data: Record<string, any>[];
     header: string;
     width: string;
-    loading: boolean;
+    selectable: boolean;
+    shadow: "hover" | "always" | "never";
+    bodyStyle: Record<string, string>;
+    showIndex: boolean;
+    rowKey: string;
+    api: any;
+    apiParams: Record<string, string | number>;
     height: string;
     emptyText: string;
-    api: any;
-    shadow: "hover" | "never" | "always";
-    bodyStyle: Record<string, string>;
+    loading: boolean;
     scroll: boolean;
-    rowKey: string;
-    selectable: boolean;
-    showIndex: boolean;
     dividePage: boolean;
-    apiParams: Record<string, string | number>;
     apiKeyMap: XTableV2APIKeyMap;
     headerClass: any;
     headerHeight: number;

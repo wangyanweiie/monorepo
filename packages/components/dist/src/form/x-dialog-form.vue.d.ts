@@ -21,13 +21,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string | number>;
         default: string;
     };
-    loading: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     modelValue: {
         type: globalThis.PropType<boolean>;
         required: true;
+        default: boolean;
+    };
+    loading: {
+        type: globalThis.PropType<boolean>;
         default: boolean;
     };
     schemas: {
@@ -66,13 +66,13 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string | number>;
         default: string;
     };
-    loading: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     modelValue: {
         type: globalThis.PropType<boolean>;
         required: true;
+        default: boolean;
+    };
+    loading: {
+        type: globalThis.PropType<boolean>;
         default: boolean;
     };
     schemas: {
@@ -91,16 +91,16 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     };
 }>> & {
     onSubmit?: ((form: any) => any) | undefined;
-    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
-    "onUpdate:data"?: ((value: any) => any) | undefined;
     onOpen?: ((form: any) => any) | undefined;
     onClose?: (() => any) | undefined;
+    "onUpdate:modelValue"?: ((value: boolean) => any) | undefined;
+    "onUpdate:data"?: ((value: any) => any) | undefined;
 }, {
     title: string;
     data: any;
     width: string | number;
-    loading: boolean;
     modelValue: boolean;
+    loading: boolean;
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
     isShowConfirm: boolean;

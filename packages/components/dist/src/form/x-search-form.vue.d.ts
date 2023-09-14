@@ -21,13 +21,17 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    loading: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     modelValue: {
         type: globalThis.PropType<any>;
         default: undefined;
+    };
+    shadow: {
+        type: globalThis.PropType<"hover" | "always" | "never">;
+        default: string;
+    };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -39,10 +43,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {
             labelWidth: string;
         };
-    };
-    shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
-        default: string;
     };
     searchBtnText: {
         type: globalThis.PropType<string>;
@@ -65,13 +65,17 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         required: true;
         default: string;
     };
-    loading: {
-        type: globalThis.PropType<boolean>;
-        default: boolean;
-    };
     modelValue: {
         type: globalThis.PropType<any>;
         default: undefined;
+    };
+    shadow: {
+        type: globalThis.PropType<"hover" | "always" | "never">;
+        default: string;
+    };
+    loading: {
+        type: globalThis.PropType<boolean>;
+        default: boolean;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -83,10 +87,6 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         default: () => {
             labelWidth: string;
         };
-    };
-    shadow: {
-        type: globalThis.PropType<"hover" | "never" | "always">;
-        default: string;
     };
     searchBtnText: {
         type: globalThis.PropType<string>;
@@ -102,11 +102,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     onSearch?: ((value: any) => any) | undefined;
 }, {
     header: string;
-    loading: boolean;
     modelValue: any;
+    shadow: "hover" | "always" | "never";
+    loading: boolean;
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
-    shadow: "hover" | "never" | "always";
     searchBtnText: string;
     showRestButton: boolean;
 }, {}>, Partial<Record<string, (_: {

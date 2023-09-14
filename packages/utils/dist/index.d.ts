@@ -2,6 +2,14 @@ import * as axios from 'axios';
 import { AxiosResponse } from 'axios';
 
 /**
+ * @link https://github.com/scopsy/await-to-js
+ * @param { Promise } promise
+ * @param { Object= } errorExt - Additional Information you can pass to the err object
+ * @return { Promise }
+ */
+declare function to<T, U = Error>(promise: Promise<T>): Promise<[U, undefined] | [null, T]>;
+
+/**
  * 后端返回数据格式
  */
 interface responseData {
@@ -13,7 +21,7 @@ interface responseData {
 /**
  * 拦截器配置函数参数
  */
-interface Options$1 {
+interface Options {
     /** url */
     url?: string;
     /** 超时时间 ms */
@@ -39,20 +47,12 @@ interface Options$1 {
  * @param {Options} options 配置项
  * @returns 接口函数
  */
-declare function setupAxiosInterceptors(options: Options$1): {
+declare function setupAxiosInterceptors(options: Options): {
     get: <T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: axios.AxiosRequestConfig<D> | undefined) => Promise<R>;
     post: <T_1 = any, R_1 = AxiosResponse<T_1, any>, D_1 = any>(url: string, data?: D_1 | undefined, config?: axios.AxiosRequestConfig<D_1> | undefined) => Promise<R_1>;
     put: <T_2 = any, R_2 = AxiosResponse<T_2, any>, D_2 = any>(url: string, data?: D_2 | undefined, config?: axios.AxiosRequestConfig<D_2> | undefined) => Promise<R_2>;
     del: <T_3 = any, R_3 = AxiosResponse<T_3, any>, D_3 = any>(url: string, config?: axios.AxiosRequestConfig<D_3> | undefined) => Promise<R_3>;
 };
-
-/**
- * @link https://github.com/scopsy/await-to-js
- * @param { Promise } promise
- * @param { Object= } errorExt - Additional Information you can pass to the err object
- * @return { Promise }
- */
-declare function to<T, U = Error>(promise: Promise<T>): Promise<[U, undefined] | [null, T]>;
 
 /**
  * 存储字段到 local storage
@@ -75,36 +75,4 @@ declare function removeStorage(key: string): void;
  */
 declare function clearStorage(): void;
 
-interface Options {
-    label: string;
-    value: string | number;
-}
-
-/**
- * 校验是否为数字类型（正数/负数/整数/小数）
- * @param value 字符串
- */
-declare function checkNumberFormat(value: string): string | null | undefined;
-/**
- * 强制保留小数位方法
- * @param value 要处理的数据
- * @param precision 小数位数
- */
-declare function keepDecimalPrecision(value: number | string, precision: number): string | undefined;
-/**
- * 将枚举转换为 options
- * @param enumeration 枚举
- */
-declare function transformEnumToOptions(enumeration: Record<string, string | number>): Options[];
-/**
- * 将 '-' 拼接字符串改为驼峰格式
- * @param str 要转换的字符串
- * @param type 要转换的驼峰格式
- */
-declare function handleToHumpFormat(str: string, type: 'min' | 'max'): string;
-/**
- * 生成 uuid
- */
-declare function guid(): string;
-
-export { checkNumberFormat, clearStorage, getStorage, guid, handleToHumpFormat, keepDecimalPrecision, removeStorage, saveStorage, setupAxiosInterceptors, to, transformEnumToOptions };
+export { clearStorage, getStorage, removeStorage, saveStorage, setupAxiosInterceptors, to };

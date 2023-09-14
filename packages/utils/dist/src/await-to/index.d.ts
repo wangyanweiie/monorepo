@@ -5,4 +5,3 @@
  * @return { Promise }
  */
 export declare function to<T, U = Error>(promise: Promise<T>): Promise<[U, undefined] | [null, T]>;
-export default to;
