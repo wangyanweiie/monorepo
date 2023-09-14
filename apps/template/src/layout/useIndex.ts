@@ -7,7 +7,7 @@ import { useUserStore } from '@/store/user-info';
 import router from '@/router';
 import RequestAPI from '@/api/login';
 
-export function useConf() {
+export function useIndex() {
     const token = getUserToken();
     const userInfo = getUserInfo();
     const { clearCache } = useUserStore();

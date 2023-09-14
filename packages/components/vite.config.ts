@@ -1,16 +1,16 @@
 import path from 'path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
-import Icons from 'unplugin-icons/vite';
 import dts from 'vite-plugin-dts';
 import Inspect from 'vite-plugin-inspect';
+import VueDevTools from 'vite-plugin-vue-devtools';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
-import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
+import Icons from 'unplugin-icons/vite';
 import IconsResolver from 'unplugin-icons/resolver';
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import ElementPlus from 'unplugin-element-plus/vite';
 import DefineOptions from 'unplugin-vue-define-options/vite';
-import VueDevTools from 'vite-plugin-vue-devtools';
 
 const pathSrc = path.resolve(__dirname, 'src');
 const pathDev = path.resolve(__dirname, 'development');
@@ -35,12 +35,14 @@ export default defineConfig({
             },
         },
     },
+
     resolve: {
         alias: {
             '@': pathSrc,
             '@dev': pathDev,
         },
     },
+
     plugins: [
         Vue(),
 
@@ -61,10 +63,18 @@ export default defineConfig({
             imports: ['vue', 'vue-router'],
 
             // 自定义组件解析器
-            resolvers: [ElementPlusResolver()],
+            resolvers: [ElementPlusResolver(), IconsResolver()],
 
             // 配置文件生成位置
             dts: path.resolve('types/auto-imports.d.ts'),
+
+            // eslint 报错解决
+            eslintrc: {
+                // 当 enabled 为 true 时，会根据 filepath 生成一个 eslint 的配置文件，需要引入到 eslint 的配置文件中
+                enabled: false,
+                filepath: './.eslintrc-auto-import.json',
+                globalsPropValue: true,
+            },
         }),
 
         /**
