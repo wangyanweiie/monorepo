@@ -25,7 +25,7 @@ module.exports = defineConfig({
      */
     parserOptions: {
         parser: '@typescript-eslint/parser',
-        ecmaVersion: 2020,
+        ecmaVersion: 'latest',
         sourceType: 'module',
     },
 
