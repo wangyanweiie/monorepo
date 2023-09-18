@@ -80,9 +80,9 @@ const loading = ref<boolean>(false);
  */
 async function login(): Promise<void> {
     // 表单校验
-    const [err] = await to(formRef.value?.validate());
+    const valid = await formRef.value?.validate();
 
-    if (err) {
+    if (!valid) {
         return;
     }
 
