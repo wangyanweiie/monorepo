@@ -15,20 +15,50 @@ const pathSrc = path.resolve(__dirname, 'src');
 const pathDev = path.resolve(__dirname, 'development');
 
 export default defineConfig({
+    resolve: {
+        /**
+         * 别名
+         * 当使用文件系统路径的别名时，请使用绝对路径
+         */
+        alias: {
+            '@': pathSrc,
+            '@dev': pathDev,
+        },
+    },
+
     build: {
+        /**
+         * 库模式
+         */
+        lib: {
+            // 必需，因为库不能使用 HTML 作为入口
+            entry: path.resolve(pathSrc, 'index.ts'),
+            // 暴露的全局变量
+            name: 'custom',
+            // 输出的包文件名，默认 fileName 是 package.json 的 name 选项，同时它还可以被定义为参数为 format 和 entryAlias 的函数
+            fileName: format => `index.${format}.js`,
+        },
+
+        /**
+         * 混淆器
+         *  - boolean
+         *  - terser
+         *  - esbuild
+         */
         minify: 'terser',
+
+        /**
+         * 混淆选项
+         */
         terserOptions: {
+            // 压缩选项
             compress: {
-                // 生产环境时删除 console 与 debugger
+                // 打包后删除 console 与 debugger
                 drop_console: true,
                 drop_debugger: true,
             },
         },
-        lib: {
-            entry: path.resolve(pathSrc, 'index.ts'),
-            name: 'custom',
-            fileName: format => `index.${format}.js`,
-        },
+
         rollupOptions: {
             // 确保外部化处理那些你不想打包进库的依赖
             external: ['vue', 'vue-router', 'element-plus'],
@@ -40,13 +70,6 @@ export default defineConfig({
                     'element-plus': 'ElementPlus',
                 },
             },
-        },
-    },
-
-    resolve: {
-        alias: {
-            '@': pathSrc,
-            '@dev': pathDev,
         },
     },
 

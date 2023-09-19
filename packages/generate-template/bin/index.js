@@ -29,17 +29,17 @@ program
     .action(async (projectName, options) => {
         // 1.引入动画
         const spinner = ora();
-        spinner.start(`正在获取模版列表`);
+        spinner.start('正在获取模版列表');
 
         // 2.获取模版列表
         const templates = await getGitRepoList('wangyanweiie');
 
         if (!templates.length) {
-            spinner.fail(`获取模版失败`);
+            spinner.fail('获取模版失败');
             process.exit(1);
         }
 
-        spinner.succeed(`获取模版成功`);
+        spinner.succeed('获取模版成功');
 
         // 3.从模版列表中找到对应的模版，匹配到模版就赋值，没有匹配到就是 undefined
         const project = templates.find(template => template.name === options.template);
@@ -88,7 +88,7 @@ program
         }
 
         // 7.下载模版
-        spinner.start(`正在下载模版`);
+        spinner.start('正在下载模版');
 
         /**
          * clone

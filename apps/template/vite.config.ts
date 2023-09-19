@@ -16,15 +16,31 @@ const pathSrc = path.resolve(__dirname, 'src');
 
 export default defineConfig({
     resolve: {
+        /**
+         * 别名
+         * 当使用文件系统路径的别名时，请使用绝对路径
+         */
         alias: {
             '@': pathSrc,
         },
     },
+
     build: {
+        /**
+         * 混淆器
+         *  - boolean
+         *  - terser
+         *  - esbuild
+         */
         minify: 'terser',
+
+        /**
+         * 混淆选项
+         */
         terserOptions: {
+            // 压缩选项
             compress: {
-                // 生产环境时删除 console 与 debugger
+                // 打包后删除 console 与 debugger
                 drop_console: true,
                 drop_debugger: true,
             },
@@ -44,6 +60,7 @@ export default defineConfig({
             },
         },
     },
+
     plugins: [
         Vue(),
 
