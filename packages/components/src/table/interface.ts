@@ -81,8 +81,10 @@ export interface XTableProp {
     apiKeyMap?: XTableAPIKeyMap;
     /** 操作栏 */
     actions?: (row: any, index: number) => XTableActionButton[];
-    /** 导出配置 */
-    exportProps?: XTableExportConfig;
+    /** 要合并的某一列字段 */
+    combineField?: string;
+    /** 要根据某一列字段进行合并的列索引 */
+    columnIndex?: number[];
 }
 
 /**
@@ -91,6 +93,7 @@ export interface XTableProp {
 export type XTableColumn<T = any> = Partial<TableColumnCtx<T>> & {
     label?: string;
     prop: keyof T | '';
+    /** 是否选中 */
     checked?: boolean;
 };
 
@@ -111,9 +114,11 @@ export interface XTableActionButton extends Partial<ButtonProps> {
 }
 
 /**
- * 导出配置
+ * 合并单元格
  */
-export interface XTableExportConfig {
-    exportApi?: (patams?: any) => Promise<void>;
-    extraParams?: any[];
+export interface XTableSpanMethodProps {
+    row: Record<string, any>;
+    column: TableColumnCtx<Record<string, any>>;
+    rowIndex: number;
+    columnIndex: number;
 }

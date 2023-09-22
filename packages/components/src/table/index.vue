@@ -33,6 +33,7 @@
                 :data="tableData"
                 :row-key="rowKey"
                 :tree-props="treeProps"
+                :span-method="spanMethod"
                 :style="{ width: '100%' }"
                 v-bind="elTableProps"
                 @selection-change="handleSelectChange"
@@ -77,13 +78,13 @@
                     <template #default="{ row, $index }">
                         <div class="actions">
                             <el-button
-                                v-for="(button, index) in actionButtons(row, $index)"
+                                v-for="(item, index) in actionButtons(row, $index)"
                                 :key="index"
                                 text
                                 type="primary"
-                                v-bind="button"
+                                v-bind="item"
                             >
-                                {{ button.label }}
+                                {{ item.label }}
                             </el-button>
                         </div>
                     </template>
@@ -118,13 +119,7 @@
 
 <script lang="ts" setup>
 import type { PaginationProps, TableProps } from 'element-plus';
-import type {
-    XTableAPIKeyMap,
-    XTableColumn,
-    XTableDataType,
-    XTableActionButton,
-    XTableExportConfig,
-} from './interface';
+import type { XTableAPIKeyMap, XTableColumn, XTableDataType, XTableActionButton } from './interface';
 import { InfoFilled } from '@element-plus/icons-vue';
 import useIndex from './useIndex';
 import TableSetting from './components/table-setting.vue';
@@ -185,8 +180,10 @@ const props = withDefaults(
         apiKeyMap?: XTableAPIKeyMap;
         /** 操作栏 */
         actions?: (row: any, index: number) => XTableActionButton[];
-        /** 导出配置 */
-        exportProps?: XTableExportConfig;
+        /** 要合并的某一列字段 */
+        combineField?: string;
+        /** 要根据某一列字段进行合并的列索引 */
+        columnIndex?: number[];
     }>(),
     {
         header: '',
@@ -222,9 +219,9 @@ const props = withDefaults(
             returnPagesKey: 'pages',
             returnRecordKey: 'records',
         }),
-        afterQuery: undefined,
         actions: () => [],
-        exportProps: () => ({}),
+        combineField: '',
+        columnIndex: () => [],
     },
 );
 
@@ -254,6 +251,7 @@ const {
     getSelectedRows,
     clearSelection,
     getTableData,
+    spanMethod,
 } = useIndex(props);
 
 /**

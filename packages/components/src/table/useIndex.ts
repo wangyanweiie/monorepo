@@ -1,5 +1,11 @@
 import type { TableInstance } from 'element-plus';
-import type { XTablePagination, XTableColumn, XTableActionButton, XTableProp } from './interface';
+import type {
+    XTablePagination,
+    XTableColumn,
+    XTableActionButton,
+    XTableProp,
+    XTableSpanMethodProps,
+} from './interface';
 import { cloneDeep } from 'lodash-es';
 
 /**
@@ -25,7 +31,7 @@ export default function useIndex(props: XTableProp) {
     /**
      * 表格 tableLoading
      */
-    const tableLoading = ref<boolean>(false);
+    const tableLoading = ref<boolean>(props.loading ?? false);
 
     /**
      * 表格数据
@@ -102,7 +108,7 @@ export default function useIndex(props: XTableProp) {
      * 获取表格数据
      * @param query 查询参数
      */
-    async function loadData(query?: Record<string, any>): Promise<void> {
+    async function loadData(query?: Record<string, string | number>): Promise<void> {
         searchData.value = query;
 
         // 1.动态赋值，分页接口
@@ -205,6 +211,11 @@ export default function useIndex(props: XTableProp) {
      * 数据回显勾选
      */
     function handleToggleRowSelection(selectedList: any[]) {
+        if (!props.rowKey) {
+            console.warn(`row-key 未设置会导致回显不生效`);
+            return;
+        }
+
         if (selectedList.length) {
             selectedList.forEach(selected => {
                 tableData.value.forEach(row => {
@@ -222,16 +233,12 @@ export default function useIndex(props: XTableProp) {
      * 判断是否需要回显
      */
     function handleSelectedList() {
-        if (!props.rowKey && tableData.value[0][props.rowKey as string]) {
-            console.warn(`row-key 未设置会导致回显不生效`);
-            return;
-        }
-
         if (!props.selectedList || props.selectedList.length === 0) {
+            console.warn(`selectedList 未设置会导致回显不生效`);
             return;
         }
 
-        handleToggleRowSelection(props.selectedList as any[]);
+        handleToggleRowSelection(props.selectedList);
     }
 
     /**
@@ -248,11 +255,11 @@ export default function useIndex(props: XTableProp) {
      * action buttons
      */
     function actionButtons(row: Record<string, any>, index: number): XTableActionButton[] {
-        let buttons: any[] = [];
-
-        if (typeof props.actions === 'function') {
-            buttons = props.actions(row, index);
+        if (typeof props.actions !== 'function') {
+            return [];
         }
+
+        const buttons = props.actions(row, index);
 
         // 更新是否展示操作列
         hasActionBtn.value = !!buttons.length;
@@ -290,12 +297,75 @@ export default function useIndex(props: XTableProp) {
     }
 
     /**
+     * FIXME: 合并单元格方法
+     */
+    let cellList: any[] = [];
+    let count: number = 0;
+
+    /**
+     * 遍历单元格
+     * @param data 表格数据
+     */
+    function computeCell(data: any[]) {
+        if (!props.combineField) {
+            console.warn('combineField 未设置会导致合并不生效');
+            return;
+        }
+
+        cellList = [];
+        count = 0;
+        for (let i = 0; i < data.length; i++) {
+            // 先设置第一项
+            if (i === 0) {
+                // 初始值为 1，若下一项和此项相同，就往 cellList 数组中追加 0
+                cellList.push(1);
+                // 初始计数为 0
+                count = 0;
+            } else {
+                if (data[i][props.combineField as string] == data[i - 1][props.combineField as string]) {
+                    // 增加计数
+                    cellList[count] += 1;
+                    // 相等就往 cellList 数组中追加 0
+                    cellList.push(0);
+                } else {
+                    // 不等就往 cellList 数组中追加 1
+                    cellList.push(1);
+                    // 将索引赋值为计数
+                    count = i;
+                }
+            }
+        }
+    }
+
+    /**
+     * 合并单元格-首列
+     */
+    function spanMethod({ rowIndex, columnIndex }: XTableSpanMethodProps) {
+        if (!props.columnIndex || props.columnIndex?.length === 0) {
+            console.warn('columnIndex 未设置会导致合并不生效');
+            return;
+        }
+
+        computeCell(tableData.value);
+
+        if (props.columnIndex?.includes(columnIndex)) {
+            const rowspan = cellList[rowIndex];
+            const colspan = rowspan > 0 ? 1 : 0;
+
+            return {
+                rowspan,
+                colspan,
+            };
+        }
+    }
+
+    /**
      * 监听表格列配置
      */
     watch(
         () => props.columns,
         (newValue: XTableColumn[]) => {
-            tableColumns.value = cloneDeep(newValue) as any;
+            tableColumns.value = cloneDeep(newValue);
         },
     );
 
@@ -313,13 +383,6 @@ export default function useIndex(props: XTableProp) {
             deep: true,
         },
     );
-
-    /**
-     * 监听 loading
-     */
-    watchEffect(() => {
-        tableLoading.value = props.loading as boolean;
-    });
 
     /**
      * 页面渲染
@@ -355,5 +418,6 @@ export default function useIndex(props: XTableProp) {
         getSelectedRows,
         clearSelection,
         getTableData,
+        spanMethod,
     };
 }
