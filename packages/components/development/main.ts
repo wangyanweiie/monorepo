@@ -4,7 +4,7 @@ import { createPinia } from 'pinia';
 import App from '@dev/App.vue';
 import router from '@dev/router/index';
 import permission from '@dev/directive/permission';
-import { usePermission } from '@dev/store/permission';
+import { setPermissionRoute } from '@dev/store/permission';
 
 (() => {
     const app = createApp(App);
@@ -18,8 +18,8 @@ import { usePermission } from '@dev/store/permission';
     // 注册权限指令
     app.use(permission);
 
-    // 设置路由权限
-    usePermission();
+    // 赋值路由数组并动态加载路由
+    setPermissionRoute();
 
     // 事件通讯
     app.config.globalProperties.$bus = mitt();

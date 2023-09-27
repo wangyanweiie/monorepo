@@ -8,7 +8,7 @@ import appLayout from '@dev/layout/index.vue';
 /**
  * 权限缓存状态
  */
-const usePermissionStore = defineStore('permission', () => {
+export const usePermissionStore = defineStore('permission', () => {
     // ================= 权限 =================
     /**
      * 是否开启权限设置
@@ -32,7 +32,7 @@ const usePermissionStore = defineStore('permission', () => {
     /**
      * 权限数组
      */
-    const permissions = ref<string[]>([]);
+    const permissions = ref<string[]>(['首页']);
 
     /**
      * 更新权限数组
@@ -125,7 +125,7 @@ const usePermissionStore = defineStore('permission', () => {
     }
 
     /**
-     * FIXME: 动态加载路由？
+     * 动态加载路由？
      */
     function setActiveRouteList() {
         router.addRoute({
@@ -162,13 +162,11 @@ const usePermissionStore = defineStore('permission', () => {
 /**
  * 设置路由与权限
  */
-function usePermission() {
+export function setPermissionRoute() {
     const permissionStore = usePermissionStore();
     const permissions = store.local.get('permissions');
 
-    permissionStore.setPermission(permissions);
     permissionStore.setRoutes(menuRoutes);
+    permissionStore.setPermission(permissions);
     permissionStore.setActiveRouteList();
 }
-
-export { usePermissionStore, usePermission };

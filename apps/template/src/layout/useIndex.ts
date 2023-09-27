@@ -1,9 +1,9 @@
 import type { XFormItemSchema, XFormInstance } from '@custom/components';
+import { clearStorage } from '@custom/utils';
 import { ElMessage } from 'element-plus';
 import { OPERATION_NOTICE } from '@/constant/base';
 import { confirmExitMessage } from '@/utils/confirm-message';
 import { getBaseUrl, getUserInfo, getUserToken, saveBaseUrl } from '@/utils/storage';
-import { useUserStore } from '@/store/user-info';
 import router from '@/router';
 import RequestAPI from '@/api/login';
 
@@ -11,7 +11,6 @@ export default function useIndex() {
     const baseUrl = ref<string>(getBaseUrl());
     const token = getUserToken();
     const userInfo = getUserInfo();
-    const { clearCache } = useUserStore();
 
     /**
      * 改变 base-url
@@ -116,7 +115,7 @@ export default function useIndex() {
         const result = await RequestAPI.logout();
 
         if (result) {
-            clearCache();
+            clearStorage();
             router.push(`/login`);
         }
     }
@@ -138,7 +137,7 @@ export default function useIndex() {
         const res = await RequestAPI.logout();
 
         if (res) {
-            clearCache();
+            clearStorage();
             router.push(`/login`);
         }
     }
