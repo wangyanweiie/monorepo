@@ -44,10 +44,10 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue';
-import type { XFormInstance, XFormItemSchema } from './interface';
 import type { FormProps } from 'element-plus';
+import type { XFormInstance, XFormItemSchema } from './interface';
 import XForm from './x-form.vue';
-import XFormItem from './x-form-item.vue';
+// import XFormItem from './XFormItem.vue';
 
 /**
  * props
@@ -102,9 +102,9 @@ const emits = defineEmits<{
 /**
  * slot-name
  */
-function customSlotName(schema: XFormItemSchema): string {
-    return schema.components === 'custom' ? schema.slotName : '';
-}
+// function customSlotName(schema: XFormItemSchema): string {
+//     return schema.components === 'custom' ? schema.slotName : '';
+// }
 
 /**
  * 是否展示弹窗
@@ -148,8 +148,8 @@ function handleOpen() {
  */
 function handleClose() {
     // 重置表单值
-    // formRef.value?.resetFields();
-    // modelForm.value = {};
+    formRef.value?.resetFields();
+    modelForm.value = {};
     emits('close');
 }
 

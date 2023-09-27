@@ -154,6 +154,7 @@ importers:
       '@vitejs/plugin-vue': ^4.3.4
       '@vue-macros/volar': ^0.14.3
       '@vue/tsconfig': ^0.4.0
+      dayjs: ^1.11.9
       element-plus: ^2.3.12
       eslint: ^8.49.0
       lodash-es: ^4.17.21
@@ -177,6 +178,7 @@ importers:
     dependencies:
       '@custom/utils': link:../utils
       '@element-plus/icons-vue': 2.1.0_vue@3.3.4
+      dayjs: 1.11.9
       element-plus: 2.3.12_vue@3.3.4
       lodash-es: 4.17.21
       mitt: 3.0.1

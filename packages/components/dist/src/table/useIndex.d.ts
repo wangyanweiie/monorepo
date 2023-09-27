@@ -1,4 +1,4 @@
-import type { XTableColumn, XTableActionButton, XTableProp } from './interface';
+import type { XTableColumn, XTableActionButton, XTableProp, XTableSpanMethodProps } from './interface';
 /**
  * @description useIndex
  * @param props 组件传参
@@ -153,7 +153,9 @@ export default function useIndex(props: XTableProp): {
                 type: BooleanConstructor;
                 default: boolean;
             };
-            stripe: BooleanConstructor;
+            stripe: BooleanConstructor; /**
+             * 页面渲染
+             */
             border: BooleanConstructor;
             rowKey: globalThis.PropType<string | ((row: any) => string) | undefined>;
             showHeader: {
@@ -261,9 +263,6 @@ export default function useIndex(props: XTableProp): {
                 };
                 cssVar: (object: Record<string, string>) => Record<string, string>;
                 cssVarName: (name: string) => string;
-                /**
-                 * 数据回显勾选
-                 */
                 cssVarBlock: (object: Record<string, string>) => Record<string, string>;
                 cssVarBlockName: (name: string) => string;
             };
@@ -282,6 +281,9 @@ export default function useIndex(props: XTableProp): {
                 height: number | null;
                 headerHeight: number | null;
             }>;
+            /**
+             * 判断是否需要回显
+             */
             isGroup: globalThis.Ref<boolean>;
             bodyWidth: globalThis.ComputedRef<string>;
             tableBodyStyles: globalThis.ComputedRef<{
@@ -312,11 +314,10 @@ export default function useIndex(props: XTableProp): {
             scrollbarViewStyle: {
                 display: string;
                 verticalAlign: string;
-            };
+            }; /**
+             * 清空选中
+             */
             tableInnerStyle: globalThis.ComputedRef<{
-                /**
-                 * 获取表格数据
-                 */
                 height: string | number;
                 maxHeight?: undefined;
             } | {
@@ -327,10 +328,11 @@ export default function useIndex(props: XTableProp): {
                 maxHeight?: undefined;
             }>;
             scrollbarStyle: globalThis.ComputedRef<{
-                height: string;
-                maxHeight?: undefined; /**
-                 * 监听表格数据
+                height: string; /**
+                 * 遍历单元格
+                 * @param data 表格数据
                  */
+                maxHeight?: undefined;
             } | {
                 maxHeight: string;
                 height?: undefined;
@@ -401,7 +403,9 @@ export default function useIndex(props: XTableProp): {
             type: BooleanConstructor;
             default: boolean;
         };
-        stripe: BooleanConstructor;
+        stripe: BooleanConstructor; /**
+         * 页面渲染
+         */
         border: BooleanConstructor;
         rowKey: globalThis.PropType<string | ((row: any) => string) | undefined>;
         showHeader: {
@@ -509,9 +513,6 @@ export default function useIndex(props: XTableProp): {
             };
             cssVar: (object: Record<string, string>) => Record<string, string>;
             cssVarName: (name: string) => string;
-            /**
-             * 数据回显勾选
-             */
             cssVarBlock: (object: Record<string, string>) => Record<string, string>;
             cssVarBlockName: (name: string) => string;
         };
@@ -530,6 +531,9 @@ export default function useIndex(props: XTableProp): {
             height: number | null;
             headerHeight: number | null;
         }>;
+        /**
+         * 判断是否需要回显
+         */
         isGroup: globalThis.Ref<boolean>;
         bodyWidth: globalThis.ComputedRef<string>;
         tableBodyStyles: globalThis.ComputedRef<{
@@ -560,11 +564,10 @@ export default function useIndex(props: XTableProp): {
         scrollbarViewStyle: {
             display: string;
             verticalAlign: string;
-        };
+        }; /**
+         * 清空选中
+         */
         tableInnerStyle: globalThis.ComputedRef<{
-            /**
-             * 获取表格数据
-             */
             height: string | number;
             maxHeight?: undefined;
         } | {
@@ -575,10 +578,11 @@ export default function useIndex(props: XTableProp): {
             maxHeight?: undefined;
         }>;
         scrollbarStyle: globalThis.ComputedRef<{
-            height: string;
-            maxHeight?: undefined; /**
-             * 监听表格数据
+            height: string; /**
+             * 遍历单元格
+             * @param data 表格数据
              */
+            maxHeight?: undefined;
         } | {
             maxHeight: string;
             height?: undefined;
@@ -609,7 +613,7 @@ export default function useIndex(props: XTableProp): {
     handleIndex: (index: number) => number;
     selectableValue: (row: Record<string, any>) => any;
     searchData: globalThis.Ref<Record<string, any> | undefined>;
-    loadData: (query?: Record<string, any>) => Promise<void>;
+    loadData: (query?: Record<string, string | number>) => Promise<void>;
     handleSizeChange: () => Promise<void>;
     handleCurrentChange: () => Promise<void>;
     handleToggleRowSelection: (selectedList: any[]) => void;
@@ -619,4 +623,8 @@ export default function useIndex(props: XTableProp): {
     getSelectedRows: () => Record<string, any>[];
     clearSelection: () => void;
     getTableData: () => Record<string, any>[];
+    spanMethod: ({ rowIndex, columnIndex }: XTableSpanMethodProps) => {
+        rowspan: any;
+        colspan: number;
+    } | undefined;
 };

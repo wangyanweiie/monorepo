@@ -84,7 +84,7 @@ export default defineConfig({
             resolvers: [ElementPlusResolver(), IconsResolver()],
 
             // 配置文件生成位置
-            dts: path.resolve('src/types/auto-imports.d.ts'),
+            dts: path.resolve('types/auto-imports.d.ts'),
 
             // eslint 报错解决
             eslintrc: {
@@ -119,7 +119,7 @@ export default defineConfig({
             ],
 
             // 配置文件生成位置
-            dts: path.resolve('src/types/components.d.ts'),
+            dts: path.resolve('types/components.d.ts'),
         }),
 
         /**

@@ -107,7 +107,7 @@ var HTTP_ERROR_NOTICE;
  * @param {Options} options 配置项
  * @returns 接口函数
  */
-function setupAxiosInterceptors(options) {
+function useAxiosInterceptors(options) {
     if (!options.url) {
         throw new Error('未设置 url');
     }
@@ -125,12 +125,17 @@ function setupAxiosInterceptors(options) {
      * 请求拦截
      */
     service.interceptors.request.use((config) => {
-        // 获取存储在本地的 token 放在请求头中
         const token = getStorage(options.storageTokenKey || 'token');
+        const baseUrl = getStorage(options.storageUrlKey || 'baseUrl');
+        // 设置 token
         if (token && config.headers) {
             config.headers[options.requestHeaderTokenKey || 'v-token'] = token;
         }
-        // 更新请求参数
+        // 更新 base-url
+        if (baseUrl) {
+            config.url = baseUrl + config.url;
+        }
+        // 将配置的全局参数更新到请求参数
         if (options.getMethodsParams && config.params) {
             config.params = {
                 ...options.getMethodsParams,
@@ -263,5 +268,5 @@ exports.clearStorage = clearStorage;
 exports.getStorage = getStorage;
 exports.removeStorage = removeStorage;
 exports.saveStorage = saveStorage;
-exports.setupAxiosInterceptors = setupAxiosInterceptors;
 exports.to = to;
+exports.useAxiosInterceptors = useAxiosInterceptors;

@@ -1,5 +1,5 @@
 import type { FormProps } from 'element-plus';
-import type { XFormInstance, XFormItemSchema } from '../form/interface';
+import type { XFormInstance, XFormItemSchema } from './interface';
 /**
  * 扩展 HTMLElement
  */

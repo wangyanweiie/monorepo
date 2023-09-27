@@ -1,5 +1,5 @@
-import type { XFormInstance, XFormItemSchema } from './interface';
 import type { FormProps } from 'element-plus';
+import type { XFormInstance, XFormItemSchema } from './interface';
 /**
  * 表单校验
  */

@@ -17,6 +17,8 @@ export interface Options {
     timeout?: number;
     /** 保存在 local storage 里的 token 的 key 值 */
     storageTokenKey?: string;
+    /** 保存在 local storage 里的 baseUrl 的 key 值 */
+    storageUrlKey?: string;
     /** 请求头携带 token 的 key 值 */
     requestHeaderTokenKey?: string;
     /** 过期码 */

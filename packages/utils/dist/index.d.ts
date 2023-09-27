@@ -28,6 +28,8 @@ interface Options {
     timeout?: number;
     /** 保存在 local storage 里的 token 的 key 值 */
     storageTokenKey?: string;
+    /** 保存在 local storage 里的 baseUrl 的 key 值 */
+    storageUrlKey?: string;
     /** 请求头携带 token 的 key 值 */
     requestHeaderTokenKey?: string;
     /** 过期码 */
@@ -47,7 +49,7 @@ interface Options {
  * @param {Options} options 配置项
  * @returns 接口函数
  */
-declare function setupAxiosInterceptors(options: Options): {
+declare function useAxiosInterceptors(options: Options): {
     get: <T = any, R = AxiosResponse<T, any>, D = any>(url: string, config?: axios.AxiosRequestConfig<D> | undefined) => Promise<R>;
     post: <T_1 = any, R_1 = AxiosResponse<T_1, any>, D_1 = any>(url: string, data?: D_1 | undefined, config?: axios.AxiosRequestConfig<D_1> | undefined) => Promise<R_1>;
     put: <T_2 = any, R_2 = AxiosResponse<T_2, any>, D_2 = any>(url: string, data?: D_2 | undefined, config?: axios.AxiosRequestConfig<D_2> | undefined) => Promise<R_2>;
@@ -75,4 +77,4 @@ declare function removeStorage(key: string): void;
  */
 declare function clearStorage(): void;
 
-export { clearStorage, getStorage, removeStorage, saveStorage, setupAxiosInterceptors, to };
+export { clearStorage, getStorage, removeStorage, saveStorage, to, useAxiosInterceptors };

@@ -1,6 +1,6 @@
 <template>
     <el-upload
-        :action="url"
+        :action="uploadUrl"
         :show-file-list="props.showFileList"
         :file-list="reverseList"
         :limit="props.limit"
@@ -16,7 +16,6 @@
 </template>
 <script lang="ts" setup>
 import { ElMessage } from 'element-plus';
-import { guid } from '@/utils/hooks';
 
 /**
  * 定义组件选项
@@ -95,7 +94,6 @@ function handleSuccess(file: Record<string, any>) {
         reverseList.value.push({
             name: file?.data?.split('/')[file?.data?.split('/').length - 1],
             url: file?.data,
-            uid: guid(),
         });
         emit('update', reverseList.value);
     }
@@ -143,7 +141,6 @@ onMounted(() => {
             return {
                 name: _item.split('/')[_item.split('/').length - 1],
                 url: _item,
-                uid: guid(),
             };
         });
 });

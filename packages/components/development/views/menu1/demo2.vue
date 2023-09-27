@@ -1,6 +1,5 @@
 <template>
     <div>
-        <!-- x-edit-table -->
         <x-edit-table
             ref="editTableRef"
             header="x-edit-table"
@@ -13,7 +12,7 @@
         >
             <template #operation>
                 <el-button type="success" @click="editTableRef?.editActions.addRow()">新增</el-button>
-                <el-button @click="editTableSubmit">提交</el-button>
+                <el-button type="primary" @click="editTableSubmit">提交</el-button>
             </template>
 
             <template #default>
@@ -22,7 +21,7 @@
                         <el-input v-model="row[item.prop]" placeholder="请输入"></el-input>
                     </template>
                 </x-edit-table-item>
-                <x-edit-table-item label="操作" :required="false" fixed="right">
+                <x-edit-table-item label="操作" :required="false" fixed="right" width="250">
                     <template #default="{ actions, index }">
                         <el-button text type="primary" @click="actions.startEdit(index)">操作</el-button>
                         <el-button text type="primary" @click="actions.deleteRow(index)">删除</el-button>
@@ -36,16 +35,18 @@
             </template>
         </x-edit-table>
 
-        <!-- x-table -->
         <x-table
             ref="tableRef"
             header="x-table"
+            row-key="id"
+            combine-field="age"
             show-index
             selectable
             :columns="columns"
             :data="data"
             :selected-list="selectedList"
-            row-key="id"
+            :column-index="[3, 6]"
+            :actions="actionsConf"
             class="component"
         >
             <template #operation>
@@ -54,7 +55,6 @@
             </template>
         </x-table>
 
-        <!-- x-table-v2 -->
         <x-table-v2
             ref="tableV2Ref"
             header="x-table-v2"
@@ -75,16 +75,12 @@
 </template>
 
 <script setup lang="ts">
-import { XTable, XTableV2, XEditTable, XEditTableItem, type XTableColumn, type XEditTableColumn } from '@/index';
-
+import { columns, columnsV2, editColumns } from './conf2';
+import { XTable, XTableV2, XEditTable, XEditTableItem } from '@/index';
 /**
  * 选中列表
  */
-const selectedList = ref([
-    {
-        id: '11',
-    },
-]);
+const selectedList = ref([{ id: '11' }, { id: '22' }, { id: '33' }]);
 
 /**
  * table ref
@@ -92,71 +88,6 @@ const selectedList = ref([
 const tableRef = ref();
 const tableV2Ref = ref();
 const editTableRef = ref();
-
-/**
- * 表格列配置
- */
-const columns: XTableColumn[] = [
-    {
-        label: '姓名',
-        prop: 'name',
-    },
-    {
-        label: '年龄',
-        prop: 'age',
-    },
-    {
-        label: '性别',
-        prop: 'sex',
-    },
-    {
-        label: '爱好',
-        prop: 'hobby',
-    },
-];
-const columnsV2: any[] = [
-    {
-        title: '姓名',
-        key: 'name',
-        dataKey: 'name',
-    },
-    {
-        title: '年龄',
-        key: 'age',
-        dataKey: 'age',
-    },
-    {
-        title: '性别',
-        key: 'sex',
-        dataKey: 'sex',
-    },
-    {
-        title: '爱好',
-        key: 'hobby',
-        dataKey: 'hobby',
-    },
-];
-const editColumns: XEditTableColumn[] = [
-    {
-        label: '姓名',
-        prop: 'name',
-        edit: false,
-    },
-    {
-        label: '年龄',
-        prop: 'age',
-        required: true,
-    },
-    {
-        label: '性别',
-        prop: 'sex',
-        required: true,
-    },
-    {
-        label: '爱好',
-        prop: 'hobby',
-    },
-];
 
 /**
  * 表格数据
@@ -172,18 +103,40 @@ const data = [
     {
         id: '22',
         name: '小强',
-        age: '20',
+        age: '18',
         sex: '男',
         hobby: '骑行',
     },
     {
         id: '33',
         name: '小红',
-        age: '18',
+        age: '20',
         sex: '女',
         hobby: '跳舞',
     },
 ];
+
+/**
+ * x-table-actions
+ */
+function actionsConf(row: Record<string, any>) {
+    return [
+        {
+            label: '详情',
+            permission: 'detail',
+            onClick: () => {
+                console.log('详情', row);
+            },
+        },
+        {
+            label: '删除',
+            permission: 'delete',
+            onClick: () => {
+                console.log('删除', row);
+            },
+        },
+    ];
+}
 
 /**
  * 编辑表格提交

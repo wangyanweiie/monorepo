@@ -30,6 +30,7 @@
     "dependencies": {
         "@custom/utils": "workspace:*",
         "@element-plus/icons-vue": "^2.1.0",
+        "dayjs": "^1.11.9",
         "element-plus": "^2.3.12",
         "lodash-es": "^4.17.21",
         "mitt": "^3.0.1",
