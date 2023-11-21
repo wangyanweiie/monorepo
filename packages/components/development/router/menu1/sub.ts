@@ -20,7 +20,7 @@ export const subRoutes: RouteRecordRaw[] = [
             title: 'menu1-sub2',
             icon: 'Setting',
             hidden: true,
-            keepAlive: false,
+            keepAlive: true,
         },
     },
 ];
