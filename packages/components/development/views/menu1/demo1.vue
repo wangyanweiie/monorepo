@@ -1,7 +1,9 @@
 <template>
     <div>
         <el-card header="x-description" shadow="hover" class="component">
-            <x-description :columns="columns" :data="data"></x-description>
+            <x-description :columns="columns" :data="data">
+                <template #addressSlot>江苏省-南京市-江宁区</template>
+            </x-description>
         </el-card>
     </div>
 </template>
@@ -20,7 +22,7 @@ const data = {
     sex: '男',
     hobby: '跑步',
     address: '南京',
-    home: '成都',
+    home: '',
 };
 </script>
 <style lang="scss" scoped>
