@@ -3,7 +3,7 @@ import mitt from 'mitt';
 import { createPinia } from 'pinia';
 import App from '@dev/App.vue';
 import router from '@dev/router/index';
-import permission from '@dev/directive/permission';
+import directivePlugin from '@dev/plugins/directive';
 import { setPermissionRoute } from '@dev/store/permission';
 
 (() => {
@@ -15,8 +15,8 @@ import { setPermissionRoute } from '@dev/store/permission';
     // 注册路由
     app.use(router);
 
-    // 注册权限指令
-    app.use(permission);
+    // 注册指令
+    app.use(directivePlugin);
 
     // 赋值路由数组并动态加载路由
     setPermissionRoute();
