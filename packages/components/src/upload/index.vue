@@ -78,6 +78,7 @@ const reverseList = ref<any>([]);
 
 /**
  * 上传之前
+ * @param file 文件
  */
 function beforeUpload(file: Record<string, any>) {
     if (reverseList.value.some((item: any) => item.name === file.name)) {
@@ -88,6 +89,7 @@ function beforeUpload(file: Record<string, any>) {
 
 /**
  * 上传成功
+ * @param file 文件
  */
 function handleSuccess(file: Record<string, any>) {
     if (file.code === 120) {
@@ -101,6 +103,8 @@ function handleSuccess(file: Record<string, any>) {
 
 /**
  * 删除
+ * @param file 文件
+ * @param fileList 文件列表
  */
 function handleRemove(file: Record<string, any>, fileList: Record<string, any>[]) {
     if (file.status === 'success') {

@@ -1,7 +1,7 @@
-const copydir = require("copy-dir");
-const fs = require("fs");
-const path = require("path");
-const Mustache = require("mustache");
+const copydir = require('copy-dir');
+const fs = require('fs');
+const path = require('path');
+const Mustache = require('mustache');
 
 /**
  * 检测目录是否存在，如果目录存在返回 true，如果目录不存在返回 false
@@ -9,7 +9,7 @@ const Mustache = require("mustache");
  * @returns { boolean }
  */
 function checkMkdirExists(path) {
-  return fs.existsSync(path);
+    return fs.existsSync(path);
 }
 
 /**
@@ -20,30 +20,30 @@ function checkMkdirExists(path) {
  * @param {*} target 目标目录路径
  */
 function mkdirGuard(target) {
-  try {
-    /**
-     * 创建文件夹目录
-     * path：文件夹目录路径；
-     * options：recursive 表示是否要创建父目录，true 表示要；
-     */
-    fs.mkdirSync(target, {
-      recursive: true,
-    });
-  } catch (e) {
-    mkdirp(target);
+    try {
+        /**
+         * 创建文件夹目录
+         * path：文件夹目录路径；
+         * options：recursive 表示是否要创建父目录，true 表示要；
+         */
+        fs.mkdirSync(target, {
+            recursive: true,
+        });
+    } catch (e) {
+        mkdirp(target);
 
-    function mkdirp(dir) {
-      // 检测目录是否存在
-      if (checkMkdirExists(dir)) {
-        return true;
-      }
+        function mkdirp(dir) {
+            // 检测目录是否存在
+            if (checkMkdirExists(dir)) {
+                return true;
+            }
 
-      // 用于获取给定路径的目录名
-      const dirname = path.dirname(dir);
-      mkdirp(dirname);
-      fs.mkdirSync(dir);
+            // 用于获取给定路径的目录名
+            const dirname = path.dirname(dir);
+            mkdirp(dirname);
+            fs.mkdirSync(dir);
+        }
     }
-  }
 }
 
 /**
@@ -53,8 +53,8 @@ function mkdirGuard(target) {
  * @param {*} options 配置项
  */
 function copyDir(form, to, options = {}) {
-  mkdirGuard(to);
-  copydir.sync(form, to, options);
+    mkdirGuard(to);
+    copydir.sync(form, to, options);
 }
 
 /**
@@ -64,11 +64,11 @@ function copyDir(form, to, options = {}) {
  * @param {*} options 配置项
  */
 function copyFile(from, to, options = {}) {
-  const buffer = fs.readFileSync(from, options);
-  const parentPath = path.dirname(to);
+    const buffer = fs.readFileSync(from, options);
+    const parentPath = path.dirname(to);
 
-  mkdirGuard(parentPath);
-  fs.writeFileSync(to, buffer);
+    mkdirGuard(parentPath);
+    fs.writeFileSync(to, buffer);
 }
 
 /**
@@ -83,11 +83,11 @@ function copyFile(from, to, options = {}) {
  * 否则 fs.readFileSync 返回 Buffer 类型数据；
  */
 function readTemplate(path, options = {}) {
-  const str = fs.readFileSync(path, {
-    encoding: "utf8",
-  });
+    const str = fs.readFileSync(path, {
+        encoding: 'utf8',
+    });
 
-  return Mustache.render(str, options);
+    return Mustache.render(str, options);
 }
 
 /**
@@ -98,15 +98,15 @@ function readTemplate(path, options = {}) {
  * @returns
  */
 function copyTemplate(from, to, options = {}) {
-  if (path.extname(from) !== ".tpl") {
-    return copyFile(from, to);
-  }
+    if (path.extname(from) !== '.tpl') {
+        return copyFile(from, to);
+    }
 
-  const mustache = readTemplate(from, options);
-  const parentToPath = path.dirname(to);
+    const mustache = readTemplate(from, options);
+    const parentToPath = path.dirname(to);
 
-  mkdirGuard(parentToPath);
-  fs.writeFileSync(to, mustache);
+    mkdirGuard(parentToPath);
+    fs.writeFileSync(to, mustache);
 }
 
 exports.checkMkdirExists = checkMkdirExists;

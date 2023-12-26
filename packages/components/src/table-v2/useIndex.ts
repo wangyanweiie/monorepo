@@ -39,7 +39,7 @@ export default function useIndex(props: XTableV2Prop) {
     const selectedCount = computed<number>(() => selectedRows.value.length ?? 0);
 
     /**
-     * @description 初始化表格数据
+     * 初始化表格数据
      * @param query 查询条件
      */
     async function loadData(query: Record<string, string | number> = {}): Promise<void> {
@@ -152,6 +152,10 @@ export default function useIndex(props: XTableV2Prop) {
 
     /**
      * 渲染复选框
+     * @param param.value 选中状态
+     * @param param.intermediate 半选状态
+     * @param param.onChange 改变事件
+     * @returns 复选框
      */
     function SelectionCell({ value, intermediate = false, onChange }: any) {
         return h(ElCheckbox, {
@@ -163,6 +167,8 @@ export default function useIndex(props: XTableV2Prop) {
 
     /**
      * 渲染表格选择列
+     * @param param.rowData 行数据
+     * @returns 表格选择列
      */
     function selectCellRenderer({ rowData }: any) {
         // change 事件

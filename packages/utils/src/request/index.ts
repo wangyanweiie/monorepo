@@ -61,12 +61,12 @@ export function useAxiosInterceptors(options: Options) {
                 config.headers[options.requestHeaderTokenKey || 'v-token'] = token;
             }
 
-            // 更新 base-url
+            // 设置 url
             if (baseUrl) {
                 config.url = baseUrl + config.url;
             }
 
-            // 将配置的全局参数更新到请求参数
+            // get 请求参数
             if (options.getMethodsParams && config.params) {
                 config.params = {
                     ...options.getMethodsParams,
@@ -74,6 +74,7 @@ export function useAxiosInterceptors(options: Options) {
                 };
             }
 
+            // post 请求参数
             if (options.postMethodsParams && config.data) {
                 config.data = {
                     ...options.postMethodsParams,
@@ -127,17 +128,25 @@ export function useAxiosInterceptors(options: Options) {
     service.interceptors.response.use(
         (response: AxiosResponse): any => {
             const responsedata = response.data;
+            const {
+                code,
+                message = HTTP_ERROR_NOTICE.UNKNOWN,
+                data,
+            } = response.data as {
+                code: number;
+                message: string;
+                data: any;
+            };
 
             // 是否响应成功
             const successStatus = options.successValidate
                 ? options.successValidate(responsedata)
-                : Math.floor(responsedata.code / 100) === 1;
+                : Math.floor(code / 100) === 1;
 
             if (successStatus) {
-                const { data } = response.data as { data: any };
                 return Promise.resolve(data || true);
             } else {
-                switch (responsedata.code) {
+                switch (code) {
                     case options.expireCode || -997:
                         handleResponseError({
                             type: 'warning',
@@ -152,11 +161,9 @@ export function useAxiosInterceptors(options: Options) {
                         return Promise.resolve(false);
 
                     default:
-                        const { message } = response.data as { message: string };
-
-                        ElNotification({
+                        handleResponseError({
                             type: 'error',
-                            message: message || HTTP_ERROR_NOTICE.UNKNOWN,
+                            message: message,
                             zIndex: 9999,
                         });
 
@@ -199,30 +206,10 @@ export function useAxiosInterceptors(options: Options) {
         },
     );
 
-    /**
-     * GET
-     */
-    const get = service.get;
-
-    /**
-     * POST
-     */
-    const post = service.post;
-
-    /**
-     * PUT
-     */
-    const put = service.put;
-
-    /**
-     * DELETE
-     */
-    const del = service.delete;
-
     return {
-        get,
-        post,
-        put,
-        del,
+        get: service.get,
+        post: service.post,
+        put: service.put,
+        del: service.delete,
     };
 }

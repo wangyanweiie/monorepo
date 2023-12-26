@@ -65,6 +65,7 @@ export default function useIndex(props: XTableProp) {
 
     /**
      * 序号展示
+     * @param index 序号
      */
     function handleIndex(index: number) {
         if (props.continuous) {
@@ -86,6 +87,7 @@ export default function useIndex(props: XTableProp) {
 
     /**
      * 改变选中状态
+     * @param selection 选中的行数据
      */
     function handleSelectChange(selection: Record<string, any>[]) {
         selectedRows.value = selection;
@@ -239,6 +241,9 @@ export default function useIndex(props: XTableProp) {
 
     /**
      * action buttons
+     * @param row 行数据
+     * @param index 行索引
+     * @returns 操作按钮
      */
     function actionButtons(row: Record<string, any>, index: number): XTableActionButton[] {
         if (typeof props.actions !== 'function') {
@@ -324,6 +329,9 @@ export default function useIndex(props: XTableProp) {
 
     /**
      * 合并单元格-首列
+     * @param param.rowIndex 行索引
+     * @param param.columnIndex 列索引
+     * @returns rowspan 和 colspan
      */
     function spanMethod({ rowIndex, columnIndex }: XTableSpanMethodProps) {
         if (!props.columnIndex || props.columnIndex?.length === 0) {
