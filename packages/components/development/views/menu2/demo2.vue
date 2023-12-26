@@ -29,6 +29,7 @@
                 v-model="dialogVisible"
                 v-model:data="form"
                 title="新增"
+                el-type="el-drawer"
                 :schemas="schemas"
                 :loading="loading"
                 @submit="handleSubmit"
