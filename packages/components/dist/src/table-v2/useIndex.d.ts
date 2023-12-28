@@ -6,10 +6,10 @@ import type { XTableV2Prop } from './interface';
  */
 export default function useIndex(props: XTableV2Prop): {
     tableRef: globalThis.Ref<TableV2Instance | undefined>;
-    selectedRows: globalThis.ComputedRef<any[]>;
+    selectedRows: globalThis.ComputedRef<Record<string, any>[]>;
     selectedCount: globalThis.ComputedRef<number>;
     tableColumns: globalThis.ComputedRef<Column<any>[]>;
-    tableData: globalThis.Ref<any[]>;
+    tableData: globalThis.Ref<Record<string, any>[]>;
     pagination: globalThis.Ref<{
         pageSize: number;
         currentPage: number;

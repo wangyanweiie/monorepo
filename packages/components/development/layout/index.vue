@@ -14,8 +14,8 @@
 
 <script setup lang="ts">
 import zhCn from 'element-plus/es/locale/lang/zh-cn';
-import { usePermissionStore } from '../store/permission';
-import { XLayout, XLogo, XUser } from '../../src/index';
+import { XLayout, XLogo, XUser } from '@/index';
+import { usePermissionStore } from '@dev/store/permission';
 
 const { showMenus } = usePermissionStore();
 </script>

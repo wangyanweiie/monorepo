@@ -2,30 +2,42 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import Vue from '@vitejs/plugin-vue';
 import Icons from 'unplugin-icons/vite';
+import Dts from 'vite-plugin-dts';
 import Inspect from 'vite-plugin-inspect';
 import AutoImport from 'unplugin-auto-import/vite';
 import Components from 'unplugin-vue-components/vite';
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers';
 import IconsResolver from 'unplugin-icons/resolver';
+import ElementPlus from 'unplugin-element-plus/vite';
 import VueDevTools from 'vite-plugin-vue-devtools';
-import Legacy from '@vitejs/plugin-legacy';
-import ViteCompression from 'vite-plugin-compression';
-import { visualizer } from 'rollup-plugin-visualizer';
 
 const pathSrc = path.resolve(__dirname, 'src');
+const pathDev = path.resolve(__dirname, 'development');
 
 export default defineConfig({
     resolve: {
         /**
-         * 别名
          * 当使用文件系统路径的别名时，请使用绝对路径
          */
         alias: {
             '@': pathSrc,
+            '@dev': pathDev,
         },
     },
 
     build: {
+        /**
+         * 库模式
+         */
+        lib: {
+            // 必需，因为库不能使用 HTML 作为入口
+            entry: path.resolve(pathSrc, 'index.ts'),
+            // 暴露的全局变量
+            name: 'custom',
+            // 输出的包文件名，默认 fileName 是 package.json 的 name 选项，同时它还可以被定义为参数为 format 和 entryAlias 的函数
+            fileName: format => `index.${format}.js`,
+        },
+
         /**
          * 混淆器
          *  - boolean：设置为 false 可以禁用最小化混淆
@@ -43,9 +55,6 @@ export default defineConfig({
         //         drop_console: true,
         //         drop_debugger: true,
         //     },
-        //     format: {
-        //         comments: false,
-        //     },
         // },
 
         /**
@@ -56,15 +65,20 @@ export default defineConfig({
 
         /**
          * rollup 打包后的静态资源名称格式
-         * vite 基于 rollup打包，打包后的 chunk（代码块）后静态资源名称比较简单，
+         * vite 基于 rollup 打包，打包后的 chunk（代码块）后静态资源名称比较简单，
          * 使用命名规则可以确保在每次构建应用程序时，文件的名称都会随着内容的更改而变化，
          * 可以避免浏览器缓存旧版本文件的问题，并确保每次部署新的构建版本时，浏览器可以正确加载更新的文件
          */
         rollupOptions: {
+            // 确保外部化处理那些你不想打包进库的依赖
+            external: ['vue', 'vue-router', 'element-plus'],
             output: {
-                chunkFileNames: 'static/js/[name]-[hash].js', // 引入文件
-                entryFileNames: 'static/js/[name]-[hash].js', // 包的入口文件
-                assetFileNames: 'static/[ext]/[name]-[hash].[ext]', // 资源文件
+                // 在 UMD 构建模式下为这些外部化的依赖提供一个全局变量
+                globals: {
+                    vue: 'Vue',
+                    'vue-router': 'VueRouter',
+                    'element-plus': 'ElementPlus',
+                },
             },
         },
     },
@@ -93,11 +107,11 @@ export default defineConfig({
         AutoImport({
             imports: ['vue', 'vue-router'],
 
-            // 自定义组件解析器
-            resolvers: [ElementPlusResolver(), IconsResolver()],
-
             // 配置文件生成位置
             dts: path.resolve('types/auto-imports.d.ts'),
+
+            // 自定义组件解析器
+            resolvers: [ElementPlusResolver(), IconsResolver()],
 
             // eslint 报错解决
             eslintrc: {
@@ -118,6 +132,9 @@ export default defineConfig({
             // 组件的有效文件扩展名。
             // extensions: ['vue'],
 
+            // 配置文件生成位置
+            dts: path.resolve('types/components.d.ts'),
+
             // 自动导入指令
             // 默认值：Vue 3 的 `true`，Vue 2 的 `false`
             // 需要 Babel 来为 Vue 2 进行转换，出于性能考虑，它默认处于禁用状态。
@@ -130,9 +147,6 @@ export default defineConfig({
                     enabledCollections: ['ep'],
                 }),
             ],
-
-            // 配置文件生成位置
-            dts: path.resolve('types/components.d.ts'),
         }),
 
         /**
@@ -141,67 +155,20 @@ export default defineConfig({
         Inspect(),
 
         /**
+         * 生成类型声明文件
+         */
+        Dts(),
+
+        /**
+         * 为 Element Plus 按需引入样式
+         */
+        ElementPlus({
+            // options
+        }),
+
+        /**
          * 增强 Vue 开发者体验
          */
         VueDevTools(),
-
-        /**
-         * 兼容旧版浏览器
-         */
-        Legacy({
-            targets: ['defaults', 'not IE 11'],
-        }),
-
-        /**
-         * 方式一.打包时进行 gzip 压缩
-         * 1.visualizer()
-         * 2.服务器安装 nginx 时需要安装 'http_gzip_static_module'
-         *   - ./configure --prefix=/usr/local/nginx --with-http_gzip_static_module
-         *   - make && make install
-         * 3.配置 nginx.conf
-         *   - server {
-         *   -     listen       3000;
-         *   -     server_name  localhost;
-         *   -     location / {
-         *   -         root   /home/static/demo/dist;
-         *   -         index  index.html index.htm;
-         *   -         try_files $uri $uri/ /index.html;
-         *   -         gzip_static on; # 静态压缩
-         *   -     }
-         *   - }
-         *
-         * 方式二.Nginx 直接配置开启 gzip 压缩
-         * 1.服务器安装 nginx 时需要安装 'http_gzip_static_module'
-         *   - ./configure --prefix=/usr/local/nginx --with-http_gzip_static_module
-         *   - make && make install
-         * 2.配置 nginx.conf
-         *   - http {
-         *   -    gzip_static on; # 开启 gzip 压缩
-         *   -    gzip_comp_level 2; # 压缩级别，1-9，数字越大压缩效果越好，也越占用 cpu
-         *   -    gzip_min_length 10k; # 压缩阈值，文件大于 10k 才进行压缩
-         *   -    gzip_vary on; # 是否在 http header 中添加 Vary: Accept-Encoding，建议开启
-         *   -    ...
-         *   - }
-         */
-        ViteCompression({
-            verbose: true, // 是否在控制台中输出压缩结果
-            disable: false,
-            threshold: 1024 * 10, // 如果体积大于阈值，将被压缩（单位：b）；体积过小时不要压缩，以免适得其反
-            algorithm: 'gzip', // 压缩算法
-            ext: '.gz',
-            deleteOriginFile: false, // 压缩后是否删除源文件
-        }),
-
-        /**
-         * 可以展示构建时长、chunk 数量及大小
-         * PS：需要将 visualizer 插件放到最后的位置
-         */
-        visualizer({
-            gzipSize: true,
-            brotliSize: true,
-            emitFile: false,
-            filename: 'stats.html', // 分析图生成的文件名
-            open: false, // 如果存在本地服务端口，将在打包后自动展示
-        }),
     ],
 });

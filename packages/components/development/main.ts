@@ -3,7 +3,7 @@ import mitt from 'mitt';
 import { createPinia } from 'pinia';
 import App from '@dev/App.vue';
 import router from '@dev/router/index';
-import directivePlugin from '@dev/plugins/directive';
+import directivePlugin from '@dev/directive/index';
 import { setPermissionRoute } from '@dev/store/permission';
 
 (() => {

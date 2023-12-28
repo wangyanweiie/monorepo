@@ -90,7 +90,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     direction: "horizontal" | "vertical";
     columns: XDescriptionColumn[];
     data: Record<string, any>;
-}, {}>, Partial<Record<string, (_: {}) => any>>>;
+}, {}>, Partial<Record<string, (_: {
+    data: Record<string, any>;
+    column: XDescriptionColumn;
+    cellValue: any;
+}) => any>>>;
 export default _default;
 type __VLS_WithTemplateSlots<T, S> = T & {
     new (): {

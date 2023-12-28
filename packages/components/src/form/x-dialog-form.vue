@@ -14,16 +14,16 @@
             <slot name="title"></slot>
         </template>
 
-        <x-form
+        <!-- <x-form
             ref="formRef"
             :model-value="modelForm"
             :el-form-props="elFormProps"
             :schemas="schemas"
             @update:model-value="handleUpdate"
         >
-        </x-form>
+        </x-form> -->
 
-        <!-- <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
+        <el-form ref="formRef" :model="modelForm" v-bind="elFormProps">
             <el-row>
                 <el-col v-for="(schema, index) in schemas" :key="index" :span="12" v-bind="schema.colProps">
                     <x-form-item :model-value="modelForm" :schema="schema" @update:model-value="handleUpdate">
@@ -35,7 +35,7 @@
             </el-row>
 
             <slot name="form-append"></slot>
-        </el-form> -->
+        </el-form>
 
         <template #footer>
             <div class="actions">
@@ -54,8 +54,8 @@
 import { computed, ref } from 'vue';
 import { ElDialog, ElDrawer, type FormProps } from 'element-plus';
 import type { XFormInstance, XFormItemSchema } from './interface';
-import XForm from './x-form.vue';
-// import XFormItem from './XFormItem.vue';
+// import XForm from './x-form.vue';
+import XFormItem from './x-form-item.vue';
 
 /**
  * props
@@ -116,9 +116,9 @@ const emits = defineEmits<{
 /**
  * slot-name
  */
-// function customSlotName(schema: XFormItemSchema): string {
-//     return schema.components === 'custom' ? schema.slotName : '';
-// }
+function customSlotName(schema: XFormItemSchema): string {
+    return schema.components === 'custom' ? schema.slotName : '';
+}
 
 /**
  * 弹窗组件
@@ -172,7 +172,6 @@ function handleOpen() {
  * 关闭弹窗
  */
 function handleClose() {
-    // 重置表单值
     formRef.value?.resetFields();
     modelForm.value = {};
     emits('close');

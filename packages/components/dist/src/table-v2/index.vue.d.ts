@@ -61,11 +61,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    loading: {
+    scroll: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
-    scroll: {
+    loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
@@ -107,7 +107,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         };
     };
 }, {
-    selectedRows: globalThis.ComputedRef<any[]>;
+    selectedRows: globalThis.ComputedRef<Record<string, any>[]>;
     loadData: (query?: Record<string, string | number>) => Promise<void>;
 }, unknown, {}, {}, import("vue").ComponentOptionsMixin, import("vue").ComponentOptionsMixin, {}, string, import("vue").VNodeProps & import("vue").AllowedComponentProps & import("vue").ComponentCustomProps, Readonly<import("vue").ExtractPropTypes<{
     title: {
@@ -170,11 +170,11 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
-    loading: {
+    scroll: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
-    scroll: {
+    loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
     };
@@ -230,8 +230,8 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     apiParams: Record<string, string | number>;
     height: string;
     emptyText: string;
-    loading: boolean;
     scroll: boolean;
+    loading: boolean;
     dividePage: boolean;
     apiKeyMap: XTableV2APIKeyMap;
     headerClass: any;
@@ -242,7 +242,7 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
 }, {}>, {
     title?(_: {}): any;
     operation?(_: {
-        checkedRows: any[];
+        checkedRows: Record<string, any>[];
     }): any;
 }>;
 export default _default;

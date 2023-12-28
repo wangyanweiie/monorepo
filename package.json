@@ -1,7 +1,26 @@
 {
     "name": "monorepo",
-    "version": "1.0.0",
+    "version": "1.0.1",
+    "private": true,
+    "author": "wyw",
+    "license": "ISC",
     "description": "monorepo template",
+    "keywords": [
+        "monorepo",
+        "vue3",
+        "typescript",
+        "element-plus",
+        "vite",
+        "rollup"
+    ],
+    "config": {
+        "commitizen": {
+            "path": "./node_modules/cz-customizable"
+        },
+        "cz-customizable": {
+            "config": "./.cz-config.cjs"
+        }
+    },
     "scripts": {
         "prepare": "husky install",
         "preinstall": "npx only-allow pnpm",
@@ -11,24 +30,6 @@
         "commit": "git add . && git cz",
         "template": "template create"
     },
-    "config": {
-        "commitizen": {
-            "path": "./node_modules/cz-customizable"
-        },
-        "cz-customizable": {
-            "config": "./.cz-config.cjs"
-        }
-    },
-    "keywords": [
-        "monorepo",
-        "vue3",
-        "typescript",
-        "element-plus",
-        "vite",
-        "rollup"
-    ],
-    "author": "wyw",
-    "license": "ISC",
     "dependencies": {
         "typescript": "^5.2.2"
     },

@@ -1,9 +1,22 @@
 {
     "name": "@custom/components",
-    "version": "1.0.0",
-    "description": "components",
+    "version": "1.0.1",
+    "private": true,
+    "author": "wyw",
+    "license": "ISC",
+    "description": "components-lib",
+    "main": "./src/index.ts ",
+    "module": "./src/index.ts",
+    "types": "./dist/src/index.d.ts",
     "keywords": [
-        "components"
+        "components",
+        "x-layout",
+        "x-form",
+        "x-table",
+        "x-table-v2",
+        "x-edit-table",
+        "x-description",
+        "x-upload"
     ],
     "files": [
         "src"
@@ -14,8 +27,6 @@
             "require": "./dist/index.umd.js"
         }
     },
-    "main": "./src/index.ts ",
-    "module": "./src/index.ts",
     "scripts": {
         "dev": "vite --host",
         "build": "vue-tsc --noEmit && vite build",
@@ -24,9 +35,6 @@
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .eslintignore",
         "format": "prettier --write src/"
     },
-    "types": "./dist/src/index.d.ts",
-    "author": "wyw",
-    "license": "ISC",
     "dependencies": {
         "@custom/utils": "workspace:*",
         "@element-plus/icons-vue": "^2.1.0",

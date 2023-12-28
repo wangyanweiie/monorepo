@@ -1,4 +1,4 @@
-import type { FormProps } from 'element-plus';
+import { type FormProps } from 'element-plus';
 import type { XFormInstance, XFormItemSchema } from './interface';
 /**
  * 表单校验
@@ -11,6 +11,10 @@ declare function resetFields(): void;
 declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     title: {
         type: globalThis.PropType<string>;
+        default: string;
+    };
+    size: {
+        type: globalThis.PropType<string | number>;
         default: string;
     };
     data: {
@@ -29,6 +33,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    elType: {
+        type: globalThis.PropType<"el-dialog" | "el-drawer">;
+        default: string;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -58,6 +66,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
         type: globalThis.PropType<string>;
         default: string;
     };
+    size: {
+        type: globalThis.PropType<string | number>;
+        default: string;
+    };
     data: {
         type: globalThis.PropType<any>;
         default: () => {};
@@ -74,6 +86,10 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     loading: {
         type: globalThis.PropType<boolean>;
         default: boolean;
+    };
+    elType: {
+        type: globalThis.PropType<"el-dialog" | "el-drawer">;
+        default: string;
     };
     schemas: {
         type: globalThis.PropType<XFormItemSchema[]>;
@@ -97,15 +113,20 @@ declare const _default: __VLS_WithTemplateSlots<import("vue").DefineComponent<{
     "onUpdate:data"?: ((value: any) => any) | undefined;
 }, {
     title: string;
+    size: string | number;
     data: any;
     width: string | number;
     modelValue: boolean;
     loading: boolean;
+    elType: "el-dialog" | "el-drawer";
     schemas: XFormItemSchema[];
     elFormProps: Partial<FormProps>;
     isShowConfirm: boolean;
-}, {}>, {
+}, {}>, Partial<Record<string, (_: {
+    form: any;
+}) => any>> & {
     title?(_: {}): any;
+    "form-append"?(_: {}): any;
     action?(_: {
         form: any;
         formRef: XFormInstance | undefined;
