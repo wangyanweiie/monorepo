@@ -66,10 +66,6 @@ export default defineConfig({
             autoInstall: true,
             // 编译方式
             // compiler: 'vue3',
-            // 默认类名
-            // defaultClass: '',
-            // 默认样式
-            // defaultStyle: '',
         }),
 
         /**

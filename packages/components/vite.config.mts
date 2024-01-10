@@ -45,17 +45,6 @@ export default defineConfig({
          *  - terser：当设置为 'terser' 时必须先安装 Terser（打包体积最小）
          */
         minify: 'esbuild',
-        // minify: 'terser',
-
-        /**
-         * 混淆选项
-         */
-        // terserOptions: {
-        //     compress: {
-        //         drop_console: true,
-        //         drop_debugger: true,
-        //     },
-        // },
 
         /**
          * chunk 大小警告的限制
@@ -95,10 +84,6 @@ export default defineConfig({
             autoInstall: true,
             // 编译方式
             // compiler: 'vue3',
-            // 默认类名
-            // defaultClass: '',
-            // 默认样式
-            // defaultStyle: '',
         }),
 
         /**

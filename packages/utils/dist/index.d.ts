@@ -65,6 +65,7 @@ declare function saveStorage(key: string, value: unknown): void;
 /**
  * 获取存储字段的值
  * @param key 存储字段
+ * @returns 存储值
  */
 declare function getStorage(key: string): any;
 /**
