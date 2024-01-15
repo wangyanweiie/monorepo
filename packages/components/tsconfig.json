@@ -13,7 +13,6 @@
      *（比如默认 .ts，.tsx，和 .d.ts， 如果 allowJs 设置为 true 还包含 .js 和 .jsx）
      */
     "include": ["src/**/*", "development/**/*", "types/**/*", "vite.config.mts"],
-
     "exclude": ["node_modules/**/*", "dist/**/*"],
 
     // 编译选项

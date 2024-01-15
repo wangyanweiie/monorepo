@@ -5,7 +5,7 @@
     "author": "wyw",
     "license": "ISC",
     "description": "components-lib",
-    "main": "./dist/index.es.js",
+    "main": "./dist/index.umd.js",
     "module": "./dist/index.es.js",
     "types": "./dist/src/index.d.ts",
     "keywords": [
@@ -29,9 +29,9 @@
         }
     },
     "scripts": {
-        "dev": "vite --host",
+        "dev": "vite --host --open",
         "build": "vue-tsc --noEmit && vite build",
-        "serve": "vite preview",
+        "preview": "vite preview--host  --open",
         "type-check": "vue-tsc --noEmit",
         "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .eslintignore",
         "format": "prettier --write src/"
