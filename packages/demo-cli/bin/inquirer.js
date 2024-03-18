@@ -13,7 +13,9 @@ function inquirerPrompt(argv) {
 
     return new Promise((resolve, reject) => {
         /**
-         * inquirer.prompt() 函数接收一个数组，数组的每一项都是一个询问项，询问项有很多配置参数，下面是常用的配置项
+         * inquirer.prompt() 函数接收一个数组，数组的每一项都是一个询问项，询问项有很多配置参数，下面是常用的配置项；
+         * 最终返回是一个 Promise，我们可以用 then 获取上个询问的答案，根据答案再发起对应的内容。
+         *
          * type：问题类型 => 输入框 input，确认 confirm，单选组：list，多选组：checkbox；
          * name：问题名称，用于标识答案对象中对应的属性名；
          * message：问题描述，将会作为问题提示信息展示给用户

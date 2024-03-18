@@ -10,8 +10,9 @@
                     <el-input
                         v-if="ENV !== 'production'"
                         v-model="baseUrl"
+                        disabled
+                        placeholder="自动生成"
                         class="header-right__item"
-                        @blur="handleBlur"
                     ></el-input>
 
                     <x-user
@@ -44,8 +45,7 @@ import useIndex from './useIndex';
 
 const { showMenus } = usePermissionStore();
 
-const { baseUrl, userInfo, dropdownItems, schemas, visible, formRef, loading, form, handleBlur, changePassword } =
-    useIndex();
+const { baseUrl, userInfo, dropdownItems, schemas, visible, formRef, loading, form, changePassword } = useIndex();
 </script>
 <style lang="scss" scoped>
 .header-right {

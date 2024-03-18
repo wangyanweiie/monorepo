@@ -13,7 +13,7 @@ function checkMkdirExists(path) {
 }
 
 /**
- * 目录守卫
+ * FIXME: 目录守卫
  * 在 mkdirGuard() 方法内部，当要创建的目录 target 父级目录不存在时，
  * 调用 fs.mkdirSync(target)，会报错走 catch 部分逻辑，在其中递归创建父级目录，
  * 使用 fs.existsSync(dir) 来判断父级目录是否存在，来终止递归；

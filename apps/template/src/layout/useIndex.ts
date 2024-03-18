@@ -3,25 +3,14 @@ import { clearStorage } from '@custom/utils';
 import { ElMessage } from 'element-plus';
 import { OPERATION_NOTICE } from '@/constant/base';
 import { confirmExitMessage } from '@/utils/confirm-message';
-import { getBaseUrl, getUserInfo, getUserToken, saveBaseUrl } from '@/utils/storage';
+import { getBaseUrl, getUserInfo, getUserToken } from '@/utils/storage';
 import router from '@/router';
 import RequestAPI from '@/api/login';
 
 export default function useIndex() {
-    const baseUrl = ref<string>(getBaseUrl());
+    const baseUrl = ref<string>(getBaseUrl() || import.meta.env.VITE_API_URL);
     const token = getUserToken();
     const userInfo = getUserInfo();
-
-    /**
-     * 改变 base-url
-     */
-    function handleBlur(e: any): void {
-        if (!e.target.value) {
-            return;
-        }
-
-        saveBaseUrl(e.target.value);
-    }
 
     /**
      * 下拉列表
@@ -152,6 +141,5 @@ export default function useIndex() {
         loading,
         form,
         changePassword,
-        handleBlur,
     };
 }
