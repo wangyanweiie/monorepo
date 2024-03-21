@@ -1,30 +1,64 @@
 {
+    /**
+     * 编译选项
+     */
     "compilerOptions": {
+        // 编译后生成的版本
         "target": "ESNext",
+
+        // 用于指定 TypeScript 编译后生成的模块系统的类型
         "module": "ESNext",
-        "strict": true,
-        "importHelpers": true,
+        // 模块解析策略
         "moduleResolution": "Node",
-        "experimentalDecorators": true,
-        "allowJs": false,
-        "skipLibCheck": true,
-        "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true,
-        "useDefineForClassFields": true,
-        "sourceMap": true,
-        "declaration": true,
-        "declarationDir": "./dist",
+        // 根目录
         "rootDir": ".",
-        "types": [
-            "node"
-        ],
-        "lib": [
-            "ESNext",
-            "DOM"
-        ],
+        // 默认使用的库
+        "lib": ["ESNext", "DOM"],
+        // 默认导出的类型
+        "types": ["node"],
+        // 是否允许导入 JSON 文件
+        "resolveJsonModule": true,
+        // 是否允许 JavaScript 资源
+        "allowJs": false,
+
+        // 是否生成声明文件
+        "declaration": true,
+        // 声明文件输出目录
+        "declarationDir": "./dist",
+
+        // 开启 esModuleInterop 后会默认开启 allowSyntheticDefaultImports 选项
+        "esModuleInterop": true,
+        // 模块没有默认导出时，也可以使用 import a from b
+        "allowSyntheticDefaultImports": true,
+        // 严格区分文件名称大小写
+        "forceConsistentCasingInFileNames": true,
+
+        // 是否开启严格模式
+        "strict": true,
+        // 是否检查未使用的局部变量
+        "noUnusedLocals": true,
+        // 是否检查未使用的参数
+        "noUnusedParameters": true,
+        // 是否禁止隐式 any 类型
+        "noImplicitAny": false,
+
+        // 是否开启 ts 的帮助函数
+        "importHelpers": true,
+        // 是否跳过库文件检查
+        "skipLibCheck": true
     },
+
+    /**
+     * "include" 和 "exclude" 属性指定一个文件 glob 匹配模式列表
+     * 支持的 glob 通配符有：
+     * * 匹配 0 或多个字符（不包括目录分隔符）
+     * ? 匹配一个任意字符（不包括目录分隔符）
+     * ** 递归匹配任意子目录
+     *
+     * 如果一个 glob 模式里的某部分只包含 * 或 .*，那么仅有支持的文件扩展名类型被包含在内
+     *（比如默认 .ts，.tsx，和 .d.ts， 如果 allowJs 设置为 true 还包含 .js 和 .jsx）
+     */
     "include": ["src/**/*"],
-    "exclude": [
-        "node_modules", "dist"
-    ]
+
+    "exclude": ["node_modules", "dist"]
 }

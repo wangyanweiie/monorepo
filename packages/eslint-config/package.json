@@ -2,12 +2,12 @@
     "name": "@custom/eslint-config",
     "version": "1.0.0",
     "description": "eslint 配置规则",
+    "author": "wyw",
+    "license": "ISC",
     "main": "index.js",
     "keywords": [
         "eslint"
     ],
-    "author": "wyw",
-    "license": "ISC",
     "peerDependencies": {
         "eslint": "^8.46.0"
     },

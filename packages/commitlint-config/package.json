@@ -2,12 +2,16 @@
     "name": "@custom/commitlint-config",
     "version": "1.0.0",
     "description": "commitlint 配置规则",
+    "author": "wyw",
+    "license": "ISC",
     "main": "index.js",
     "keywords": [
         "commitlint"
     ],
-    "author": "wyw",
-    "license": "ISC",
+    "peerDependencies": {
+        "@commitlint/cli": "^17.8.0",
+        "@commitlint/config-conventional": "^17.8.0"
+    },
     "dependencies": {
         "yaml": "^2.3.1"
     }

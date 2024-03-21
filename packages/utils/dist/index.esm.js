@@ -134,7 +134,7 @@ function useAxiosInterceptors(options) {
             config.headers[options.requestHeaderTokenKey || 'v-token'] = token;
         }
         // 设置 url
-        if (baseUrl) {
+        if (baseUrl && config.url) {
             config.url = baseUrl + config.url;
         }
         // get 请求参数

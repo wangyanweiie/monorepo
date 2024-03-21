@@ -1,10 +1,10 @@
 {
     "name": "@custom/components",
     "version": "1.0.1",
-    "private": true,
+    "description": "components-lib",
     "author": "wyw",
     "license": "ISC",
-    "description": "components-lib",
+    "private": true,
     "main": "./dist/index.umd.js",
     "module": "./dist/index.es.js",
     "types": "./dist/src/index.d.ts",
@@ -68,5 +68,9 @@
         "vite-plugin-inspect": "^0.7.40",
         "vite-plugin-vue-devtools": "1.0.0-rc.5",
         "vue-tsc": "^1.8.19"
+    },
+    "engines": {
+        "node": ">=16.0.0",
+        "npm": ">=8.0.0"
     }
 }

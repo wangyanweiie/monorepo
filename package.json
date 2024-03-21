@@ -1,10 +1,10 @@
 {
     "name": "monorepo",
     "version": "1.0.1",
-    "private": true,
+    "description": "monorepo template",
     "author": "wyw",
     "license": "ISC",
-    "description": "monorepo template",
+    "private": true,
     "keywords": [
         "monorepo",
         "vue3",

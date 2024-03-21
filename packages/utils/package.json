@@ -2,10 +2,16 @@
     "name": "@custom/utils",
     "version": "1.0.0",
     "description": "utils",
+    "author": "wyw",
+    "license": "ISC",
+    "private": true,
     "main": "./dist/index.esm.js",
     "module": "./dist/index.esm.js",
     "types": "./dist/index.d.ts",
     "type": "module",
+    "keywords": [
+        "utils"
+    ],
     "files": [
         "dist"
     ],
@@ -13,11 +19,6 @@
         "lint": "tsc --noEmit",
         "build": "rollup -c"
     },
-    "keywords": [
-        "utils"
-    ],
-    "author": "wyw",
-    "license": "ISC",
     "devDependencies": {
         "@rollup/plugin-commonjs": "^25.0.4",
         "@rollup/plugin-node-resolve": "^15.2.1",
