@@ -1,8 +1,12 @@
 {
-    // extends 属性可以从另一个配置文件里继承配置
+    /**
+     * 指定一个 tsconfig.json 文件路径，该文件将被继承
+     */
     "extends": "@vue/tsconfig/tsconfig.dom.json",
 
-    // 编译选项
+    /**
+     * 编译选项
+     */
     "compilerOptions": {
         // 跳过库文件检查
         "skipLibCheck": true

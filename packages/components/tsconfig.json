@@ -1,5 +1,7 @@
 {
-    // extends 属性可以从另一个配置文件里继承配置
+    /**
+     * 指定一个 tsconfig.json 文件路径，该文件将被继承
+     */
     "extends": "@vue/tsconfig/tsconfig.dom.json",
 
     /**
@@ -13,9 +15,12 @@
      *（比如默认 .ts，.tsx，和 .d.ts， 如果 allowJs 设置为 true 还包含 .js 和 .jsx）
      */
     "include": ["src/**/*", "development/**/*", "types/**/*", "vite.config.mts"],
+
     "exclude": ["node_modules/**/*", "dist/**/*"],
 
-    // 编译选项
+    /**
+     * 编译选项
+     */
     "compilerOptions": {
         // 忽略弃用
         "ignoreDeprecations": "5.0",
@@ -35,7 +40,9 @@
         ]
     },
 
-    // 启用项目引用
+    /**
+     * 引用其他 tsconfig.json 文件
+     */
     "references": [
         {
             "path": "./tsconfig.vite-config.json"

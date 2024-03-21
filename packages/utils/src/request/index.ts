@@ -62,7 +62,7 @@ export function useAxiosInterceptors(options: Options) {
             }
 
             // 设置 url
-            if (baseUrl) {
+            if (baseUrl && config.url) {
                 config.url = baseUrl + config.url;
             }
 
