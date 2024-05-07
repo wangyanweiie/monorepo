@@ -64,10 +64,10 @@ export default function useIndex(props: XTableV2Prop) {
                 return;
             }
 
-            tableData.value = res.data[props.apiKeyMap?.returnRecordKey ?? 'records'] ?? [];
-            pagination.value.currentPage = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
-            pagination.value.pageSize = res.data[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
-            pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
+            tableData.value = res[props.apiKeyMap?.returnRecordKey ?? 'records'] ?? [];
+            pagination.value.currentPage = res[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
+            pagination.value.pageSize = res[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
+            pagination.value.total = res[props.apiKeyMap?.returnTotalKey ?? 'total'];
         }
 
         // 2.动态赋值，非分页接口，不渲染分页
@@ -85,7 +85,7 @@ export default function useIndex(props: XTableV2Prop) {
                 return;
             }
 
-            tableData.value = res.data ?? [];
+            tableData.value = res ?? [];
         }
 
         // 3.静态赋值，假分页

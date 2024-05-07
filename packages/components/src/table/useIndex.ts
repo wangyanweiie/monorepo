@@ -152,9 +152,9 @@ export default function useIndex(props: XTableProp) {
 
             tableLoading.value = false;
             tableData.value = res[props.apiKeyMap?.returnRecordKey ?? 'records'] ?? [];
-            pagination.value.currentPage = res.data[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
-            pagination.value.pageSize = res.data[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
-            pagination.value.total = res.data[props.apiKeyMap?.returnTotalKey ?? 'total'];
+            pagination.value.currentPage = res[props.apiKeyMap?.returnCurrentPageKey ?? 'current'];
+            pagination.value.pageSize = res[props.apiKeyMap?.returnCurrentSizeKey ?? 'limit'];
+            pagination.value.total = res[props.apiKeyMap?.returnTotalKey ?? 'total'];
         }
 
         // 2.动态赋值，非分页接口，不渲染分页
@@ -172,7 +172,7 @@ export default function useIndex(props: XTableProp) {
                 return;
             }
 
-            tableData.value = res.data ?? [];
+            tableData.value = res ?? [];
         }
 
         // 3.静态赋值，假分页
@@ -210,7 +210,7 @@ export default function useIndex(props: XTableProp) {
      */
     async function handleSizeChange() {
         if (props.api) {
-            await loadData(searchData.value);
+            loadData(searchData.value);
             selectedRows.value = tableRef.value?.getSelectionRows();
         } else {
             handleFalsePage();
@@ -222,7 +222,7 @@ export default function useIndex(props: XTableProp) {
      */
     async function handleCurrentChange() {
         if (props.api) {
-            await loadData(searchData.value);
+            loadData(searchData.value);
             selectedRows.value = tableRef.value?.getSelectionRows();
         } else {
             handleFalsePage();
@@ -384,7 +384,7 @@ export default function useIndex(props: XTableProp) {
         tableColumns.value = cloneDeep<XTableColumn[]>(props.columns);
 
         if (!props.lazy) {
-            await loadData();
+            loadData();
         }
     });
 
